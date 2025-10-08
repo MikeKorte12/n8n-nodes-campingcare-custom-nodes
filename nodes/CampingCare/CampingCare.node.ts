@@ -4,20 +4,20 @@ import type {
 	INodeType,
 	INodeTypeDescription,
 } from 'n8n-workflow';
-import { NodeConnectionType, NodeOperationError } from 'n8n-workflow';
+import { NodeOperationError } from 'n8n-workflow';
 
-export class ExampleNode implements INodeType {
+export class CampingCare implements INodeType {
 	description: INodeTypeDescription = {
-		displayName: 'Example Node',
-		name: 'exampleNode',
+		displayName: 'Camping Care',
+		name: 'campingCare',
 		group: ['transform'],
 		version: 1,
-		description: 'Basic Example Node',
+		description: 'Basic Camping Care Node',
 		defaults: {
-			name: 'Example Node',
+			name: 'Camping Care',
 		},
-		inputs: [NodeConnectionType.Main],
-		outputs: [NodeConnectionType.Main],
+		inputs: ['main'],
+		outputs: ['main'],
 		usableAsTool: true,
 		properties: [
 			// Node properties which the user gets displayed and
