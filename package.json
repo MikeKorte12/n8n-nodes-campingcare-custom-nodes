@@ -13,7 +13,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/MikeKorte/n8n-nodes-campingcare-custom-nodes.git"
+    "url": "https://github.com/mikecampingcare/n8n-nodes-campingcare-custom-nodes.git"
   },
   "engines": {
     "node": ">=20.15"
