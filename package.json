@@ -32,7 +32,9 @@
   ],
   "n8n": {
     "n8nNodesApiVersion": 1,
-    "credentials": [],
+    "credentials": [
+      "dist/credentials/CampingCareOAuth2Api.credentials.js"
+    ],
     "nodes": [
       "dist/nodes/CampingCare/CampingCare.node.js"
     ]
