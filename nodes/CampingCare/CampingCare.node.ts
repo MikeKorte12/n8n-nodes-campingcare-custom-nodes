@@ -9,6 +9,7 @@ import { NodeOperationError } from 'n8n-workflow';
 export class CampingCare implements INodeType {
 	description: INodeTypeDescription = {
 		displayName: 'Camping Care',
+		icon: 'file:campingcare.svg',
 		name: 'campingCare',
 		group: ['transform'],
 		version: 1,
