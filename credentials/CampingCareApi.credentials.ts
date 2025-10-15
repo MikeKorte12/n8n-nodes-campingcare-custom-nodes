@@ -7,7 +7,7 @@ import {
 export class CampingCareApi implements ICredentialType {
 	name = 'campingCareApi';
 	displayName = 'CampingCare API';
-	documentationUrl = 'https://example.com/docs/auth';
+	documentationUrl = 'https://1drv.ms/p/c/7D450A4555B73F91/EXaXncSEOOhMrbgY426x0IkBR7zHsN4tQT1GllgNmP_dog';
 	properties: INodeProperties[] = [
 		{
 			displayName: 'API Key',
@@ -18,7 +18,7 @@ export class CampingCareApi implements ICredentialType {
 			},
 			default: '',
 			required: true,
-			description: '=Bearer token for API authentication',
+			description: 'Bearer token for API authentication',
 		},
 	];
 
@@ -28,7 +28,7 @@ export class CampingCareApi implements ICredentialType {
 			url: '/administrations',
 			method: 'GET',
 			headers: {
-				Authorization: 'Bearer {{$credentials.apiKey}}',
+				Authorization: '=Bearer {{$credentials.apiKey}}',
 			},
 		},
 	};

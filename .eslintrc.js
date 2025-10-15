@@ -97,7 +97,7 @@ module.exports = {
 				'n8n-nodes-base/node-param-description-missing-for-simplify': 'error',
 				'n8n-nodes-base/node-param-description-missing-from-dynamic-multi-options': 'error',
 				'n8n-nodes-base/node-param-description-missing-from-dynamic-options': 'error',
-				'n8n-nodes-base/node-param-description-missing-from-limit': 'error',
+				'n8n-nodes-base/node-param-description-miscased-id': 'off',
 				'n8n-nodes-base/node-param-description-unencoded-angle-brackets': 'error',
 				'n8n-nodes-base/node-param-description-unneeded-backticks': 'error',
 				'n8n-nodes-base/node-param-description-untrimmed': 'error',
