@@ -3,7 +3,10 @@ import type { INodeType, INodeTypeDescription } from 'n8n-workflow';
 export class CampingCare implements INodeType {
 	description: INodeTypeDescription = {
 		displayName: 'Camping Care',
-		icon: 'file:campingcare.svg',
+		icon: {
+			light: 'file:campingcare.svg',
+			dark: 'file:campingcaredark.svg',
+		},
 		name: 'campingCare',
 		group: ['input'],
 		version: 1,
