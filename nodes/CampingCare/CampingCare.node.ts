@@ -28,6 +28,7 @@ export class CampingCare implements INodeType {
 				Authorization: '=Bearer {{$credentials.apiKey}}',
 			},
 		},
+
 		properties: [
 			{
 				displayName: 'Resource',
@@ -48,9 +49,6 @@ export class CampingCare implements INodeType {
 				description: 'Select the resource to work with',
 			},
 
-			// =================================
-			// ADMINISTRATIONS
-			// =================================
 			{
 				displayName: 'Operation',
 				name: 'operation',
@@ -109,7 +107,6 @@ export class CampingCare implements INodeType {
 				default: 'getAdministrations',
 			},
 
-			// PARAMETERS: GET ADMINISTRATION
 			{
 				displayName: 'Administration ID',
 				name: 'administrationId',
@@ -190,7 +187,6 @@ export class CampingCare implements INodeType {
 				},
 			},
 
-			// PARAMETERS: GET ADMINISTRATIONS
 			{
 				displayName: 'Search',
 				name: 'search',
@@ -325,9 +321,6 @@ export class CampingCare implements INodeType {
 				},
 			},
 
-			// =================================
-			// CONTACTS
-			// =================================
 			{
 				displayName: 'Operation',
 				name: 'operation',
@@ -387,7 +380,26 @@ export class CampingCare implements INodeType {
 							request: {
 								method: 'POST',
 								url: '/contacts',
-								body: '={{ $json }}',
+								body: {
+									first_name: '={{ $parameter["first_name"] || undefined }}',
+									last_name: '={{ $parameter["last_name"] || undefined }}',
+									gender: '={{ $parameter["gender"] || undefined }}',
+									birthday: '={{ $parameter["birthday"] || undefined }}',
+									id_type: '={{ $parameter["id_type"] || undefined }}',
+									id_nr: '={{ $parameter["id_nr"] || undefined }}',
+									country_origin: '={{ $parameter["country_origin"] || undefined }}',
+									email: '={{ $parameter["email"] || undefined }}',
+									phone: '={{ $parameter["phone"] || undefined }}',
+									phone_mobile: '={{ $parameter["phone_mobile"] || undefined }}',
+									address: '={{ $parameter["address"] || undefined }}',
+									address_number: '={{ $parameter["address_number"] || undefined }}',
+									city: '={{ $parameter["city"] || undefined }}',
+									state: '={{ $parameter["state"] || undefined }}',
+									zipcode: '={{ $parameter["zipcode"] || undefined }}',
+									country: '={{ $parameter["country"] || undefined }}',
+									company: '={{ $parameter["company"] || undefined }}',
+									vat_number: '={{ $parameter["vat_number"] || undefined }}',
+								},
 							},
 						},
 					},
@@ -400,7 +412,6 @@ export class CampingCare implements INodeType {
 				default: 'getContacts',
 			},
 
-			// PARAMETERS: GET CONTACT
 			{
 				displayName: 'Contact ID',
 				name: 'contactId',
@@ -481,7 +492,6 @@ export class CampingCare implements INodeType {
 				},
 			},
 
-			// PARAMETERS: GET CONTACTS
 			{
 				displayName: 'Get Meta',
 				name: 'get_meta',
@@ -607,8 +617,7 @@ export class CampingCare implements INodeType {
 				type: 'string',
 				default: '',
 				placeholder: 'Field to sort results by',
-				description:
-					'Order results by a specific field (e.g. name, created_at)',
+				description: 'Order results by a specific field (e.g. name, created_at)',
 				displayOptions: {
 					show: {
 						resource: ['contacts'],
@@ -627,6 +636,260 @@ export class CampingCare implements INodeType {
 					show: {
 						resource: ['contacts'],
 						operation: ['getContacts'],
+					},
+				},
+			},
+
+			{
+				displayName: 'First Name',
+				name: 'first_name',
+				type: 'string',
+				default: '',
+				placeholder: 'John',
+				description: 'First name of the contact',
+				displayOptions: {
+					show: {
+						resource: ['contacts'],
+						operation: ['addContact'],
+					},
+				},
+			},
+			{
+				displayName: 'Last Name',
+				name: 'last_name',
+				type: 'string',
+				default: '',
+				placeholder: 'Doe',
+				description: 'Last name of the contact',
+				displayOptions: {
+					show: {
+						resource: ['contacts'],
+						operation: ['addContact'],
+					},
+				},
+			},
+			{
+				displayName: 'Gender',
+				name: 'gender',
+				type: 'options',
+				options: [
+					{ name: 'Male', value: 'male' },
+					{ name: 'Female', value: 'female' },
+					{ name: 'Family', value: 'family' },
+				],
+				default: 'male',
+				description: 'Gender of the contact',
+				displayOptions: {
+					show: {
+						resource: ['contacts'],
+						operation: ['addContact'],
+					},
+				},
+			},
+			{
+				displayName: 'Birthday',
+				name: 'birthday',
+				type: 'string',
+				default: '',
+				placeholder: 'YYYY-MM-DD',
+				description: 'Birthday of the contact',
+				displayOptions: {
+					show: {
+						resource: ['contacts'],
+						operation: ['addContact'],
+					},
+				},
+			},
+			{
+				displayName: 'ID Type',
+				name: 'id_type',
+				type: 'string',
+				default: '',
+				placeholder: 'Passport',
+				description: 'Type of identification',
+				displayOptions: {
+					show: {
+						resource: ['contacts'],
+						operation: ['addContact'],
+					},
+				},
+			},
+			{
+				displayName: 'ID Number',
+				name: 'id_nr',
+				type: 'string',
+				default: '',
+				placeholder: 'A1234567',
+				description: 'Identification number',
+				displayOptions: {
+					show: {
+						resource: ['contacts'],
+						operation: ['addContact'],
+					},
+				},
+			},
+			{
+				displayName: 'Country of Origin',
+				name: 'country_origin',
+				type: 'string',
+				default: '',
+				placeholder: 'Select country of origin',
+				displayOptions: {
+					show: {
+						resource: ['contacts'],
+						operation: ['addContact'],
+					},
+				},
+			},
+			{
+				displayName: 'Email',
+				name: 'email',
+				type: 'string',
+				default: '',
+				placeholder: 'john.doe@example.com',
+				description: 'Email address',
+				displayOptions: {
+					show: {
+						resource: ['contacts'],
+						operation: ['addContact'],
+					},
+				},
+			},
+			{
+				displayName: 'Phone',
+				name: 'phone',
+				type: 'string',
+				default: '',
+				placeholder: 'Enter your phone number',
+				description: 'Phone number',
+				displayOptions: {
+					show: {
+						resource: ['contacts'],
+						operation: ['addContact'],
+					},
+				},
+			},
+			{
+				displayName: 'Mobile Phone',
+				name: 'phone_mobile',
+				type: 'string',
+				default: '',
+				placeholder: 'Enter your mobile number',
+				description: 'Mobile phone number',
+				displayOptions: {
+					show: {
+						resource: ['contacts'],
+						operation: ['addContact'],
+					},
+				},
+			},
+			{
+				displayName: 'Address',
+				name: 'address',
+				type: 'string',
+				default: '',
+				placeholder: 'Main Street',
+				description: 'Street address',
+				displayOptions: {
+					show: {
+						resource: ['contacts'],
+						operation: ['addContact'],
+					},
+				},
+			},
+			{
+				displayName: 'Address Number',
+				name: 'address_number',
+				type: 'string',
+				default: '',
+				placeholder: '123',
+				description: 'Street number',
+				displayOptions: {
+					show: {
+						resource: ['contacts'],
+						operation: ['addContact'],
+					},
+				},
+			},
+			{
+				displayName: 'City',
+				name: 'city',
+				type: 'string',
+				default: '',
+				placeholder: 'Enter city name',
+				displayOptions: {
+					show: {
+						resource: ['contacts'],
+						operation: ['addContact'],
+					},
+				},
+			},
+			{
+				displayName: 'State',
+				name: 'state',
+				type: 'string',
+				default: '',
+				placeholder: 'Enter state or province',
+				description: 'State/Province',
+				displayOptions: {
+					show: {
+						resource: ['contacts'],
+						operation: ['addContact'],
+					},
+				},
+			},
+			{
+				displayName: 'Zipcode',
+				name: 'zipcode',
+				type: 'string',
+				default: '',
+				placeholder: 'Enter postal code',
+				description: 'Postal code',
+				displayOptions: {
+					show: {
+						resource: ['contacts'],
+						operation: ['addContact'],
+					},
+				},
+			},
+			{
+				displayName: 'Country',
+				name: 'country',
+				type: 'string',
+				default: '',
+				placeholder: 'Enter country name',
+				displayOptions: {
+					show: {
+						resource: ['contacts'],
+						operation: ['addContact'],
+					},
+				},
+			},
+			{
+				displayName: 'Company',
+				name: 'company',
+				type: 'string',
+				default: '',
+				placeholder: 'My Company B.V.',
+				description: 'Company name',
+				displayOptions: {
+					show: {
+						resource: ['contacts'],
+						operation: ['addContact'],
+					},
+				},
+			},
+			{
+				displayName: 'VAT Number',
+				name: 'vat_number',
+				type: 'string',
+				default: '',
+				placeholder: 'Enter VAT number',
+				description: 'VAT identification number',
+				displayOptions: {
+					show: {
+						resource: ['contacts'],
+						operation: ['addContact'],
 					},
 				},
 			},
