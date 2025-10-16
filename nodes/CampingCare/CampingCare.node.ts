@@ -133,7 +133,7 @@ export class CampingCare implements INodeType {
 				displayOptions: {
 					show: {
 						resource: ['administrations'],
-						operation: ['getAdministration'],
+						operation: ['getAdministration', 'getAdministrations'],
 					},
 				},
 			},
@@ -159,7 +159,7 @@ export class CampingCare implements INodeType {
 				displayOptions: {
 					show: {
 						resource: ['administrations'],
-						operation: ['getAdministration'],
+						operation: ['getAdministration', 'getAdministrations'],
 					},
 				},
 			},
@@ -172,7 +172,7 @@ export class CampingCare implements INodeType {
 				displayOptions: {
 					show: {
 						resource: ['administrations'],
-						operation: ['getAdministration'],
+						operation: ['getAdministration', 'getAdministrations'],
 					},
 				},
 			},
@@ -185,7 +185,7 @@ export class CampingCare implements INodeType {
 				displayOptions: {
 					show: {
 						resource: ['administrations'],
-						operation: ['getAdministration'],
+						operation: ['getAdministration', 'getAdministrations'],
 					},
 				},
 			},
@@ -258,72 +258,6 @@ export class CampingCare implements INodeType {
 					},
 				},
 			},
-			{
-				displayName: 'Get Meta',
-				name: 'get_meta',
-				type: 'boolean',
-				default: false,
-				description: 'Whether to include meta information in the response',
-				displayOptions: {
-					show: {
-						resource: ['administrations'],
-						operation: ['getAdministrations'],
-					},
-				},
-			},
-			{
-				displayName: 'Get Age Tables',
-				name: 'get_age_tables',
-				type: 'boolean',
-				default: false,
-				description: 'Whether to include age tables in the response',
-				displayOptions: {
-					show: {
-						resource: ['administrations'],
-						operation: ['getAdministrations'],
-					},
-				},
-			},
-			{
-				displayName: 'Translations',
-				name: 'translations',
-				type: 'boolean',
-				default: false,
-				description: 'Whether to include translations in the response',
-				displayOptions: {
-					show: {
-						resource: ['administrations'],
-						operation: ['getAdministrations'],
-					},
-				},
-			},
-			{
-				displayName: 'Get Media',
-				name: 'get_media',
-				type: 'boolean',
-				default: false,
-				description: 'Whether to include media files in the response',
-				displayOptions: {
-					show: {
-						resource: ['administrations'],
-						operation: ['getAdministrations'],
-					},
-				},
-			},
-			{
-				displayName: 'Get Accommodations',
-				name: 'get_accommodations',
-				type: 'boolean',
-				default: false,
-				description: 'Whether to include accommodation details in the response',
-				displayOptions: {
-					show: {
-						resource: ['administrations'],
-						operation: ['getAdministrations'],
-					},
-				},
-			},
-
 			{
 				displayName: 'Operation',
 				name: 'operation',
@@ -440,7 +374,7 @@ export class CampingCare implements INodeType {
 				displayOptions: {
 					show: {
 						resource: ['contacts'],
-						operation: ['getContact'],
+						operation: ['getContact', 'getContacts'],
 					},
 				},
 			},
@@ -453,20 +387,7 @@ export class CampingCare implements INodeType {
 				displayOptions: {
 					show: {
 						resource: ['contacts'],
-						operation: ['getContact'],
-					},
-				},
-			},
-			{
-				displayName: 'Get Meta',
-				name: 'get_meta',
-				type: 'boolean',
-				default: false,
-				description: 'Whether to include meta information in the response',
-				displayOptions: {
-					show: {
-						resource: ['contacts'],
-						operation: ['getContact'],
+						operation: ['getContact', 'getContacts'],
 					},
 				},
 			},
@@ -479,7 +400,7 @@ export class CampingCare implements INodeType {
 				displayOptions: {
 					show: {
 						resource: ['contacts'],
-						operation: ['getContact'],
+						operation: ['getContact', 'getContacts'],
 					},
 				},
 			},
@@ -492,76 +413,12 @@ export class CampingCare implements INodeType {
 				displayOptions: {
 					show: {
 						resource: ['contacts'],
-						operation: ['getContact'],
+						operation: ['getContact', 'getContacts'],
 					},
 				},
 			},
 
-			{
-				displayName: 'Get Meta',
-				name: 'get_meta',
-				type: 'boolean',
-				default: false,
-				description: 'Whether to include meta information in the response',
-				displayOptions: {
-					show: {
-						resource: ['contacts'],
-						operation: ['getContacts'],
-					},
-				},
-			},
-			{
-				displayName: 'Get Reservations',
-				name: 'get_reservations',
-				type: 'boolean',
-				default: false,
-				description: 'Whether to include reservations in the response',
-				displayOptions: {
-					show: {
-						resource: ['contacts'],
-						operation: ['getContacts'],
-					},
-				},
-			},
-			{
-				displayName: 'Get Reservation Payment Terms',
-				name: 'get_reservation_payment_terms',
-				type: 'boolean',
-				default: false,
-				description: 'Whether to include reservation payment terms in the response',
-				displayOptions: {
-					show: {
-						resource: ['contacts'],
-						operation: ['getContacts'],
-					},
-				},
-			},
-			{
-				displayName: 'Get Invoices',
-				name: 'get_invoices',
-				type: 'boolean',
-				default: false,
-				description: 'Whether to include invoices in the response',
-				displayOptions: {
-					show: {
-						resource: ['contacts'],
-						operation: ['getContacts'],
-					},
-				},
-			},
-			{
-				displayName: 'Get Invoice Payments',
-				name: 'get_invoice_payments',
-				type: 'boolean',
-				default: false,
-				description: 'Whether to include invoice payments in the response',
-				displayOptions: {
-					show: {
-						resource: ['contacts'],
-						operation: ['getContacts'],
-					},
-				},
-			},
+
 			{
 				displayName: 'Offset',
 				name: 'offset',
