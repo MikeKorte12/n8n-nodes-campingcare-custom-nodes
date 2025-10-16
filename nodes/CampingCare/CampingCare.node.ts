@@ -342,7 +342,8 @@ export class CampingCare implements INodeType {
 								qs: {
 									get_meta: '={{ $parameter["get_meta"] || undefined }}',
 									get_reservations: '={{ $parameter["get_reservations"] || undefined }}',
-									get_reservation_payment_terms: '={{ $parameter["get_reservation_payment_terms"] || undefined }}',
+									get_reservation_payment_terms:
+										'={{ $parameter["get_reservation_payment_terms"] || undefined }}',
 									get_invoices: '={{ $parameter["get_invoices"] || undefined }}',
 									get_invoice_payments: '={{ $parameter["get_invoice_payments"] || undefined }}',
 									offset: '={{ $parameter["offset"] || undefined }}',
@@ -368,7 +369,8 @@ export class CampingCare implements INodeType {
 									get_reservations: '={{ $parameter["get_reservations"] || undefined }}',
 									get_invoices: '={{ $parameter["get_invoices"] || undefined }}',
 									get_meta: '={{ $parameter["get_meta"] || undefined }}',
-									get_reservation_payment_terms: '={{ $parameter["get_reservation_payment_terms"] || undefined }}',
+									get_reservation_payment_terms:
+										'={{ $parameter["get_reservation_payment_terms"] || undefined }}',
 									get_invoice_payments: '={{ $parameter["get_invoice_payments"] || undefined }}',
 								},
 							},
