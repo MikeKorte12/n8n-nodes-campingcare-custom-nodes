@@ -111,154 +111,6 @@ export class CampingCare implements INodeType {
 			},
 
 			{
-				displayName: 'Administration ID',
-				name: 'administrationId',
-				type: 'string',
-				default: '',
-				placeholder: 'e.g. 1234',
-				description: 'The unique ID of the administration to retrieve',
-				displayOptions: {
-					show: {
-						resource: ['administrations'],
-						operation: ['getAdministration'],
-					},
-				},
-			},
-			{
-				displayName: 'Get Meta',
-				name: 'get_meta',
-				type: 'boolean',
-				default: false,
-				description: 'Whether to include meta information in the response',
-				displayOptions: {
-					show: {
-						resource: ['administrations'],
-						operation: ['getAdministration', 'getAdministrations'],
-					},
-				},
-			},
-			{
-				displayName: 'Get VAT Tables',
-				name: 'get_vat_tables',
-				type: 'boolean',
-				default: false,
-				description: 'Whether to include VAT tables in the response',
-				displayOptions: {
-					show: {
-						resource: ['administrations'],
-						operation: ['getAdministration'],
-					},
-				},
-			},
-			{
-				displayName: 'Get Age Tables',
-				name: 'get_age_tables',
-				type: 'boolean',
-				default: false,
-				description: 'Whether to include age tables in the response',
-				displayOptions: {
-					show: {
-						resource: ['administrations'],
-						operation: ['getAdministration', 'getAdministrations'],
-					},
-				},
-			},
-			{
-				displayName: 'Translations',
-				name: 'translations',
-				type: 'boolean',
-				default: false,
-				description: 'Whether to include translations in the response',
-				displayOptions: {
-					show: {
-						resource: ['administrations'],
-						operation: ['getAdministration', 'getAdministrations'],
-					},
-				},
-			},
-			{
-				displayName: 'Get Media',
-				name: 'get_media',
-				type: 'boolean',
-				default: false,
-				description: 'Whether to include media files in the response',
-				displayOptions: {
-					show: {
-						resource: ['administrations'],
-						operation: ['getAdministration', 'getAdministrations'],
-					},
-				},
-			},
-
-			{
-				displayName: 'Search',
-				name: 'search',
-				type: 'string',
-				default: '',
-				placeholder: 'Search by name',
-				description: 'Search term to filter administrations',
-				displayOptions: {
-					show: {
-						resource: ['administrations'],
-						operation: ['getAdministrations'],
-					},
-				},
-			},
-			{
-				displayName: 'Offset',
-				name: 'offset',
-				type: 'number',
-				default: '',
-				description: 'Number of records to skip (for pagination)',
-				displayOptions: {
-					show: {
-						resource: ['administrations'],
-						operation: ['getAdministrations'],
-					},
-				},
-			},
-			{
-				displayName: 'Limit',
-				name: 'limit',
-				type: 'number',
-				typeOptions: { minValue: 1 },
-				default: 50,
-				description: 'Max number of results to return',
-				displayOptions: {
-					show: {
-						resource: ['administrations'],
-						operation: ['getAdministrations'],
-					},
-				},
-			},
-			{
-				displayName: 'Order',
-				name: 'order',
-				type: 'string',
-				default: '',
-				placeholder: 'e.g. desc or asc',
-				description: 'Sorting order of the results',
-				displayOptions: {
-					show: {
-						resource: ['administrations'],
-						operation: ['getAdministrations'],
-					},
-				},
-			},
-			{
-				displayName: 'Count',
-				name: 'count',
-				type: 'boolean',
-				default: false,
-				description: 'Whether to return only the count of administrations',
-				displayOptions: {
-					show: {
-						resource: ['administrations'],
-						operation: ['getAdministrations'],
-					},
-				},
-			},
-			{
 				displayName: 'Operation',
 				name: 'operation',
 				type: 'options',
@@ -351,6 +203,21 @@ export class CampingCare implements INodeType {
 				default: 'getContacts',
 			},
 
+			// --- IDs eerst ---
+			{
+				displayName: 'Administration ID',
+				name: 'administrationId',
+				type: 'string',
+				default: '',
+				placeholder: 'e.g. 1234',
+				description: 'The unique ID of the administration to retrieve',
+				displayOptions: {
+					show: {
+						resource: ['administrations'],
+						operation: ['getAdministration'],
+					},
+				},
+			},
 			{
 				displayName: 'Contact ID',
 				name: 'contactId',
@@ -365,12 +232,53 @@ export class CampingCare implements INodeType {
 					},
 				},
 			},
+
+			// --- Booleans in alfabetische volgorde ---
 			{
-				displayName: 'Get Reservations',
-				name: 'get_reservations',
+				displayName: 'Count',
+				name: 'count',
 				type: 'boolean',
 				default: false,
-				description: 'Whether to include reservations in the response',
+				description: 'Whether to return only the count of administrations',
+				displayOptions: {
+					show: {
+						resource: ['administrations', 'contacts'],
+						operation: ['getAdministrations', 'getContacts'],
+					},
+				},
+			},
+			{
+				displayName: 'Get Accommodations',
+				name: 'get_accommodations',
+				type: 'boolean',
+				default: false,
+				description: 'Whether to include accommodations in the response',
+				displayOptions: {
+					show: {
+						resource: ['administrations'],
+						operation: ['getAdministrations'],
+					},
+				},
+			},
+			{
+				displayName: 'Get Age Tables',
+				name: 'get_age_tables',
+				type: 'boolean',
+				default: false,
+				description: 'Whether to include age tables in the response',
+				displayOptions: {
+					show: {
+						resource: ['administrations'],
+						operation: ['getAdministration', 'getAdministrations'],
+					},
+				},
+			},
+			{
+				displayName: 'Get Invoice Payments',
+				name: 'get_invoice_payments',
+				type: 'boolean',
+				default: false,
+				description: 'Whether to include invoice payments in the response',
 				displayOptions: {
 					show: {
 						resource: ['contacts'],
@@ -392,6 +300,32 @@ export class CampingCare implements INodeType {
 				},
 			},
 			{
+				displayName: 'Get Media',
+				name: 'get_media',
+				type: 'boolean',
+				default: false,
+				description: 'Whether to include media files in the response',
+				displayOptions: {
+					show: {
+						resource: ['administrations'],
+						operation: ['getAdministration', 'getAdministrations'],
+					},
+				},
+			},
+			{
+				displayName: 'Get Meta',
+				name: 'get_meta',
+				type: 'boolean',
+				default: false,
+				description: 'Whether to include meta information in the response',
+				displayOptions: {
+					show: {
+						resource: ['administrations'],
+						operation: ['getAdministration', 'getAdministrations'],
+					},
+				},
+			},
+			{
 				displayName: 'Get Reservation Payment Terms',
 				name: 'get_reservation_payment_terms',
 				type: 'boolean',
@@ -405,11 +339,11 @@ export class CampingCare implements INodeType {
 				},
 			},
 			{
-				displayName: 'Get Invoice Payments',
-				name: 'get_invoice_payments',
+				displayName: 'Get Reservations',
+				name: 'get_reservations',
 				type: 'boolean',
 				default: false,
-				description: 'Whether to include invoice payments in the response',
+				description: 'Whether to include reservations in the response',
 				displayOptions: {
 					show: {
 						resource: ['contacts'],
@@ -417,21 +351,34 @@ export class CampingCare implements INodeType {
 					},
 				},
 			},
-
-
 			{
-				displayName: 'Offset',
-				name: 'offset',
-				type: 'number',
-				default: '',
-				description: 'Number of records to skip (for pagination)',
+				displayName: 'Get VAT Tables',
+				name: 'get_vat_tables',
+				type: 'boolean',
+				default: false,
+				description: 'Whether to include VAT tables in the response',
 				displayOptions: {
 					show: {
-						resource: ['contacts'],
-						operation: ['getContacts'],
+						resource: ['administrations'],
+						operation: ['getAdministration'],
 					},
 				},
 			},
+			{
+				displayName: 'Translations',
+				name: 'translations',
+				type: 'boolean',
+				default: false,
+				description: 'Whether to include translations in the response',
+				displayOptions: {
+					show: {
+						resource: ['administrations'],
+						operation: ['getAdministration', 'getAdministrations'],
+					},
+				},
+			},
+
+			// --- Strings/numbers in alfabetische volgorde ---
 			{
 				displayName: 'Limit',
 				name: 'limit',
@@ -441,21 +388,21 @@ export class CampingCare implements INodeType {
 				description: 'Max number of results to return',
 				displayOptions: {
 					show: {
-						resource: ['contacts'],
-						operation: ['getContacts'],
+						resource: ['administrations', 'contacts'],
+						operation: ['getAdministrations', 'getContacts'],
 					},
 				},
 			},
 			{
-				displayName: 'Count',
-				name: 'count',
-				type: 'boolean',
-				default: false,
-				description: 'Whether to return only the count of contacts',
+				displayName: 'Offset',
+				name: 'offset',
+				type: 'number',
+				default: '',
+				description: 'Number of records to skip (for pagination)',
 				displayOptions: {
 					show: {
-						resource: ['contacts'],
-						operation: ['getContacts'],
+						resource: ['administrations', 'contacts'],
+						operation: ['getAdministrations', 'getContacts'],
 					},
 				},
 			},
@@ -468,8 +415,8 @@ export class CampingCare implements INodeType {
 				description: 'Sorting order of the results',
 				displayOptions: {
 					show: {
-						resource: ['contacts'],
-						operation: ['getContacts'],
+						resource: ['administrations', 'contacts'],
+						operation: ['getAdministrations', 'getContacts'],
 					},
 				},
 			},
@@ -492,16 +439,17 @@ export class CampingCare implements INodeType {
 				name: 'search',
 				type: 'string',
 				default: '',
-				placeholder: 'Search by email, name, etc.',
-				description: 'Search term to filter contacts',
+				placeholder: 'Search by name',
+				description: 'Search term to filter administrations',
 				displayOptions: {
 					show: {
-						resource: ['contacts'],
-						operation: ['getContacts'],
+						resource: ['administrations', 'contacts'],
+						operation: ['getAdministrations', 'getContacts'],
 					},
 				},
 			},
 
+			// --- Add Contact fields ---
 			{
 				displayName: 'First Name',
 				name: 'first_name',
