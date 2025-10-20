@@ -128,7 +128,8 @@ export class CampingCare implements INodeType {
 								qs: {
 									get_meta: '={{ $parameter["get_meta"] || undefined }}',
 									get_reservations: '={{ $parameter["get_reservations"] || undefined }}',
-									get_reservation_payment_terms: '={{ $parameter["get_reservation_payment_terms"] || undefined }}',
+									get_reservation_payment_terms:
+										'={{ $parameter["get_reservation_payment_terms"] || undefined }}',
 									get_invoices: '={{ $parameter["get_invoices"] || undefined }}',
 									get_invoice_payments: '={{ $parameter["get_invoice_payments"] || undefined }}',
 									offset: '={{ $parameter["offset"] || undefined }}',
@@ -154,7 +155,8 @@ export class CampingCare implements INodeType {
 									get_reservations: '={{ $parameter["get_reservations"] || undefined }}',
 									get_invoices: '={{ $parameter["get_invoices"] || undefined }}',
 									get_meta: '={{ $parameter["get_meta"] || undefined }}',
-									get_reservation_payment_terms: '={{ $parameter["get_reservation_payment_terms"] || undefined }}',
+									get_reservation_payment_terms:
+										'={{ $parameter["get_reservation_payment_terms"] || undefined }}',
 									get_invoice_payments: '={{ $parameter["get_invoice_payments"] || undefined }}',
 								},
 							},
@@ -445,7 +447,7 @@ export class CampingCare implements INodeType {
 				type: 'string',
 				default: '',
 				placeholder: 'John',
-				description: 'First name of the contact',
+				description: 'Given name of the contact',
 				noDataExpression: true,
 				displayOptions: {
 					show: {
@@ -460,7 +462,7 @@ export class CampingCare implements INodeType {
 				type: 'string',
 				default: '',
 				placeholder: 'Doe',
-				description: 'Last name of the contact',
+				description: 'Family name or surname of the contact',
 				noDataExpression: true,
 				displayOptions: {
 					show: {
@@ -479,7 +481,7 @@ export class CampingCare implements INodeType {
 					{ name: 'Family', value: 'family' },
 				],
 				default: 'male',
-				description: 'Gender of the contact',
+				description: 'Gender or type of contact',
 				noDataExpression: true,
 				displayOptions: {
 					show: {
@@ -494,7 +496,7 @@ export class CampingCare implements INodeType {
 				type: 'string',
 				default: '',
 				placeholder: 'YYYY-MM-DD',
-				description: 'Birthday of the contact',
+				description: 'Date of birth in YYYY-MM-DD format',
 				noDataExpression: true,
 				displayOptions: {
 					show: {
@@ -508,8 +510,8 @@ export class CampingCare implements INodeType {
 				name: 'id_type',
 				type: 'string',
 				default: '',
-				placeholder: 'Passport',
-				description: 'Type of identification',
+				placeholder: 'e.g. Passport',
+				description: 'Type of identification document',
 				noDataExpression: true,
 				displayOptions: {
 					show: {
@@ -523,8 +525,8 @@ export class CampingCare implements INodeType {
 				name: 'id_nr',
 				type: 'string',
 				default: '',
-				placeholder: 'A1234567',
-				description: 'Identification number',
+				placeholder: 'e.g. A1234567',
+				description: 'Number of the identification document',
 				noDataExpression: true,
 				displayOptions: {
 					show: {
@@ -536,10 +538,13 @@ export class CampingCare implements INodeType {
 			{
 				displayName: 'Country of Origin',
 				name: 'country_origin',
-				type: 'string',
+				type: 'options',
+				typeOptions: {
+					loadOptionsMethod: 'getCountriesFromRules',
+				},
 				default: '',
-				placeholder: 'Select country of origin',
 				noDataExpression: true,
+				description: 'Country where the contact originates from',
 				displayOptions: {
 					show: {
 						resource: ['contacts'],
@@ -547,13 +552,14 @@ export class CampingCare implements INodeType {
 					},
 				},
 			},
+
 			{
 				displayName: 'Email',
 				name: 'email',
 				type: 'string',
 				default: '',
 				placeholder: 'john.doe@example.com',
-				description: 'Email address',
+				description: 'Primary email address of the contact',
 				noDataExpression: true,
 				displayOptions: {
 					show: {
@@ -567,8 +573,8 @@ export class CampingCare implements INodeType {
 				name: 'phone',
 				type: 'string',
 				default: '',
-				placeholder: 'Enter your phone number',
-				description: 'Phone number',
+				placeholder: 'e.g. +31 20 123 4567',
+				description: 'Landline phone number (with country code if applicable)',
 				noDataExpression: true,
 				displayOptions: {
 					show: {
@@ -582,8 +588,8 @@ export class CampingCare implements INodeType {
 				name: 'phone_mobile',
 				type: 'string',
 				default: '',
-				placeholder: 'Enter your mobile number',
-				description: 'Mobile phone number',
+				placeholder: 'e.g. +44 7700 900123',
+				description: 'Mobile phone number (with country code)',
 				noDataExpression: true,
 				displayOptions: {
 					show: {
@@ -597,8 +603,8 @@ export class CampingCare implements INodeType {
 				name: 'address',
 				type: 'string',
 				default: '',
-				placeholder: 'Main Street',
-				description: 'Street address',
+				placeholder: 'e.g. Main Street',
+				description: "Street name of the contact's address",
 				noDataExpression: true,
 				displayOptions: {
 					show: {
@@ -612,8 +618,8 @@ export class CampingCare implements INodeType {
 				name: 'address_number',
 				type: 'string',
 				default: '',
-				placeholder: '123',
-				description: 'Street number',
+				placeholder: 'e.g. 42A',
+				description: 'House or building number',
 				noDataExpression: true,
 				displayOptions: {
 					show: {
@@ -627,8 +633,8 @@ export class CampingCare implements INodeType {
 				name: 'city',
 				type: 'string',
 				default: '',
-				placeholder: 'Enter city name',
-				description: 'City name',
+				placeholder: 'e.g. Amsterdam',
+				description: 'City or town name',
 				noDataExpression: true,
 				displayOptions: {
 					show: {
@@ -642,8 +648,8 @@ export class CampingCare implements INodeType {
 				name: 'state',
 				type: 'string',
 				default: '',
-				placeholder: 'Enter state or province',
-				description: 'State/Province',
+				placeholder: 'e.g. North Holland',
+				description: 'State, province, or region',
 				noDataExpression: true,
 				displayOptions: {
 					show: {
@@ -657,8 +663,8 @@ export class CampingCare implements INodeType {
 				name: 'zipcode',
 				type: 'string',
 				default: '',
-				placeholder: 'Enter postal code',
-				description: 'Postal code',
+				placeholder: 'e.g. 1011AB',
+				description: 'Postal or ZIP code',
 				noDataExpression: true,
 				displayOptions: {
 					show: {
@@ -670,11 +676,13 @@ export class CampingCare implements INodeType {
 			{
 				displayName: 'Country',
 				name: 'country',
-				type: 'string',
+				type: 'options',
+				typeOptions: {
+					loadOptionsMethod: 'getCountriesFromRules',
+				},
 				default: '',
-				placeholder: 'Enter country name',
-				description: 'Country name',
 				noDataExpression: true,
+				description: 'Country of residence of the contact',
 				displayOptions: {
 					show: {
 						resource: ['contacts'],
@@ -682,13 +690,14 @@ export class CampingCare implements INodeType {
 					},
 				},
 			},
+
 			{
 				displayName: 'Company',
 				name: 'company',
 				type: 'string',
 				default: '',
-				placeholder: 'My Company B.V.',
-				description: 'Company name',
+				placeholder: 'e.g. Example Ltd.',
+				description: 'Name of the company or organization',
 				noDataExpression: true,
 				displayOptions: {
 					show: {
@@ -702,8 +711,8 @@ export class CampingCare implements INodeType {
 				name: 'vat_number',
 				type: 'string',
 				default: '',
-				placeholder: 'Enter VAT number',
-				description: 'VAT identification number',
+				placeholder: 'e.g. NL123456789B01',
+				description: "Company's VAT or tax identification number",
 				noDataExpression: true,
 				displayOptions: {
 					show: {
@@ -716,8 +725,8 @@ export class CampingCare implements INodeType {
 				displayName: 'Extra Fields',
 				name: 'extraFields',
 				type: 'fixedCollection',
-				placeholder: 'Add Extra Field',
-				description: 'Additional fields to set for the contact',
+				placeholder: 'Enter a value',
+				description: 'Custom extra fields linked to the contact',
 				noDataExpression: true,
 				typeOptions: {
 					multipleValues: true,
@@ -740,7 +749,8 @@ export class CampingCare implements INodeType {
 								displayName: 'Extra Field Name or ID',
 								name: 'key',
 								type: 'options',
-								description: 'Choose from the list, or specify an ID using an <a href="https://docs.n8n.io/code/expressions/">expression</a>',
+								description:
+									'Choose from the list, or specify an ID using an <a href="https://docs.n8n.io/code/expressions/">expression</a>',
 								noDataExpression: true,
 								typeOptions: {
 									loadOptionsMethod: 'getContactFields',
@@ -752,8 +762,8 @@ export class CampingCare implements INodeType {
 								name: 'value',
 								type: 'string',
 								default: '',
-								placeholder: 'Enter value for this field',
-								description: 'Value for the extra field',
+								placeholder: 'Enter a value',
+								description: 'Value to assign to this extra field',
 								noDataExpression: true,
 							},
 						],
@@ -811,6 +821,47 @@ export class CampingCare implements INodeType {
 						name: field.name,
 						value: field.key,
 					}));
+			},
+
+			getCountriesFromRules: async function (this: ILoadOptionsFunctions) {
+				try {
+					const credentials = await this.getCredentials('campingCareApi');
+
+					const response = await this.helpers.httpRequest({
+						method: 'GET',
+						url: 'https://api.camping.care/v21/fields',
+						qs: { type: 'contact', status: 'active' },
+						headers: {
+							Accept: 'application/json',
+							Authorization: `Bearer ${credentials.apiKey}`,
+						},
+					});
+
+					// Zoek het veld met de regel 'regex_country'
+					const postcodeField = response.find((field: any) =>
+						field.rules?.some((r: any) => r.type === 'regex_country'),
+					);
+
+					if (!postcodeField) {
+						return [];
+					}
+
+					const rule = postcodeField.rules.find((r: any) => r.type === 'regex_country');
+
+					if (!rule?.countries?.length) {
+						return [];
+					}
+
+					const countries = rule.countries.map((c: any) => ({
+						name: c.country_name,
+						value: c.country,
+					}));
+
+					// Sorteer alfabetisch op naam
+					return countries.sort((a: any, b: any) => a.name.localeCompare(b.name));
+				} catch (error) {
+					throw new Error(`Failed to load country list: ${error.message}`);
+				}
 			},
 		},
 	};
