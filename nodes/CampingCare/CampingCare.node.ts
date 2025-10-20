@@ -1,4 +1,4 @@
-import type { INodeType, INodeTypeDescription } from 'n8n-workflow';
+import type { INodeType, INodeTypeDescription, ILoadOptionsFunctions } from 'n8n-workflow';
 
 export class CampingCare implements INodeType {
 	description: INodeTypeDescription = {
@@ -190,6 +190,7 @@ export class CampingCare implements INodeType {
 									country: '={{ $parameter["country"] || undefined }}',
 									company: '={{ $parameter["company"] || undefined }}',
 									vat_number: '={{ $parameter["vat_number"] || undefined }}',
+									meta: '={{ $parameter["extraFields"]?.field?.filter(f => f.value !== "" && f.value !== undefined)?.map(f => ({ key: f.key, value: f.value })) || [] }}'
 								},
 							},
 						},
@@ -203,251 +204,226 @@ export class CampingCare implements INodeType {
 				default: 'getContacts',
 			},
 
-			// --- IDs eerst ---
 			{
-				displayName: 'Administration ID',
-				name: 'administrationId',
-				type: 'string',
-				default: '',
-				placeholder: 'e.g. 1234',
-				description: 'The unique ID of the administration to retrieve',
-				displayOptions: {
-					show: {
-						resource: ['administrations'],
-						operation: ['getAdministration'],
-					},
-				},
-			},
-			{
-				displayName: 'Contact ID',
-				name: 'contactId',
-				type: 'string',
-				default: '',
-				placeholder: 'e.g. 1234567',
-				description: 'The unique ID of the contact to retrieve',
-				displayOptions: {
-					show: {
-						resource: ['contacts'],
-						operation: ['getContact'],
-					},
-				},
-			},
+		displayName: 'Administration ID',
+		name: 'administrationId',
+		type: 'string',
+		default: '',
+		placeholder: 'e.g. 1234',
+		description: 'The unique ID of the administration to retrieve',
+		displayOptions: {
+			show: { resource: ['administrations'], operation: ['getAdministration'] },
+		},
+	},
+	{
+		displayName: 'Contact ID',
+		name: 'contactId',
+		type: 'string',
+		default: '',
+		placeholder: 'e.g. 1234567',
+		description: 'The unique ID of the contact to retrieve',
+		displayOptions: {
+			show: { resource: ['contacts'], operation: ['getContact'] },
+		},
+	},
 
-			// --- Booleans in alfabetische volgorde ---
-			{
-				displayName: 'Count',
-				name: 'count',
-				type: 'boolean',
-				default: false,
-				description: 'Whether to return only the count of administrations',
-				displayOptions: {
-					show: {
-						resource: ['administrations', 'contacts'],
-						operation: ['getAdministrations', 'getContacts'],
-					},
-				},
+	// --- Booleans in alfabetische volgorde ---
+	{
+		displayName: 'Count',
+		name: 'count',
+		type: 'boolean',
+		default: false,
+		description: 'Whether to return only the count',
+		displayOptions: {
+			show: {
+				resource: ['administrations', 'contacts'],
+				operation: ['getAdministrations', 'getContacts'],
 			},
-			{
-				displayName: 'Get Accommodations',
-				name: 'get_accommodations',
-				type: 'boolean',
-				default: false,
-				description: 'Whether to include accommodations in the response',
-				displayOptions: {
-					show: {
-						resource: ['administrations'],
-						operation: ['getAdministrations'],
-					},
-				},
+		},
+	},
+	{
+		displayName: 'Get Accommodations',
+		name: 'get_accommodations',
+		type: 'boolean',
+		default: false,
+		description: 'Whether to include accommodations in the response',
+		displayOptions: {
+			show: { resource: ['administrations'], operation: ['getAdministrations'] },
+		},
+	},
+	{
+		displayName: 'Get Age Tables',
+		name: 'get_age_tables',
+		type: 'boolean',
+		default: false,
+		description: 'Whether to include age tables in the response',
+		displayOptions: {
+			show: {
+				resource: ['administrations'],
+				operation: ['getAdministration', 'getAdministrations'],
 			},
-			{
-				displayName: 'Get Age Tables',
-				name: 'get_age_tables',
-				type: 'boolean',
-				default: false,
-				description: 'Whether to include age tables in the response',
-				displayOptions: {
-					show: {
-						resource: ['administrations'],
-						operation: ['getAdministration', 'getAdministrations'],
-					},
-				},
+		},
+	},
+	{
+		displayName: 'Get Invoice Payments',
+		name: 'get_invoice_payments',
+		type: 'boolean',
+		default: false,
+		description: 'Whether to include invoice payments in the response',
+		displayOptions: {
+			show: { resource: ['contacts'], operation: ['getContact', 'getContacts'] },
+		},
+	},
+	{
+		displayName: 'Get Invoices',
+		name: 'get_invoices',
+		type: 'boolean',
+		default: false,
+		description: 'Whether to include invoices in the response',
+		displayOptions: {
+			show: { resource: ['contacts'], operation: ['getContact', 'getContacts'] },
+		},
+	},
+	{
+		displayName: 'Get Media',
+		name: 'get_media',
+		type: 'boolean',
+		default: false,
+		description: 'Whether to include media files in the response',
+		displayOptions: {
+			show: {
+				resource: ['administrations'],
+				operation: ['getAdministration', 'getAdministrations'],
 			},
-			{
-				displayName: 'Get Invoice Payments',
-				name: 'get_invoice_payments',
-				type: 'boolean',
-				default: false,
-				description: 'Whether to include invoice payments in the response',
-				displayOptions: {
-					show: {
-						resource: ['contacts'],
-						operation: ['getContact', 'getContacts'],
-					},
-				},
+		},
+	},
+	{
+		displayName: 'Get Meta',
+		name: 'get_meta',
+		type: 'boolean',
+		default: false,
+		description: 'Whether to include meta information',
+		displayOptions: {
+			show: {
+				resource: ['administrations', 'contacts'],
+				operation: [
+					'getAdministration',
+					'getAdministrations',
+					'getContact',
+					'getContacts',
+				],
 			},
-			{
-				displayName: 'Get Invoices',
-				name: 'get_invoices',
-				type: 'boolean',
-				default: false,
-				description: 'Whether to include invoices in the response',
-				displayOptions: {
-					show: {
-						resource: ['contacts'],
-						operation: ['getContact', 'getContacts'],
-					},
-				},
+		},
+	},
+	{
+		displayName: 'Get Reservation Payment Terms',
+		name: 'get_reservation_payment_terms',
+		type: 'boolean',
+		default: false,
+		description: 'Whether to include reservation payment terms in the response',
+		displayOptions: {
+			show: { resource: ['contacts'], operation: ['getContact', 'getContacts'] },
+		},
+	},
+	{
+		displayName: 'Get Reservations',
+		name: 'get_reservations',
+		type: 'boolean',
+		default: false,
+		description: 'Whether to include reservations in the response',
+		displayOptions: {
+			show: { resource: ['contacts'], operation: ['getContact', 'getContacts'] },
+		},
+	},
+	{
+		displayName: 'Get VAT Tables',
+		name: 'get_vat_tables',
+		type: 'boolean',
+		default: false,
+		description: 'Whether to include VAT tables in the response',
+		displayOptions: {
+			show: { resource: ['administrations'], operation: ['getAdministration'] },
+		},
+	},
+	{
+		displayName: 'Translations',
+		name: 'translations',
+		type: 'boolean',
+		default: false,
+		description: 'Whether to include translations in the response',
+		displayOptions: {
+			show: {
+				resource: ['administrations'],
+				operation: ['getAdministration', 'getAdministrations'],
 			},
-			{
-				displayName: 'Get Media',
-				name: 'get_media',
-				type: 'boolean',
-				default: false,
-				description: 'Whether to include media files in the response',
-				displayOptions: {
-					show: {
-						resource: ['administrations'],
-						operation: ['getAdministration', 'getAdministrations'],
-					},
-				},
-			},
-			{
-				displayName: 'Get Meta',
-				name: 'get_meta',
-				type: 'boolean',
-				default: false,
-				description: 'Whether to include meta information in the response',
-				displayOptions: {
-					show: {
-						resource: ['administrations'],
-						operation: ['getAdministration', 'getAdministrations'],
-					},
-				},
-			},
-			{
-				displayName: 'Get Reservation Payment Terms',
-				name: 'get_reservation_payment_terms',
-				type: 'boolean',
-				default: false,
-				description: 'Whether to include reservation payment terms in the response',
-				displayOptions: {
-					show: {
-						resource: ['contacts'],
-						operation: ['getContact', 'getContacts'],
-					},
-				},
-			},
-			{
-				displayName: 'Get Reservations',
-				name: 'get_reservations',
-				type: 'boolean',
-				default: false,
-				description: 'Whether to include reservations in the response',
-				displayOptions: {
-					show: {
-						resource: ['contacts'],
-						operation: ['getContact', 'getContacts'],
-					},
-				},
-			},
-			{
-				displayName: 'Get VAT Tables',
-				name: 'get_vat_tables',
-				type: 'boolean',
-				default: false,
-				description: 'Whether to include VAT tables in the response',
-				displayOptions: {
-					show: {
-						resource: ['administrations'],
-						operation: ['getAdministration'],
-					},
-				},
-			},
-			{
-				displayName: 'Translations',
-				name: 'translations',
-				type: 'boolean',
-				default: false,
-				description: 'Whether to include translations in the response',
-				displayOptions: {
-					show: {
-						resource: ['administrations'],
-						operation: ['getAdministration', 'getAdministrations'],
-					},
-				},
-			},
+		},
+	},
 
-			// --- Strings/numbers in alfabetische volgorde ---
-			{
-				displayName: 'Limit',
-				name: 'limit',
-				type: 'number',
-				typeOptions: { minValue: 1 },
-				default: 50,
-				description: 'Max number of results to return',
-				displayOptions: {
-					show: {
-						resource: ['administrations', 'contacts'],
-						operation: ['getAdministrations', 'getContacts'],
-					},
-				},
+	// --- Strings/numbers in alfabetische volgorde ---
+	{
+		displayName: 'Limit',
+		name: 'limit',
+		type: 'number',
+		typeOptions: { minValue: 1 },
+		default: 50,
+		description: 'Max number of results to return',
+		displayOptions: {
+			show: {
+				resource: ['administrations', 'contacts'],
+				operation: ['getAdministrations', 'getContacts'],
 			},
-			{
-				displayName: 'Offset',
-				name: 'offset',
-				type: 'number',
-				default: '',
-				description: 'Number of records to skip (for pagination)',
-				displayOptions: {
-					show: {
-						resource: ['administrations', 'contacts'],
-						operation: ['getAdministrations', 'getContacts'],
-					},
-				},
+		},
+	},
+	{
+		displayName: 'Offset',
+		name: 'offset',
+		type: 'number',
+		default: 0,
+		description: 'Number of records to skip',
+		displayOptions: {
+			show: {
+				resource: ['administrations', 'contacts'],
+				operation: ['getAdministrations', 'getContacts'],
 			},
-			{
-				displayName: 'Order',
-				name: 'order',
-				type: 'string',
-				default: '',
-				placeholder: 'e.g. desc or asc',
-				description: 'Sorting order of the results',
-				displayOptions: {
-					show: {
-						resource: ['administrations', 'contacts'],
-						operation: ['getAdministrations', 'getContacts'],
-					},
-				},
+		},
+	},
+	{
+		displayName: 'Order',
+		name: 'order',
+		type: 'string',
+		default: '',
+		placeholder: 'asc or desc',
+		description: 'Sorting order',
+		displayOptions: {
+			show: {
+				resource: ['administrations', 'contacts'],
+				operation: ['getAdministrations', 'getContacts'],
 			},
-			{
-				displayName: 'Order By',
-				name: 'order_by',
-				type: 'string',
-				default: '',
-				placeholder: 'Field to sort results by',
-				description: 'Order results by a specific field (e.g. name, created_at)',
-				displayOptions: {
-					show: {
-						resource: ['contacts'],
-						operation: ['getContacts'],
-					},
-				},
+		},
+	},
+	{
+		displayName: 'Order By',
+		name: 'order_by',
+		type: 'string',
+		default: '',
+		placeholder: 'Field to sort results by',
+		displayOptions: {
+			show: { resource: ['contacts'], operation: ['getContacts'] },
+		},
+	},
+	{
+		displayName: 'Search',
+		name: 'search',
+		type: 'string',
+		default: '',
+		description: 'Search term to filter results',
+		displayOptions: {
+			show: {
+				resource: ['administrations', 'contacts'],
+				operation: ['getAdministrations', 'getContacts'],
 			},
-			{
-				displayName: 'Search',
-				name: 'search',
-				type: 'string',
-				default: '',
-				placeholder: 'Search by name',
-				description: 'Search term to filter administrations',
-				displayOptions: {
-					show: {
-						resource: ['administrations', 'contacts'],
-						operation: ['getAdministrations', 'getContacts'],
-					},
-				},
-			},
+		},
+	},
 
 			// --- Add Contact fields ---
 			{
@@ -703,6 +679,103 @@ export class CampingCare implements INodeType {
 					},
 				},
 			},
+			{
+	displayName: 'Extra Fields',
+	name: 'extraFields',
+	type: 'fixedCollection',
+	placeholder: 'Add Extra Field',
+	typeOptions: {
+		multipleValues: true,
+	},
+	default: {
+		field: [],
+	},
+	displayOptions: {
+		show: {
+			resource: ['contacts'],
+			operation: ['addContact'],
+		},
+	},
+	options: [
+		{
+			displayName: 'Field',
+			name: 'field',
+			values: [
+				{
+					displayName: 'Extra Field Name or ID',
+					name: 'key',
+					type: 'options',
+					description:
+						'Choose from the list, or specify an ID using an <a href="https://docs.n8n.io/code/expressions/">expression</a>',
+					typeOptions: {
+						loadOptionsMethod: 'getContactFields',
+					},
+					default: '',
+				},
+				{
+					displayName: 'Extra Field Value',
+					name: 'value',
+					type: 'string', // default, wordt aangepast bij submit
+					default: '',
+					placeholder: 'Enter value for this field',
+				},
+			],
+		},
+	],
+}
 		],
+	};
+	methods = {
+		loadOptions: {
+			async getContactFields(this: ILoadOptionsFunctions) {
+				const credentials = await this.getCredentials('campingCareApi');
+
+				const response = await this.helpers.httpRequest({
+					method: 'GET',
+					url: 'https://api.camping.care/v21/fields',
+					qs: {
+						type: 'contact',
+						status: 'active',
+						read_only: 'true',
+					},
+					headers: {
+						Accept: 'application/json',
+						'Content-Type': 'application/json',
+						Authorization: `Bearer ${credentials.apiKey}`,
+					},
+				});
+
+				// Hier lijst van standaard velden die je wilt uitsluiten
+				const excludeFields = [
+					'gender',
+					'first_name',
+					'last_name',
+					'address',
+					'address_number',
+					'birthday',
+					'city',
+					'company',
+					'country',
+					'country_origin',
+					'email',
+					'id_nr',
+					'phone',
+					'zipcode',
+					'phone_mobile',
+					'vat_number',
+					'state',
+					'id_type',
+					'created',
+					'create_date',
+				];
+
+				return response
+					.filter((field: any) => !excludeFields.includes(field.key))
+					.map((field: any) => ({
+						name: field.name,
+						value: field.key,
+					}));
+			},
+		},
 	};
 }
