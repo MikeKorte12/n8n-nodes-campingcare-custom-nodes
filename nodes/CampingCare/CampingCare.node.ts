@@ -209,6 +209,7 @@ export class CampingCare implements INodeType {
 				default: '',
 				placeholder: 'e.g. 1234',
 				description: 'The unique ID of the administration to retrieve',
+				noDataExpression: true,
 				displayOptions: {
 					show: { resource: ['administrations'], operation: ['getAdministration'] },
 				},
@@ -220,6 +221,7 @@ export class CampingCare implements INodeType {
 				default: '',
 				placeholder: 'e.g. 1234567',
 				description: 'The unique ID of the contact to retrieve',
+				noDataExpression: true,
 				displayOptions: {
 					show: { resource: ['contacts'], operation: ['getContact'] },
 				},
@@ -232,6 +234,7 @@ export class CampingCare implements INodeType {
 				type: 'boolean',
 				default: false,
 				description: 'Whether to return only the count',
+				noDataExpression: true,
 				displayOptions: {
 					show: {
 						resource: ['administrations', 'contacts'],
@@ -245,6 +248,7 @@ export class CampingCare implements INodeType {
 				type: 'boolean',
 				default: false,
 				description: 'Whether to include accommodations in the response',
+				noDataExpression: true,
 				displayOptions: {
 					show: { resource: ['administrations'], operation: ['getAdministrations'] },
 				},
@@ -255,6 +259,7 @@ export class CampingCare implements INodeType {
 				type: 'boolean',
 				default: false,
 				description: 'Whether to include age tables in the response',
+				noDataExpression: true,
 				displayOptions: {
 					show: {
 						resource: ['administrations'],
@@ -268,6 +273,7 @@ export class CampingCare implements INodeType {
 				type: 'boolean',
 				default: false,
 				description: 'Whether to include invoice payments in the response',
+				noDataExpression: true,
 				displayOptions: {
 					show: { resource: ['contacts'], operation: ['getContact', 'getContacts'] },
 				},
@@ -278,6 +284,7 @@ export class CampingCare implements INodeType {
 				type: 'boolean',
 				default: false,
 				description: 'Whether to include invoices in the response',
+				noDataExpression: true,
 				displayOptions: {
 					show: { resource: ['contacts'], operation: ['getContact', 'getContacts'] },
 				},
@@ -288,6 +295,7 @@ export class CampingCare implements INodeType {
 				type: 'boolean',
 				default: false,
 				description: 'Whether to include media files in the response',
+				noDataExpression: true,
 				displayOptions: {
 					show: {
 						resource: ['administrations'],
@@ -301,6 +309,7 @@ export class CampingCare implements INodeType {
 				type: 'boolean',
 				default: false,
 				description: 'Whether to include meta information',
+				noDataExpression: true,
 				displayOptions: {
 					show: {
 						resource: ['administrations', 'contacts'],
@@ -314,6 +323,7 @@ export class CampingCare implements INodeType {
 				type: 'boolean',
 				default: false,
 				description: 'Whether to include reservation payment terms in the response',
+				noDataExpression: true,
 				displayOptions: {
 					show: { resource: ['contacts'], operation: ['getContact', 'getContacts'] },
 				},
@@ -324,6 +334,7 @@ export class CampingCare implements INodeType {
 				type: 'boolean',
 				default: false,
 				description: 'Whether to include reservations in the response',
+				noDataExpression: true,
 				displayOptions: {
 					show: { resource: ['contacts'], operation: ['getContact', 'getContacts'] },
 				},
@@ -334,6 +345,7 @@ export class CampingCare implements INodeType {
 				type: 'boolean',
 				default: false,
 				description: 'Whether to include VAT tables in the response',
+				noDataExpression: true,
 				displayOptions: {
 					show: { resource: ['administrations'], operation: ['getAdministration'] },
 				},
@@ -344,6 +356,7 @@ export class CampingCare implements INodeType {
 				type: 'boolean',
 				default: false,
 				description: 'Whether to include translations in the response',
+				noDataExpression: true,
 				displayOptions: {
 					show: {
 						resource: ['administrations'],
@@ -360,6 +373,7 @@ export class CampingCare implements INodeType {
 				typeOptions: { minValue: 1 },
 				default: 50,
 				description: 'Max number of results to return',
+				noDataExpression: true,
 				displayOptions: {
 					show: {
 						resource: ['administrations', 'contacts'],
@@ -373,6 +387,7 @@ export class CampingCare implements INodeType {
 				type: 'number',
 				default: 0,
 				description: 'Number of records to skip',
+				noDataExpression: true,
 				displayOptions: {
 					show: {
 						resource: ['administrations', 'contacts'],
@@ -387,6 +402,7 @@ export class CampingCare implements INodeType {
 				default: '',
 				placeholder: 'asc or desc',
 				description: 'Sorting order',
+				noDataExpression: true,
 				displayOptions: {
 					show: {
 						resource: ['administrations', 'contacts'],
@@ -401,6 +417,7 @@ export class CampingCare implements INodeType {
 				default: '',
 				placeholder: 'Field to sort results by',
 				description: 'Field to order results by',
+				noDataExpression: true,
 				displayOptions: {
 					show: { resource: ['contacts'], operation: ['getContacts'] },
 				},
@@ -412,6 +429,7 @@ export class CampingCare implements INodeType {
 				default: '',
 				placeholder: 'Enter search term',
 				description: 'Search term to filter results',
+				noDataExpression: true,
 				displayOptions: {
 					show: {
 						resource: ['administrations', 'contacts'],
@@ -428,6 +446,7 @@ export class CampingCare implements INodeType {
 				default: '',
 				placeholder: 'John',
 				description: 'First name of the contact',
+				noDataExpression: true,
 				displayOptions: {
 					show: {
 						resource: ['contacts'],
@@ -442,6 +461,7 @@ export class CampingCare implements INodeType {
 				default: '',
 				placeholder: 'Doe',
 				description: 'Last name of the contact',
+				noDataExpression: true,
 				displayOptions: {
 					show: {
 						resource: ['contacts'],
@@ -460,6 +480,7 @@ export class CampingCare implements INodeType {
 				],
 				default: 'male',
 				description: 'Gender of the contact',
+				noDataExpression: true,
 				displayOptions: {
 					show: {
 						resource: ['contacts'],
@@ -474,6 +495,7 @@ export class CampingCare implements INodeType {
 				default: '',
 				placeholder: 'YYYY-MM-DD',
 				description: 'Birthday of the contact',
+				noDataExpression: true,
 				displayOptions: {
 					show: {
 						resource: ['contacts'],
@@ -488,6 +510,7 @@ export class CampingCare implements INodeType {
 				default: '',
 				placeholder: 'Passport',
 				description: 'Type of identification',
+				noDataExpression: true,
 				displayOptions: {
 					show: {
 						resource: ['contacts'],
@@ -502,6 +525,7 @@ export class CampingCare implements INodeType {
 				default: '',
 				placeholder: 'A1234567',
 				description: 'Identification number',
+				noDataExpression: true,
 				displayOptions: {
 					show: {
 						resource: ['contacts'],
@@ -515,6 +539,7 @@ export class CampingCare implements INodeType {
 				type: 'string',
 				default: '',
 				placeholder: 'Select country of origin',
+				noDataExpression: true,
 				displayOptions: {
 					show: {
 						resource: ['contacts'],
@@ -529,6 +554,7 @@ export class CampingCare implements INodeType {
 				default: '',
 				placeholder: 'john.doe@example.com',
 				description: 'Email address',
+				noDataExpression: true,
 				displayOptions: {
 					show: {
 						resource: ['contacts'],
@@ -543,6 +569,7 @@ export class CampingCare implements INodeType {
 				default: '',
 				placeholder: 'Enter your phone number',
 				description: 'Phone number',
+				noDataExpression: true,
 				displayOptions: {
 					show: {
 						resource: ['contacts'],
@@ -557,6 +584,7 @@ export class CampingCare implements INodeType {
 				default: '',
 				placeholder: 'Enter your mobile number',
 				description: 'Mobile phone number',
+				noDataExpression: true,
 				displayOptions: {
 					show: {
 						resource: ['contacts'],
@@ -571,6 +599,7 @@ export class CampingCare implements INodeType {
 				default: '',
 				placeholder: 'Main Street',
 				description: 'Street address',
+				noDataExpression: true,
 				displayOptions: {
 					show: {
 						resource: ['contacts'],
@@ -585,6 +614,7 @@ export class CampingCare implements INodeType {
 				default: '',
 				placeholder: '123',
 				description: 'Street number',
+				noDataExpression: true,
 				displayOptions: {
 					show: {
 						resource: ['contacts'],
@@ -599,6 +629,7 @@ export class CampingCare implements INodeType {
 				default: '',
 				placeholder: 'Enter city name',
 				description: 'City name',
+				noDataExpression: true,
 				displayOptions: {
 					show: {
 						resource: ['contacts'],
@@ -613,6 +644,7 @@ export class CampingCare implements INodeType {
 				default: '',
 				placeholder: 'Enter state or province',
 				description: 'State/Province',
+				noDataExpression: true,
 				displayOptions: {
 					show: {
 						resource: ['contacts'],
@@ -627,6 +659,7 @@ export class CampingCare implements INodeType {
 				default: '',
 				placeholder: 'Enter postal code',
 				description: 'Postal code',
+				noDataExpression: true,
 				displayOptions: {
 					show: {
 						resource: ['contacts'],
@@ -641,6 +674,7 @@ export class CampingCare implements INodeType {
 				default: '',
 				placeholder: 'Enter country name',
 				description: 'Country name',
+				noDataExpression: true,
 				displayOptions: {
 					show: {
 						resource: ['contacts'],
@@ -655,6 +689,7 @@ export class CampingCare implements INodeType {
 				default: '',
 				placeholder: 'My Company B.V.',
 				description: 'Company name',
+				noDataExpression: true,
 				displayOptions: {
 					show: {
 						resource: ['contacts'],
@@ -669,6 +704,7 @@ export class CampingCare implements INodeType {
 				default: '',
 				placeholder: 'Enter VAT number',
 				description: 'VAT identification number',
+				noDataExpression: true,
 				displayOptions: {
 					show: {
 						resource: ['contacts'],
@@ -682,6 +718,7 @@ export class CampingCare implements INodeType {
 				type: 'fixedCollection',
 				placeholder: 'Add Extra Field',
 				description: 'Additional fields to set for the contact',
+				noDataExpression: true,
 				typeOptions: {
 					multipleValues: true,
 				},
@@ -704,10 +741,11 @@ export class CampingCare implements INodeType {
 								name: 'key',
 								type: 'options',
 								description: 'Choose from the list, or specify an ID using an <a href="https://docs.n8n.io/code/expressions/">expression</a>',
+								noDataExpression: true,
 								typeOptions: {
 									loadOptionsMethod: 'getContactFields',
 								},
-								default: '',
+								default: undefined,
 							},
 							{
 								displayName: 'Extra Field Value',
@@ -715,6 +753,8 @@ export class CampingCare implements INodeType {
 								type: 'string',
 								default: '',
 								placeholder: 'Enter value for this field',
+								description: 'Value for the extra field',
+								noDataExpression: true,
 							},
 						],
 					},
