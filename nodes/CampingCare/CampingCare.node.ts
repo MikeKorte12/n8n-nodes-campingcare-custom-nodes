@@ -229,7 +229,6 @@ export class CampingCare implements INodeType {
 				},
 			},
 
-			// --- Booleans in alfabetische volgorde ---
 			{
 				displayName: 'Count',
 				name: 'count',
@@ -367,7 +366,6 @@ export class CampingCare implements INodeType {
 				},
 			},
 
-			// --- Strings/numbers in alfabetische volgorde ---
 			{
 				displayName: 'Limit',
 				name: 'limit',
@@ -440,7 +438,6 @@ export class CampingCare implements INodeType {
 				},
 			},
 
-			// --- Add Contact fields ---
 			{
 				displayName: 'First Name',
 				name: 'first_name',
@@ -837,7 +834,6 @@ export class CampingCare implements INodeType {
 						},
 					});
 
-					// Zoek het veld met de regel 'regex_country'
 					const postcodeField = response.find((field: any) =>
 						field.rules?.some((r: any) => r.type === 'regex_country'),
 					);
@@ -857,7 +853,6 @@ export class CampingCare implements INodeType {
 						value: c.country,
 					}));
 
-					// Sorteer alfabetisch op naam
 					return countries.sort((a: any, b: any) => a.name.localeCompare(b.name));
 				} catch (error) {
 					throw new Error(`Failed to load country list: ${error.message}`);
