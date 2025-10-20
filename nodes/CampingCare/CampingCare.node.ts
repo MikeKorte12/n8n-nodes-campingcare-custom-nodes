@@ -415,7 +415,7 @@ export class CampingCare implements INodeType {
 				name: 'order_by',
 				type: 'string',
 				default: '',
-				placeholder: 'Field to sort results by',
+				placeholder: 'Search by "ID" or "name"',
 				description: 'Field to order results by',
 				noDataExpression: true,
 				displayOptions: {
@@ -427,7 +427,7 @@ export class CampingCare implements INodeType {
 				name: 'search',
 				type: 'string',
 				default: '',
-				placeholder: 'Enter search term',
+				placeholder: 'Search by "ID" or "name"',
 				description: 'Search term to filter results',
 				noDataExpression: true,
 				displayOptions: {
