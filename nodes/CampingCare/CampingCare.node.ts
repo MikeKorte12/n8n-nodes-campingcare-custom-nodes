@@ -1,4 +1,5 @@
 import type { INodeType, INodeTypeDescription, ILoadOptionsFunctions } from 'n8n-workflow';
+import { NodeApiError } from 'n8n-workflow';
 
 export class CampingCare implements INodeType {
 	description: INodeTypeDescription = {
@@ -46,6 +47,10 @@ export class CampingCare implements INodeType {
 					{
 						name: 'Contacts API',
 						value: 'contacts',
+					},
+					{
+						name: 'Reservations API',
+						value: 'reservations',
 					},
 				],
 				default: 'administrations',
@@ -203,6 +208,45 @@ export class CampingCare implements INodeType {
 				},
 				default: 'getContacts',
 			},
+			{
+				displayName: 'Operation',
+				name: 'operation',
+				type: 'options',
+				noDataExpression: true,
+				options: [
+					{
+						name: 'Create Reservation',
+						value: 'createReservations',
+						description:
+							'Create a new reservation with optional forced rows or existing contact ID',
+						action: 'Create a reservation',
+						routing: {
+							request: {
+								method: 'POST',
+								url: '/reservations',
+								body: {
+									accommodation_id: '={{ $parameter["accommodationId"] }}',
+									arrival: '={{ $parameter["arrival"] }}',
+									departure: '={{ $parameter["departure"] }}',
+									persons: '={{ $parameter["persons"] || 1 }}',
+									contact_id: '={{ $parameter["contactId"] || undefined }}',
+									force: true,
+									forced_rows:
+										'={{ $parameter["forced_rows"].row?.map(r => ({type: r.type,description: r.description,amount: Number(r.amount),total: Number(r.total),data: ""})) || [] }}',
+									co_travelers:
+										'={{ $parameter["co_travelers"].row2?.map(traveler => ({first_name: traveler.first_name,last_name: traveler.last_name,gender: traveler.gender,birthday: traveler.birthday,country_origin: traveler.country_origin,})) || [] }}',
+								},
+							},
+						},
+					},
+				],
+				displayOptions: {
+					show: {
+						resource: ['reservations'],
+					},
+				},
+				default: 'createReservations',
+			},
 
 			{
 				displayName: 'Administration ID',
@@ -213,7 +257,10 @@ export class CampingCare implements INodeType {
 				description: 'The unique ID of the administration to retrieve',
 				noDataExpression: true,
 				displayOptions: {
-					show: { resource: ['administrations'], operation: ['getAdministration'] },
+					show: {
+						resource: ['administrations'],
+						operation: ['getAdministration'],
+					},
 				},
 			},
 			{
@@ -225,7 +272,10 @@ export class CampingCare implements INodeType {
 				description: 'The unique ID of the contact to retrieve',
 				noDataExpression: true,
 				displayOptions: {
-					show: { resource: ['contacts'], operation: ['getContact'] },
+					show: {
+						resource: ['contacts'],
+						operation: ['getContact'],
+					},
 				},
 			},
 
@@ -251,7 +301,10 @@ export class CampingCare implements INodeType {
 				description: 'Whether to include accommodations in the response',
 				noDataExpression: true,
 				displayOptions: {
-					show: { resource: ['administrations'], operation: ['getAdministrations'] },
+					show: {
+						resource: ['administrations'],
+						operation: ['getAdministrations'],
+					},
 				},
 			},
 			{
@@ -276,7 +329,10 @@ export class CampingCare implements INodeType {
 				description: 'Whether to include invoice payments in the response',
 				noDataExpression: true,
 				displayOptions: {
-					show: { resource: ['contacts'], operation: ['getContact', 'getContacts'] },
+					show: {
+						resource: ['contacts'],
+						operation: ['getContact', 'getContacts'],
+					},
 				},
 			},
 			{
@@ -287,7 +343,10 @@ export class CampingCare implements INodeType {
 				description: 'Whether to include invoices in the response',
 				noDataExpression: true,
 				displayOptions: {
-					show: { resource: ['contacts'], operation: ['getContact', 'getContacts'] },
+					show: {
+						resource: ['contacts'],
+						operation: ['getContact', 'getContacts'],
+					},
 				},
 			},
 			{
@@ -326,7 +385,10 @@ export class CampingCare implements INodeType {
 				description: 'Whether to include reservation payment terms in the response',
 				noDataExpression: true,
 				displayOptions: {
-					show: { resource: ['contacts'], operation: ['getContact', 'getContacts'] },
+					show: {
+						resource: ['contacts'],
+						operation: ['getContact', 'getContacts'],
+					},
 				},
 			},
 			{
@@ -337,7 +399,10 @@ export class CampingCare implements INodeType {
 				description: 'Whether to include reservations in the response',
 				noDataExpression: true,
 				displayOptions: {
-					show: { resource: ['contacts'], operation: ['getContact', 'getContacts'] },
+					show: {
+						resource: ['contacts'],
+						operation: ['getContact', 'getContacts'],
+					},
 				},
 			},
 			{
@@ -348,7 +413,10 @@ export class CampingCare implements INodeType {
 				description: 'Whether to include VAT tables in the response',
 				noDataExpression: true,
 				displayOptions: {
-					show: { resource: ['administrations'], operation: ['getAdministration'] },
+					show: {
+						resource: ['administrations'],
+						operation: ['getAdministration'],
+					},
 				},
 			},
 			{
@@ -415,11 +483,14 @@ export class CampingCare implements INodeType {
 				name: 'order_by',
 				type: 'string',
 				default: '',
-				placeholder: 'Search by "ID" or "name"',
+				placeholder: 'Order by "ID" or "name"',
 				description: 'Field to order results by',
 				noDataExpression: true,
 				displayOptions: {
-					show: { resource: ['contacts'], operation: ['getContacts'] },
+					show: {
+						resource: ['contacts'],
+						operation: ['getContacts'],
+					},
 				},
 			},
 			{
@@ -533,7 +604,7 @@ export class CampingCare implements INodeType {
 				},
 			},
 			{
-				displayName: 'Country of Origin',
+				displayName: 'Country of Origin Name or ID',
 				name: 'country_origin',
 				type: 'options',
 				typeOptions: {
@@ -541,7 +612,8 @@ export class CampingCare implements INodeType {
 				},
 				default: '',
 				noDataExpression: true,
-				description: 'Country where the contact originates from',
+				description:
+					'Choose from the list, or specify an ID using an <a href="https://docs.n8n.io/code/expressions/">expression</a>',
 				displayOptions: {
 					show: {
 						resource: ['contacts'],
@@ -671,7 +743,7 @@ export class CampingCare implements INodeType {
 				},
 			},
 			{
-				displayName: 'Country',
+				displayName: 'Country Name or ID',
 				name: 'country',
 				type: 'options',
 				typeOptions: {
@@ -679,7 +751,8 @@ export class CampingCare implements INodeType {
 				},
 				default: '',
 				noDataExpression: true,
-				description: 'Country of residence of the contact',
+				description:
+					'Choose from the list, or specify an ID using an <a href="https://docs.n8n.io/code/expressions/">expression</a>',
 				displayOptions: {
 					show: {
 						resource: ['contacts'],
@@ -762,6 +835,210 @@ export class CampingCare implements INodeType {
 								placeholder: 'Enter a value',
 								description: 'Value to assign to this extra field',
 								noDataExpression: true,
+							},
+						],
+					},
+				],
+			},
+			{
+				displayName: 'Accommodation Name or ID',
+				name: 'accommodationId',
+				type: 'options',
+				typeOptions: {
+					loadOptionsMethod: 'getAccommodations',
+				},
+				default: '',
+				required: true,
+				description:
+					'Choose from the list, or specify an ID using an <a href="https://docs.n8n.io/code/expressions/">expression</a>',
+				displayOptions: {
+					show: {
+						resource: ['reservations'],
+						operation: ['createReservations'],
+					},
+				},
+			},
+			{
+				displayName: 'Arrival Date',
+				name: 'arrival',
+				type: 'string',
+				required: true,
+				default: '',
+				placeholder: 'YYYY-MM-DD',
+				description: 'Arrival date for the reservation',
+				displayOptions: {
+					show: {
+						resource: ['reservations'],
+						operation: ['createReservations'],
+					},
+				},
+			},
+			{
+				displayName: 'Departure Date',
+				name: 'departure',
+				type: 'string',
+				required: true,
+				default: '',
+				placeholder: 'YYYY-MM-DD',
+				description: 'Departure date for the reservation',
+				displayOptions: {
+					show: {
+						resource: ['reservations'],
+						operation: ['createReservations'],
+					},
+				},
+			},
+			{
+				displayName: 'Persons',
+				name: 'persons',
+				type: 'number',
+				default: 1,
+				description: 'Number of persons in the reservation',
+				displayOptions: {
+					show: {
+						resource: ['reservations'],
+						operation: ['createReservations'],
+					},
+				},
+			},
+			{
+				displayName: 'Contact ID',
+				name: 'contactId',
+				type: 'string',
+				default: '',
+				placeholder: 'e.g. 12345',
+				description: 'Existing contact ID in Camping.care (optional)',
+				displayOptions: {
+					show: {
+						resource: ['reservations'],
+						operation: ['createReservations'],
+					},
+				},
+			},
+			{
+				displayName: 'Forced Rows',
+				name: 'forced_rows',
+				type: 'fixedCollection',
+				typeOptions: {
+					multipleValues: true,
+				},
+				placeholder: 'Add forced row',
+				default: {},
+				displayOptions: {
+					show: {
+						resource: ['reservations'],
+						operation: ['createReservations'],
+					},
+				},
+				options: [
+					{
+						name: 'row',
+						displayName: 'Row',
+						values: [
+							{
+								displayName: 'Type',
+								name: 'type',
+								type: 'options',
+								options: [
+									{ name: 'Product Price', value: 'product_price' },
+									{ name: 'Product Guest', value: 'product_guest' },
+									{ name: 'Product ID', value: 'product_id' },
+								],
+								default: 'product_price',
+								description: 'Type of the forced row',
+							},
+							{
+								displayName: 'Description',
+								name: 'description',
+								type: 'string',
+								default: '',
+								placeholder: 'Pitch description',
+								description: 'Description of the row',
+							},
+							{
+								displayName: 'Amount',
+								name: 'amount',
+								type: 'number',
+								default: 1,
+								description: 'Quantity',
+							},
+							{
+								displayName: 'Total',
+								name: 'total',
+								type: 'number',
+								default: 0,
+								description: 'Total price for this row',
+							},
+						],
+					},
+				],
+			},
+			{
+				displayName: 'Co-Travelers',
+				name: 'co_travelers',
+				type: 'fixedCollection',
+				typeOptions: {
+					multipleValues: true,
+				},
+				placeholder: 'Add co-traveler',
+				default: {},
+				displayOptions: {
+					show: {
+						resource: ['reservations'],
+						operation: ['createReservations'],
+					},
+				},
+				options: [
+					{
+						name: 'row2',
+						displayName: 'Row2',
+						values: [
+							{
+								displayName: 'Birthday',
+								name: 'birthday',
+								type: 'string',
+								default: '',
+								placeholder: 'YYYY-MM-DD',
+								description: 'Birthday of the traveler',
+							},
+							{
+								displayName: 'Country of Origin Name or ID',
+								name: 'country_origin',
+								type: 'options',
+								typeOptions: {
+									loadOptionsMethod: 'getCountriesFromRules',
+								},
+								default: '',
+								description:
+									'Choose from the list, or specify an ID using an <a href="https://docs.n8n.io/code/expressions/">expression</a>',
+							},
+							{
+								displayName: 'First Name',
+								name: 'first_name',
+								type: 'string',
+								default: '',
+								placeholder: 'First Name',
+								description: 'First Name of the traveler',
+							},
+							{
+								displayName: 'Gender',
+								name: 'gender',
+								type: 'options',
+								options: [
+									{ name: 'Male', value: 'male' },
+									{ name: 'Female', value: 'female' },
+									{ name: 'Family', value: 'family' },
+								],
+								default: 'male',
+								description: 'Gender of the traveler',
+							},
+							{
+								displayName: 'Last Name',
+								name: 'last_name',
+								type: 'string',
+								default: '',
+								placeholder: 'Last Name',
+								description: 'Last Name of the traveler',
 							},
 						],
 					},
@@ -855,8 +1132,30 @@ export class CampingCare implements INodeType {
 
 					return countries.sort((a: any, b: any) => a.name.localeCompare(b.name));
 				} catch (error) {
-					throw new Error(`Failed to load country list: ${error.message}`);
+					throw new NodeApiError(this.getNode(), error, {
+						message: 'Failed to load country list',
+					});
 				}
+			},
+			async getAccommodations(this: ILoadOptionsFunctions) {
+				const credentials = await this.getCredentials('campingCareApi');
+
+				const response = await this.helpers.httpRequest({
+					method: 'GET',
+					url: 'https://api.camping.care/v21/accommodations',
+					headers: {
+						Accept: 'application/json',
+						'Content-Type': 'application/json',
+						Authorization: `Bearer ${credentials.apiKey}`,
+					},
+				});
+
+				return response
+					.filter((a: any) => a.status === 'active')
+					.map((a: any) => ({
+						name: a.name || `Accommodation ${a.id}`,
+						value: a.id,
+					}));
 			},
 		},
 	};
