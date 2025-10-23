@@ -73,16 +73,16 @@ export class CampingCare implements INodeType {
 								method: 'GET',
 								url: '/administrations',
 								qs: {
-									search: '={{ $parameter["search"] || undefined }}',
-									offset: '={{ $parameter["offset"] || undefined }}',
-									limit: '={{ $parameter["limit"] || undefined }}',
-									order: '={{ $parameter["order"] || undefined }}',
 									count: '={{ $parameter["count"] || undefined }}',
-									get_meta: '={{ $parameter["get_meta"] || undefined }}',
-									get_age_tables: '={{ $parameter["get_age_tables"] || undefined }}',
-									translations: '={{ $parameter["translations"] || undefined }}',
-									get_media: '={{ $parameter["get_media"] || undefined }}',
 									get_accommodations: '={{ $parameter["get_accommodations"] || undefined }}',
+									get_age_tables: '={{ $parameter["get_age_tables"] || undefined }}',
+									get_media: '={{ $parameter["get_media"] || undefined }}',
+									get_meta: '={{ $parameter["get_meta"] || undefined }}',
+									translations: '={{ $parameter["translations"] || undefined }}',
+									limit: '={{ $parameter["limit"] || undefined }}',
+									offset: '={{ $parameter["offset"] || undefined }}',
+									order: '={{ $parameter["order"] || undefined }}',
+									search: '={{ $parameter["search"] || undefined }}',
 								},
 							},
 						},
@@ -97,11 +97,11 @@ export class CampingCare implements INodeType {
 								method: 'GET',
 								url: '=/administrations/{{$parameter["administrationId"]}}',
 								qs: {
+									get_age_tables: '={{ $parameter["get_age_tables"] || undefined }}',
+									get_media: '={{ $parameter["get_media"] || undefined }}',
 									get_meta: '={{ $parameter["get_meta"] || undefined }}',
 									get_vat_tables: '={{ $parameter["get_vat_tables"] || undefined }}',
-									get_age_tables: '={{ $parameter["get_age_tables"] || undefined }}',
 									translations: '={{ $parameter["translations"] || undefined }}',
-									get_media: '={{ $parameter["get_media"] || undefined }}',
 								},
 							},
 						},
@@ -131,15 +131,15 @@ export class CampingCare implements INodeType {
 								method: 'GET',
 								url: '/contacts',
 								qs: {
+									count: '={{ $parameter["count"] || undefined }}',
+									get_invoice_payments: '={{ $parameter["get_invoice_payments"] || undefined }}',
+									get_invoices: '={{ $parameter["get_invoices"] || undefined }}',
 									get_meta: '={{ $parameter["get_meta"] || undefined }}',
-									get_reservations: '={{ $parameter["get_reservations"] || undefined }}',
 									get_reservation_payment_terms:
 										'={{ $parameter["get_reservation_payment_terms"] || undefined }}',
-									get_invoices: '={{ $parameter["get_invoices"] || undefined }}',
-									get_invoice_payments: '={{ $parameter["get_invoice_payments"] || undefined }}',
-									offset: '={{ $parameter["offset"] || undefined }}',
+									get_reservations: '={{ $parameter["get_reservations"] || undefined }}',
 									limit: '={{ $parameter["limit"] || undefined }}',
-									count: '={{ $parameter["count"] || undefined }}',
+									offset: '={{ $parameter["offset"] || undefined }}',
 									order: '={{ $parameter["order"] || undefined }}',
 									order_by: '={{ $parameter["order_by"] || undefined }}',
 									search: '={{ $parameter["search"] || undefined }}',
@@ -157,12 +157,12 @@ export class CampingCare implements INodeType {
 								method: 'GET',
 								url: '=/contacts/{{$parameter["contactId"]}}',
 								qs: {
-									get_reservations: '={{ $parameter["get_reservations"] || undefined }}',
+									get_invoice_payments: '={{ $parameter["get_invoice_payments"] || undefined }}',
 									get_invoices: '={{ $parameter["get_invoices"] || undefined }}',
 									get_meta: '={{ $parameter["get_meta"] || undefined }}',
 									get_reservation_payment_terms:
 										'={{ $parameter["get_reservation_payment_terms"] || undefined }}',
-									get_invoice_payments: '={{ $parameter["get_invoice_payments"] || undefined }}',
+									get_reservations: '={{ $parameter["get_reservations"] || undefined }}',
 								},
 							},
 						},
@@ -208,6 +208,7 @@ export class CampingCare implements INodeType {
 				},
 				default: 'getContacts',
 			},
+
 			{
 				displayName: 'Operation',
 				name: 'operation',
@@ -215,8 +216,93 @@ export class CampingCare implements INodeType {
 				noDataExpression: true,
 				options: [
 					{
+						name: '1. Using Price Calculation (with ID and Hash)',
+						value: 'priceCalculationIdAndHash',
+						action: '1. Using price calculation with ID and hash for a reservation',
+					},
+					{
+						name: '2. Using Price Calculation (with Start and End Date)',
+						value: 'priceCalculationStartAndEndDate',
+						action: '2. Using price calculation with start and end date for a reservation',
+					},
+					{
+						name: '3. Forcing A Reservation With Own Data',
+						value: 'priceCalculationOwnData',
+						action: '3. Forcing a reservation with own data for a reservation',
+					},
+				],
+				default: 'priceCalculationIdAndHash',
+				displayOptions: {
+					show: {
+						resource: ['reservations'],
+					},
+				},
+			},
+
+			{
+				displayName: 'Sub-Operation',
+				name: 'subOperation',
+				type: 'options',
+				noDataExpression: true,
+				options: [
+					{
+						name: 'Calculate Price',
+						value: 'calculatePrice',
+						description:
+							'Calculate accommodation price based on arrival, departure, and number of persons',
+						action: 'Calculate accommodation price',
+						routing: {
+							request: {
+								method: 'GET',
+								url: '/price_calculation',
+								qs: {
+									arrival: '={{ $parameter["arrival_calculate"] }}',
+									departure: '={{ $parameter["departure_calculate"] }}',
+									accommodation_id: '={{ $parameter["accommodation_id_calculate"] }}',
+									persons: '={{ $parameter["persons_calculate"] }}',
+								},
+							},
+						},
+					},
+					{
 						name: 'Create Reservation',
-						value: 'createReservations',
+						value: 'createReservations1',
+						description: 'Create a new reservation using a price calculation',
+						action: 'Create a reservation',
+						routing: {
+							request: {
+								method: 'POST',
+								url: '/reservations',
+								body: {
+									accommodation_id: '={{ $parameter["accommodation_id_reservation"] }}',
+									calculation_id: '={{ $parameter["calculation_id"] }}',
+									calculation_draft_id: '={{ $parameter["calculation_draft_id"] }}',
+									contact_id: '={{ $parameter["contact_id_reservation"] || undefined }}',
+									co_travelers:
+										'={{ $parameter["co_travelers_reservation"].row2?.map(t => ({ last_name: t.last_name, birthday: t.birthday })) || [] }}',
+								},
+							},
+						},
+					},
+				],
+				default: 'calculatePrice',
+				displayOptions: {
+					show: {
+						resource: ['reservations'],
+						operation: ['priceCalculationIdAndHash'],
+					},
+				},
+			},
+
+			{
+				displayName: 'Sub-Operation',
+				name: 'subOperation',
+				type: 'options',
+				noDataExpression: true,
+				options: [
+					{
+						name: 'Create Reservation',
+						value: 'createReservations2',
 						description:
 							'Create a new reservation with optional forced rows or existing contact ID',
 						action: 'Create a reservation',
@@ -243,11 +329,11 @@ export class CampingCare implements INodeType {
 				displayOptions: {
 					show: {
 						resource: ['reservations'],
+						operation: ['priceCalculationOwnData'],
 					},
 				},
-				default: 'createReservations',
+				default: 'createReservations2',
 			},
-
 			{
 				displayName: 'Administration ID',
 				name: 'administrationId',
@@ -255,7 +341,6 @@ export class CampingCare implements INodeType {
 				default: '',
 				placeholder: 'e.g. 1234',
 				description: 'The unique ID of the administration to retrieve',
-				noDataExpression: true,
 				displayOptions: {
 					show: {
 						resource: ['administrations'],
@@ -270,7 +355,6 @@ export class CampingCare implements INodeType {
 				default: '',
 				placeholder: 'e.g. 1234567',
 				description: 'The unique ID of the contact to retrieve',
-				noDataExpression: true,
 				displayOptions: {
 					show: {
 						resource: ['contacts'],
@@ -285,7 +369,6 @@ export class CampingCare implements INodeType {
 				type: 'boolean',
 				default: false,
 				description: 'Whether to return only the count',
-				noDataExpression: true,
 				displayOptions: {
 					show: {
 						resource: ['administrations', 'contacts'],
@@ -299,7 +382,6 @@ export class CampingCare implements INodeType {
 				type: 'boolean',
 				default: false,
 				description: 'Whether to include accommodations in the response',
-				noDataExpression: true,
 				displayOptions: {
 					show: {
 						resource: ['administrations'],
@@ -313,7 +395,6 @@ export class CampingCare implements INodeType {
 				type: 'boolean',
 				default: false,
 				description: 'Whether to include age tables in the response',
-				noDataExpression: true,
 				displayOptions: {
 					show: {
 						resource: ['administrations'],
@@ -327,7 +408,6 @@ export class CampingCare implements INodeType {
 				type: 'boolean',
 				default: false,
 				description: 'Whether to include invoice payments in the response',
-				noDataExpression: true,
 				displayOptions: {
 					show: {
 						resource: ['contacts'],
@@ -341,7 +421,6 @@ export class CampingCare implements INodeType {
 				type: 'boolean',
 				default: false,
 				description: 'Whether to include invoices in the response',
-				noDataExpression: true,
 				displayOptions: {
 					show: {
 						resource: ['contacts'],
@@ -355,7 +434,6 @@ export class CampingCare implements INodeType {
 				type: 'boolean',
 				default: false,
 				description: 'Whether to include media files in the response',
-				noDataExpression: true,
 				displayOptions: {
 					show: {
 						resource: ['administrations'],
@@ -369,7 +447,6 @@ export class CampingCare implements INodeType {
 				type: 'boolean',
 				default: false,
 				description: 'Whether to include meta information',
-				noDataExpression: true,
 				displayOptions: {
 					show: {
 						resource: ['administrations', 'contacts'],
@@ -383,7 +460,6 @@ export class CampingCare implements INodeType {
 				type: 'boolean',
 				default: false,
 				description: 'Whether to include reservation payment terms in the response',
-				noDataExpression: true,
 				displayOptions: {
 					show: {
 						resource: ['contacts'],
@@ -397,7 +473,6 @@ export class CampingCare implements INodeType {
 				type: 'boolean',
 				default: false,
 				description: 'Whether to include reservations in the response',
-				noDataExpression: true,
 				displayOptions: {
 					show: {
 						resource: ['contacts'],
@@ -411,7 +486,6 @@ export class CampingCare implements INodeType {
 				type: 'boolean',
 				default: false,
 				description: 'Whether to include VAT tables in the response',
-				noDataExpression: true,
 				displayOptions: {
 					show: {
 						resource: ['administrations'],
@@ -425,7 +499,6 @@ export class CampingCare implements INodeType {
 				type: 'boolean',
 				default: false,
 				description: 'Whether to include translations in the response',
-				noDataExpression: true,
 				displayOptions: {
 					show: {
 						resource: ['administrations'],
@@ -441,7 +514,6 @@ export class CampingCare implements INodeType {
 				typeOptions: { minValue: 1 },
 				default: 50,
 				description: 'Max number of results to return',
-				noDataExpression: true,
 				displayOptions: {
 					show: {
 						resource: ['administrations', 'contacts'],
@@ -455,7 +527,6 @@ export class CampingCare implements INodeType {
 				type: 'number',
 				default: 0,
 				description: 'Number of records to skip',
-				noDataExpression: true,
 				displayOptions: {
 					show: {
 						resource: ['administrations', 'contacts'],
@@ -470,7 +541,6 @@ export class CampingCare implements INodeType {
 				default: '',
 				placeholder: 'asc or desc',
 				description: 'Sorting order',
-				noDataExpression: true,
 				displayOptions: {
 					show: {
 						resource: ['administrations', 'contacts'],
@@ -485,7 +555,6 @@ export class CampingCare implements INodeType {
 				default: '',
 				placeholder: 'Order by "ID" or "name"',
 				description: 'Field to order results by',
-				noDataExpression: true,
 				displayOptions: {
 					show: {
 						resource: ['contacts'],
@@ -500,7 +569,6 @@ export class CampingCare implements INodeType {
 				default: '',
 				placeholder: 'Search by "ID" or "name"',
 				description: 'Search term to filter results',
-				noDataExpression: true,
 				displayOptions: {
 					show: {
 						resource: ['administrations', 'contacts'],
@@ -516,7 +584,6 @@ export class CampingCare implements INodeType {
 				default: '',
 				placeholder: 'John',
 				description: 'Given name of the contact',
-				noDataExpression: true,
 				displayOptions: {
 					show: {
 						resource: ['contacts'],
@@ -531,7 +598,6 @@ export class CampingCare implements INodeType {
 				default: '',
 				placeholder: 'Doe',
 				description: 'Family name or surname of the contact',
-				noDataExpression: true,
 				displayOptions: {
 					show: {
 						resource: ['contacts'],
@@ -550,7 +616,6 @@ export class CampingCare implements INodeType {
 				],
 				default: 'male',
 				description: 'Gender or type of contact',
-				noDataExpression: true,
 				displayOptions: {
 					show: {
 						resource: ['contacts'],
@@ -565,7 +630,6 @@ export class CampingCare implements INodeType {
 				default: '',
 				placeholder: 'YYYY-MM-DD',
 				description: 'Date of birth in YYYY-MM-DD format',
-				noDataExpression: true,
 				displayOptions: {
 					show: {
 						resource: ['contacts'],
@@ -580,7 +644,6 @@ export class CampingCare implements INodeType {
 				default: '',
 				placeholder: 'e.g. Passport',
 				description: 'Type of identification document',
-				noDataExpression: true,
 				displayOptions: {
 					show: {
 						resource: ['contacts'],
@@ -595,7 +658,6 @@ export class CampingCare implements INodeType {
 				default: '',
 				placeholder: 'e.g. A1234567',
 				description: 'Number of the identification document',
-				noDataExpression: true,
 				displayOptions: {
 					show: {
 						resource: ['contacts'],
@@ -611,7 +673,6 @@ export class CampingCare implements INodeType {
 					loadOptionsMethod: 'getCountriesFromRules',
 				},
 				default: '',
-				noDataExpression: true,
 				description:
 					'Choose from the list, or specify an ID using an <a href="https://docs.n8n.io/code/expressions/">expression</a>',
 				displayOptions: {
@@ -629,7 +690,6 @@ export class CampingCare implements INodeType {
 				default: '',
 				placeholder: 'john.doe@example.com',
 				description: 'Primary email address of the contact',
-				noDataExpression: true,
 				displayOptions: {
 					show: {
 						resource: ['contacts'],
@@ -644,7 +704,6 @@ export class CampingCare implements INodeType {
 				default: '',
 				placeholder: 'e.g. +31 20 123 4567',
 				description: 'Landline phone number (with country code if applicable)',
-				noDataExpression: true,
 				displayOptions: {
 					show: {
 						resource: ['contacts'],
@@ -659,7 +718,6 @@ export class CampingCare implements INodeType {
 				default: '',
 				placeholder: 'e.g. +44 7700 900123',
 				description: 'Mobile phone number (with country code)',
-				noDataExpression: true,
 				displayOptions: {
 					show: {
 						resource: ['contacts'],
@@ -674,7 +732,6 @@ export class CampingCare implements INodeType {
 				default: '',
 				placeholder: 'e.g. Main Street',
 				description: "Street name of the contact's address",
-				noDataExpression: true,
 				displayOptions: {
 					show: {
 						resource: ['contacts'],
@@ -689,7 +746,6 @@ export class CampingCare implements INodeType {
 				default: '',
 				placeholder: 'e.g. 42A',
 				description: 'House or building number',
-				noDataExpression: true,
 				displayOptions: {
 					show: {
 						resource: ['contacts'],
@@ -704,7 +760,6 @@ export class CampingCare implements INodeType {
 				default: '',
 				placeholder: 'e.g. Amsterdam',
 				description: 'City or town name',
-				noDataExpression: true,
 				displayOptions: {
 					show: {
 						resource: ['contacts'],
@@ -719,7 +774,6 @@ export class CampingCare implements INodeType {
 				default: '',
 				placeholder: 'e.g. North Holland',
 				description: 'State, province, or region',
-				noDataExpression: true,
 				displayOptions: {
 					show: {
 						resource: ['contacts'],
@@ -734,7 +788,6 @@ export class CampingCare implements INodeType {
 				default: '',
 				placeholder: 'e.g. 1011AB',
 				description: 'Postal or ZIP code',
-				noDataExpression: true,
 				displayOptions: {
 					show: {
 						resource: ['contacts'],
@@ -750,7 +803,6 @@ export class CampingCare implements INodeType {
 					loadOptionsMethod: 'getCountriesFromRules',
 				},
 				default: '',
-				noDataExpression: true,
 				description:
 					'Choose from the list, or specify an ID using an <a href="https://docs.n8n.io/code/expressions/">expression</a>',
 				displayOptions: {
@@ -768,7 +820,6 @@ export class CampingCare implements INodeType {
 				default: '',
 				placeholder: 'e.g. Example Ltd.',
 				description: 'Name of the company or organization',
-				noDataExpression: true,
 				displayOptions: {
 					show: {
 						resource: ['contacts'],
@@ -783,7 +834,6 @@ export class CampingCare implements INodeType {
 				default: '',
 				placeholder: 'e.g. NL123456789B01',
 				description: "Company's VAT or tax identification number",
-				noDataExpression: true,
 				displayOptions: {
 					show: {
 						resource: ['contacts'],
@@ -797,7 +847,6 @@ export class CampingCare implements INodeType {
 				type: 'fixedCollection',
 				placeholder: 'Enter a value',
 				description: 'Custom extra fields linked to the contact',
-				noDataExpression: true,
 				typeOptions: {
 					multipleValues: true,
 				},
@@ -821,7 +870,6 @@ export class CampingCare implements INodeType {
 								type: 'options',
 								description:
 									'Choose from the list, or specify an ID using an <a href="https://docs.n8n.io/code/expressions/">expression</a>',
-								noDataExpression: true,
 								typeOptions: {
 									loadOptionsMethod: 'getContactFields',
 								},
@@ -834,12 +882,190 @@ export class CampingCare implements INodeType {
 								default: '',
 								placeholder: 'Enter a value',
 								description: 'Value to assign to this extra field',
-								noDataExpression: true,
 							},
 						],
 					},
 				],
 			},
+			// Velden voor Calculate Price
+			{
+				displayName: 'Arrival Date',
+				name: 'arrival_calculate',
+				type: 'string',
+				default: '',
+				required: true,
+				placeholder: 'YYYY-MM-DD',
+				description: 'Arrival date for the booking (format: YYYY-MM-DD)',
+				displayOptions: {
+					show: {
+						resource: ['reservations'],
+						operation: ['priceCalculationIdAndHash'],
+						subOperation: ['calculatePrice'],
+					},
+				},
+			},
+			{
+				displayName: 'Departure Date',
+				name: 'departure_calculate',
+				type: 'string',
+				default: '',
+				required: true,
+				placeholder: 'YYYY-MM-DD',
+				description: 'Departure date for the booking (format: YYYY-MM-DD)',
+				displayOptions: {
+					show: {
+						resource: ['reservations'],
+						operation: ['priceCalculationIdAndHash'],
+						subOperation: ['calculatePrice'],
+					},
+				},
+			},
+			{
+				displayName: 'Accommodation Name or ID',
+				name: 'accommodation_id_calculate',
+				type: 'options',
+				required: true,
+				typeOptions: {
+					loadOptionsMethod: 'getAccommodations',
+				},
+				default: '',
+				description:
+					'Choose from the list, or specify an ID using an <a href="https://docs.n8n.io/code/expressions/">expression</a>',
+				displayOptions: {
+					show: {
+						resource: ['reservations'],
+						operation: ['priceCalculationIdAndHash'],
+						subOperation: ['calculatePrice'],
+					},
+				},
+			},
+			{
+				displayName: 'Number of Persons',
+				name: 'persons_calculate',
+				type: 'number',
+				default: 1,
+				required: true,
+				description: 'Number of persons staying in the accommodation',
+				displayOptions: {
+					show: {
+						resource: ['reservations'],
+						operation: ['priceCalculationIdAndHash'],
+						subOperation: ['calculatePrice'],
+					},
+				},
+			},
+
+			// Velden voor Create Reservation
+			{
+				displayName: 'Accommodation Name or ID',
+				name: 'accommodation_id_reservation',
+				type: 'options',
+				required: true,
+				typeOptions: {
+					loadOptionsMethod: 'getAccommodations',
+				},
+				default: '',
+				description:
+					'Choose from the list, or specify an ID using an <a href="https://docs.n8n.io/code/expressions/">expression</a>',
+				displayOptions: {
+					show: {
+						resource: ['reservations'],
+						operation: ['priceCalculationIdAndHash'],
+						subOperation: ['createReservations1'],
+					},
+				},
+			},
+			{
+				displayName: 'Calculation ID',
+				name: 'calculation_id',
+				type: 'string',
+				required: true,
+				default: '',
+				placeholder: 'e.g. 98765',
+				description: 'The calculation ID returned from the Price Calculation API',
+				displayOptions: {
+					show: {
+						resource: ['reservations'],
+						operation: ['priceCalculationIdAndHash'],
+						subOperation: ['createReservations1'],
+					},
+				},
+			},
+			{
+				displayName: 'Calculation Draft ID',
+				name: 'calculation_draft_id',
+				type: 'string',
+				required: true,
+				default: '',
+				placeholder: 'e.g. 123456',
+				description: 'The draft ID returned from the Price Calculation API',
+				displayOptions: {
+					show: {
+						resource: ['reservations'],
+						operation: ['priceCalculationIdAndHash'],
+						subOperation: ['createReservations1'],
+					},
+				},
+			},
+			{
+				displayName: 'Contact ID',
+				name: 'contact_id_reservation',
+				type: 'string',
+				default: '',
+				required: true,
+				placeholder: 'e.g. 123456',
+				description: 'The ID of the contact to find associated with the reservation',
+				displayOptions: {
+					show: {
+						resource: ['reservations'],
+						operation: ['priceCalculationIdAndHash'],
+						subOperation: ['createReservations1'],
+					},
+				},
+			},
+			{
+				displayName: 'Co-Travelers',
+				name: 'co_travelers_reservation',
+				type: 'fixedCollection',
+				typeOptions: {
+					multipleValues: true,
+				},
+				required: true,
+				placeholder: 'Add co-traveler details',
+				default: {},
+				displayOptions: {
+					show: {
+						resource: ['reservations'],
+						operation: ['priceCalculationIdAndHash'],
+						subOperation: ['createReservations1'],
+					},
+				},
+				options: [
+					{
+						name: 'row2',
+						displayName: 'Row',
+						values: [
+							{
+								displayName: 'Last Name',
+								name: 'last_name',
+								type: 'string',
+								required: true,
+								default: '',
+								placeholder: 'Last Name',
+							},
+							{
+								displayName: 'Birthday',
+								name: 'birthday',
+								type: 'string',
+								required: true,
+								default: '',
+								placeholder: 'YYYY-MM-DD',
+							},
+						],
+					},
+				],
+			},
+
 			{
 				displayName: 'Accommodation Name or ID',
 				name: 'accommodationId',
@@ -854,7 +1080,8 @@ export class CampingCare implements INodeType {
 				displayOptions: {
 					show: {
 						resource: ['reservations'],
-						operation: ['createReservations'],
+						operation: ['priceCalculationOwnData'],
+						subOperation: ['createReservations2'],
 					},
 				},
 			},
@@ -869,7 +1096,8 @@ export class CampingCare implements INodeType {
 				displayOptions: {
 					show: {
 						resource: ['reservations'],
-						operation: ['createReservations'],
+						operation: ['priceCalculationOwnData'],
+						subOperation: ['createReservations2'],
 					},
 				},
 			},
@@ -884,7 +1112,8 @@ export class CampingCare implements INodeType {
 				displayOptions: {
 					show: {
 						resource: ['reservations'],
-						operation: ['createReservations'],
+						operation: ['priceCalculationOwnData'],
+						subOperation: ['createReservations2'],
 					},
 				},
 			},
@@ -897,7 +1126,8 @@ export class CampingCare implements INodeType {
 				displayOptions: {
 					show: {
 						resource: ['reservations'],
-						operation: ['createReservations'],
+						operation: ['priceCalculationOwnData'],
+						subOperation: ['createReservations2'],
 					},
 				},
 			},
@@ -911,7 +1141,8 @@ export class CampingCare implements INodeType {
 				displayOptions: {
 					show: {
 						resource: ['reservations'],
-						operation: ['createReservations'],
+						operation: ['priceCalculationOwnData'],
+						subOperation: ['createReservations2'],
 					},
 				},
 			},
@@ -923,11 +1154,21 @@ export class CampingCare implements INodeType {
 					multipleValues: true,
 				},
 				placeholder: 'Add forced row',
-				default: {},
+				default: {
+					row: [
+						{
+							type: 'product_price',
+							description: 'Description',
+							amount: 1,
+							total: 0,
+						},
+					],
+				},
 				displayOptions: {
 					show: {
 						resource: ['reservations'],
-						operation: ['createReservations'],
+						operation: ['priceCalculationOwnData'],
+						subOperation: ['createReservations2'],
 					},
 				},
 				options: [
@@ -951,7 +1192,7 @@ export class CampingCare implements INodeType {
 								displayName: 'Description',
 								name: 'description',
 								type: 'string',
-								default: '',
+								default: 'Description',
 								placeholder: 'Pitch description',
 								description: 'Description of the row',
 							},
@@ -973,6 +1214,7 @@ export class CampingCare implements INodeType {
 					},
 				],
 			},
+
 			{
 				displayName: 'Co-Travelers',
 				name: 'co_travelers',
@@ -985,7 +1227,8 @@ export class CampingCare implements INodeType {
 				displayOptions: {
 					show: {
 						resource: ['reservations'],
-						operation: ['createReservations'],
+						operation: ['priceCalculationOwnData'],
+						subOperation: ['createReservations2'],
 					},
 				},
 				options: [
