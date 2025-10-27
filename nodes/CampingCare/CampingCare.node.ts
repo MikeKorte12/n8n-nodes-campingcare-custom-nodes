@@ -102,6 +102,29 @@ export class CampingCare implements INodeType {
 						value: field.key,
 					}));
 			},
+			async getCoTravelerFields(this: ILoadOptionsFunctions) {
+				const credentials = await this.getCredentials('campingCareApi');
+
+				const response = await this.helpers.httpRequest({
+					method: 'GET',
+					url: 'https://api.camping.care/v21/fields/forms',
+					qs: {
+						type: 'booking',
+					},
+					headers: {
+						Accept: 'application/json',
+						'Content-Type': 'application/json',
+						Authorization: `Bearer ${credentials.apiKey}`,
+					},
+				});
+
+				const coTravelerFields = response?.co_travelers ?? [];
+
+				return coTravelerFields.map((field: any) => ({
+					name: field.name,
+					value: field.key,
+				}));
+			},
 
 			getCountriesFromRules: async function (this: ILoadOptionsFunctions) {
 				try {

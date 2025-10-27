@@ -87,7 +87,7 @@ export const createReservationsDescription = [
 							calculation_draft_id: '={{ $parameter["calculation_draft_id"] }}',
 							contact_id: '={{ $parameter["contact_id"] || undefined }}',
 							co_travelers:
-								'={{ $parameter["co_travelers"].row2?.map(t => ({ last_name: t.last_name, birthday: t.birthday })) || [] }}',
+								'={{ $parameter["co_travelers"].traveler?.map(traveler => Object.fromEntries(traveler.field.field.map(f => [f.key, f.value]))) || [] }}',
 						},
 					},
 				},
@@ -126,7 +126,7 @@ export const createReservationsDescription = [
 							forced_rows:
 								'={{ $parameter["forced_rows"].row?.map(r => ({type: r.type,description: r.description,amount: Number(r.amount),total: Number(r.total),data: ""})) || [] }}',
 							co_travelers:
-								'={{ $parameter["co_travelers"].row2?.map(traveler => ({first_name: traveler.first_name,last_name: traveler.last_name,gender: traveler.gender,birthday: traveler.birthday,country_origin: traveler.country_origin,})) || [] }}',
+								'={{ $parameter["co_travelers"].traveler?.map(traveler => Object.fromEntries(traveler.field.field.map(f => [f.key, f.value]))) || [] }}',
 						},
 					},
 				},
@@ -352,9 +352,9 @@ export const createReservationsDescription = [
 		typeOptions: {
 			multipleValues: true,
 		},
-		required: true,
-		placeholder: 'Add co-traveler details',
-		default: {},
+		description: 'Add one or more co-travelers with their dynamic fields',
+		placeholder: 'Add Co-Traveler',
+		default: { traveler: [] },
 		displayOptions: {
 			show: {
 				resource: ['resourceCreateReservations'],
@@ -364,24 +364,42 @@ export const createReservationsDescription = [
 		},
 		options: [
 			{
-				name: 'row2',
-				displayName: 'Row',
+				name: 'traveler',
+				displayName: 'Traveler',
 				values: [
 					{
-						displayName: 'Last Name',
-						name: 'last_name',
-						type: 'string' as NodePropertyTypes,
-						required: true,
-						default: '',
-						placeholder: 'Last Name',
-					},
-					{
-						displayName: 'Birthday',
-						name: 'birthday',
-						type: 'string' as NodePropertyTypes,
-						required: true,
-						default: '',
-						placeholder: 'YYYY-MM-DD',
+						displayName: 'Fields',
+						name: 'field',
+						type: 'fixedCollection' as NodePropertyTypes,
+						typeOptions: {
+							multipleValues: true,
+						},
+						default: {},
+						options: [
+							{
+								name: 'field',
+								displayName: 'Field',
+								values: [
+									{
+										displayName: 'Key',
+										name: 'key',
+										type: 'options' as NodePropertyTypes,
+										typeOptions: {
+											loadOptionsMethod: 'getCoTravelerFields',
+										},
+										default: '',
+										description: 'Field key from the API',
+									},
+									{
+										displayName: 'Value',
+										name: 'value',
+										type: 'string' as NodePropertyTypes,
+										default: '',
+										description: 'Value for this field',
+									},
+								],
+							},
+						],
 					},
 				],
 			},
