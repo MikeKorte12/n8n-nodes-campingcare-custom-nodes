@@ -1,5 +1,7 @@
 import type {
 	IHookFunctions,
+	ILoadOptionsFunctions,
+	INodePropertyOptions,
 	INodeType,
 	INodeTypeDescription,
 	IWebhookFunctions,
@@ -31,17 +33,44 @@ export class CampingCareTrigger implements INodeType {
 
 		properties: [
 			{
-				displayName: 'Event',
-				name: 'event',
-				type: 'options',
-				options: [
-					{ name: 'Guest Created', value: 'contact.add' },
-					{ name: 'Reservation Created', value: 'reservation.add' },
-				],
-				default: 'contact.add',
-				description: 'Event type to listen for from Camping Care',
+				displayName: 'Event Names or IDs',
+				name: 'events',
+				type: 'multiOptions',
+				typeOptions: {
+					loadOptionsMethod: 'getWebhookEvents',
+				},
+				default: [],
+				description: 'Choose from the list, or specify IDs using an <a href="https://docs.n8n.io/code/expressions/">expression</a>',
 			},
 		],
+	};
+
+	methods = {
+		loadOptions: {
+			async getWebhookEvents(this: ILoadOptionsFunctions): Promise<INodePropertyOptions[]> {
+				const credentials = await this.getCredentials('campingCareApi');
+
+				try {
+					const events = await this.helpers.httpRequest({
+						method: 'GET',
+						url: 'https://api.camping.care/v21/webhooks/events',
+						headers: {
+							Authorization: `Bearer ${credentials.apiKey}`,
+							'Content-Type': 'application/json',
+						},
+					});
+
+					return events.map((event: any) => ({
+						name: event.name || event.label || event.event || event,
+						value: event.value || event.event || event,
+					}));
+				} catch (error) {
+					throw new NodeApiError(this.getNode(), error, {
+						message: 'Failed to load webhook events from Camping Care',
+					});
+				}
+			},
+		},
 	};
 
 	webhookMethods = {
@@ -69,12 +98,12 @@ export class CampingCareTrigger implements INodeType {
 			},
 			async create(this: IHookFunctions): Promise<boolean> {
 				const webhookUrl = this.getNodeWebhookUrl('default');
-				const event = this.getNodeParameter('event') as string;
+				const events = this.getNodeParameter('events') as string[];
 				const credentials = await this.getCredentials('campingCareApi');
 
 				const body = {
 					url: webhookUrl,
-					events: [event],
+					events: events,
 				};
 
 				try {
@@ -129,8 +158,8 @@ export class CampingCareTrigger implements INodeType {
 		try {
 			const body = this.getBodyData();
 
-			const selectedEvent = this.getNodeParameter('event') as string;
-			if (body?.event && body.event !== selectedEvent) {
+			const selectedEvents = this.getNodeParameter('events') as string[];
+			if (body?.event && selectedEvents.length > 0 && !selectedEvents.includes(body.event as string)) {
 				return {};
 			}
 
