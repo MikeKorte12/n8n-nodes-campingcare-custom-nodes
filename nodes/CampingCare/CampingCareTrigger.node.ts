@@ -7,7 +7,7 @@ import type {
 	IWebhookFunctions,
 	IWebhookResponseData,
 } from 'n8n-workflow';
-import { NodeApiError } from 'n8n-workflow';
+import { NodeApiError, NodeConnectionTypes } from 'n8n-workflow';
 
 export class CampingCareTrigger implements INodeType {
 	description: INodeTypeDescription = {
@@ -20,7 +20,7 @@ export class CampingCareTrigger implements INodeType {
 		defaults: { name: 'Camping Care Trigger' },
 		credentials: [{ name: 'campingCareApi', required: true }],
 		inputs: [],
-		outputs: ['main'],
+		outputs: [NodeConnectionTypes.Main],
 
 		webhooks: [
 			{
@@ -155,21 +155,9 @@ export class CampingCareTrigger implements INodeType {
 	};
 
 	async webhook(this: IWebhookFunctions): Promise<IWebhookResponseData> {
-		try {
-			const body = this.getBodyData();
-
-			const selectedEvents = this.getNodeParameter('events') as string[];
-			if (body?.event && selectedEvents.length > 0 && !selectedEvents.includes(body.event as string)) {
-				return {};
-			}
-
-			return {
-				workflowData: [this.helpers.returnJsonArray([body])],
-			};
-		} catch (error) {
-			throw new NodeApiError(this.getNode(), error, {
-				message: 'Error processing Camping Care webhook',
-			});
-		}
+		const bodyData = this.getBodyData();
+		return {
+			workflowData: [this.helpers.returnJsonArray(bodyData)],
+		};
 	}
 }
