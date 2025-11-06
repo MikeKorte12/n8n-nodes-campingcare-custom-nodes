@@ -36,7 +36,8 @@
       "dist/credentials/CampingCareApi.credentials.js"
     ],
     "nodes": [
-      "dist/nodes/CampingCare/CampingCare.node.js"
+      "dist/nodes/CampingCare/CampingCare.node.js",
+      "dist/nodes/CampingCare/CampingCareTrigger.node.js"
     ]
   },
   "devDependencies": {
