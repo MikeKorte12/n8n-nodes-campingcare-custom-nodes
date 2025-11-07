@@ -13,13 +13,13 @@ import { extractWebhookId } from './utils/helpers';
 
 export class CampingCareTrigger implements INodeType {
 	description: INodeTypeDescription = {
-		displayName: 'Camping Care Trigger',
+		displayName: 'Starfish Trigger',
 		name: 'campingCareTrigger',
 		icon: { light: 'file:campingcare.svg', dark: 'file:campingcaredark.svg' },
 		group: ['trigger'],
 		version: 1,
-		description: 'Starts the workflow when an event occurs in Camping Care',
-		defaults: { name: 'Camping Care Trigger' },
+		description: 'Starts the workflow when an event occurs in Starfish',
+		defaults: { name: 'Starfish Trigger' },
 		credentials: [{ name: 'campingCareApi', required: true }],
 		inputs: [],
 		outputs: [NodeConnectionTypes.Main],
@@ -69,7 +69,7 @@ export class CampingCareTrigger implements INodeType {
 					}));
 				} catch (error) {
 					throw new NodeApiError(this.getNode(), error, {
-						message: 'Failed to load webhook events from Camping Care',
+						message: 'Failed to load webhook events from Starfish',
 					});
 				}
 			},
@@ -126,7 +126,7 @@ export class CampingCareTrigger implements INodeType {
 					return true;
 				} catch (error) {
 					throw new NodeApiError(this.getNode(), error, {
-						message: 'Failed to create webhook in Camping Care',
+						message: 'Failed to create webhook in Starfish',
 					});
 				}
 			},
@@ -148,7 +148,7 @@ export class CampingCareTrigger implements INodeType {
 					});
 				} catch (error) {
 					throw new NodeApiError(this.getNode(), error, {
-						message: 'Failed to delete webhook from Camping Care',
+						message: 'Failed to delete webhook from Starfish',
 					});
 				}
 

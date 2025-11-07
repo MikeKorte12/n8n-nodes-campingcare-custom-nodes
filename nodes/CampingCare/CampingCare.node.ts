@@ -9,14 +9,14 @@ import { API_BASE_URL, API_ENDPOINTS, EXCLUDED_CONTACT_FIELDS } from './utils/co
 
 export class CampingCare implements INodeType {
 	description: INodeTypeDescription = {
-		displayName: 'Camping Care',
+		displayName: 'Starfish',
 		name: 'campingCare',
 		icon: { light: 'file:campingcare.svg', dark: 'file:campingcaredark.svg' },
 		group: ['input'],
 		version: 1,
 		subtitle: '={{ $parameter["operation"] + ": " + $parameter["resource"] }}',
-		description: 'Interact with the Camping Care API',
-		defaults: { name: 'Camping Care' },
+		description: 'Interact with the Starfish API',
+		defaults: { name: 'Starfish' },
 		inputs: ['main'],
 		outputs: ['main'],
 		credentials: [{ name: 'campingCareApi', required: true }],

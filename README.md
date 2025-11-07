@@ -1,27 +1,27 @@
 # n8n-nodes-campingcare-custom-nodes
 
-Custom n8n nodes for integrating with the [Camping Care API](https://api.camping.care). These nodes allow you to interact with contacts, reservations, accommodations, and webhooks in your n8n workflows.
+Custom n8n nodes for integrating with the [Starfish API](https://api.camping.care). These nodes allow you to interact with contacts, reservations, accommodations, and webhooks in your n8n workflows.
 
 ## Features
 
 This package provides the following nodes:
 
-### Camping Care Node
+### Starfish Node
 
-Regular node for making API calls to Camping Care:
+Regular node for making API calls to Starfish:
 
 - **Administrations**: Manage administration data
 - **Contacts**: Create, retrieve, and search contacts
 - **Reservations**: Get and create reservations with price calculations
 - **Accommodations**: List and manage accommodations
 
-### Camping Care Trigger Node
+### Starfish Trigger Node
 
-Webhook trigger node that listens for events from Camping Care:
+Webhook trigger node that listens for events from Starfish:
 
 - Automatically creates and manages webhooks
 - Supports multiple event types
-- Receives real-time updates from Camping Care
+- Receives real-time updates from Starfish
 
 ## Installation
 
@@ -29,7 +29,7 @@ Webhook trigger node that listens for events from Camping Care:
 
 - Node.js 20.x or higher
 - n8n installed (minimum version 0.x)
-- A valid Camping Care API key
+- A valid Starfish API key
 
 ### Install via npm
 
@@ -49,15 +49,15 @@ npm install n8n-nodes-campingcare-custom-nodes
 ### Setting up API Credentials
 
 1. In n8n, go to **Credentials** > **New**
-2. Search for "Camping Care API"
+2. Search for "Starfish API"
 3. Enter your API credentials:
-   - **API Key**: Your Camping Care API key (available in your Camping Care dashboard)
+   - **API Key**: Your Starfish API key (available in your Starfish dashboard)
 
 ## Usage Examples
 
 ### Example 1: Create a Contact
 
-1. Add the "Camping Care" node
+1. Add the "Starfish" node
 2. Select **Resource**: Contact
 3. Select **Operation**: Add Contact
 4. Fill in the required fields:
@@ -67,7 +67,7 @@ npm install n8n-nodes-campingcare-custom-nodes
 
 ### Example 2: Create a Reservation
 
-1. Add the "Camping Care" node
+1. Add the "Starfish" node
 2. Select **Resource**: Create Reservation
 3. Choose operation type:
    - **Using Price Calculation**: Calculate price first, then create
@@ -76,10 +76,10 @@ npm install n8n-nodes-campingcare-custom-nodes
 
 ### Example 3: Listen for Webhook Events
 
-1. Add the "Camping Care Trigger" node
+1. Add the "Starfish Trigger" node
 2. Select the event types you want to listen for
 3. Activate the workflow
-4. The webhook will be automatically created in Camping Care
+4. The webhook will be automatically created in Starfish
 
 ## Supported Operations
 
@@ -157,13 +157,13 @@ npm run build         # Build the project
 
 **Issue**: "Invalid API Key" error
 
-- **Solution**: Verify your API key in the Camping Care dashboard and update it in n8n credentials
+- **Solution**: Verify your API key in the Starfish dashboard and update it in n8n credentials
 
 **Issue**: Webhook not receiving events
 
 - **Solution**:
   - Check that the workflow is activated
-  - Verify the webhook exists in Camping Care dashboard
+  - Verify the webhook exists in Starfish dashboard
   - Ensure n8n is accessible from the internet (for webhooks)
 
 **Issue**: Date format errors in reservations
@@ -199,7 +199,7 @@ For support, please:
 
 - Check the [API Documentation](https://api.camping.care/docs)
 - Open an issue on [GitHub](https://github.com/MikeKorte12/n8n-nodes-campingcare-custom-nodes/issues)
-- Contact Camping Care support for API-related questions
+- Contact Starfish support for API-related questions
 
 ## Credits
 

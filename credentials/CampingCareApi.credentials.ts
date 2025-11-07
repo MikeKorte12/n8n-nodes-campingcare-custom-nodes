@@ -2,7 +2,7 @@ import { ICredentialTestRequest, ICredentialType, INodeProperties } from 'n8n-wo
 
 export class CampingCareApi implements ICredentialType {
 	name = 'campingCareApi';
-	displayName = 'CampingCare API';
+	displayName = 'Starfish API';
 	documentationUrl = 'https://1drv.ms/p/c/7D450A4555B73F91/EXaXncSEOOhMrbgY426x0IkBR7zHsN4tQT1GllgNmP_dog';
 	properties: INodeProperties[] = [
 		{
