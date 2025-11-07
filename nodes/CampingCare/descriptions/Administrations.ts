@@ -52,8 +52,62 @@ export const administrationsDescription = [
 					},
 				},
 			},
+			{
+				name: 'Age Tables',
+				value: 'ageTables',
+				description: 'Get age tables for an administration',
+				action: 'Age tables',
+			},
 		],
 		default: 'getAdministrations',
+	},
+
+	// Age Tables Method Selection
+	{
+		displayName: 'Age Tables Method',
+		name: 'ageTablesMethod',
+		type: 'options' as NodePropertyTypes,
+		noDataExpression: true,
+		displayOptions: {
+			show: {
+				resource: ['administrations'],
+				operation: ['ageTables'],
+			},
+		},
+		options: [
+			{
+				name: 'Get Age Tables',
+				value: 'getAgeTables',
+				description: 'Get age tables for this administration',
+				action: 'Get age tables',
+				routing: {
+					request: {
+						method: 'GET' as IHttpRequestMethods,
+						url: '=/administrations/{{$parameter["admin_id"]}}/age_tables',
+						qs: {
+							translations: '={{ $parameter["translations_age_tables"] || undefined }}',
+							sort: '={{ $parameter["sort"] || undefined }}',
+						},
+					},
+				},
+			},
+			{
+				name: 'Get Age Table',
+				value: 'getAgeTable',
+				description: 'Get a single age table by ID',
+				action: 'Get age table',
+				routing: {
+					request: {
+						method: 'GET' as IHttpRequestMethods,
+						url: '=/administrations/{{$parameter["admin_id"]}}/age_tables/{{$parameter["age_table_id"]}}',
+						qs: {
+							translations: '={{ $parameter["translations_age_tables"] || undefined }}',
+						},
+					},
+				},
+			},
+		],
+		default: 'getAgeTables',
 	},
 
 	{
@@ -187,5 +241,71 @@ export const administrationsDescription = [
 		placeholder: 'Enter ID or name',
 		default: '',
 		displayOptions: { show: { resource: ['administrations'], operation: ['getAdministrations'] } },
+	},
+
+	// === AGE TABLES PARAMETERS ===
+	{
+		displayName: 'Administration ID',
+		name: 'admin_id',
+		type: 'string' as NodePropertyTypes,
+		required: true,
+		description: 'The administration ID to get age tables from',
+		placeholder: '1234',
+		default: '',
+		displayOptions: {
+			show: {
+				resource: ['administrations'],
+				operation: ['ageTables'],
+			},
+		},
+	},
+	{
+		displayName: 'Translations',
+		name: 'translations_age_tables',
+		type: 'boolean' as NodePropertyTypes,
+		description: 'Whether to include translations for age table fields',
+		default: false,
+		displayOptions: {
+			show: {
+				resource: ['administrations'],
+				operation: ['ageTables'],
+			},
+		},
+	},
+	{
+		displayName: 'Age Table ID',
+		name: 'age_table_id',
+		type: 'string' as NodePropertyTypes,
+		required: true,
+		description: 'The unique ID of the age table to retrieve',
+		placeholder: '1234',
+		default: '',
+		displayOptions: {
+			show: {
+				resource: ['administrations'],
+				operation: ['ageTables'],
+				ageTablesMethod: ['getAgeTable'],
+			},
+		},
+	},
+	{
+		displayName: 'Sort',
+		name: 'sort',
+		type: 'options' as NodePropertyTypes,
+		description: 'Sort age tables by field',
+		options: [
+			{ name : '— None —', value: '' },
+			{ name: 'Priority', value: 'priority' },
+			{ name: 'Name', value: 'name' },
+			{ name: 'ID', value: 'id' },
+		],
+		default: '',
+		displayOptions: {
+			show: {
+				resource: ['administrations'],
+				operation: ['ageTables'],
+				ageTablesMethod: ['getAgeTables'],
+			},
+		},
 	},
 ];
