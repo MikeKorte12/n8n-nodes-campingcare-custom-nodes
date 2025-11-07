@@ -1,6 +1,7 @@
 export const API_BASE_URL = 'https://api.camping.care/v21';
 
 export const API_ENDPOINTS = {
+	ADMINISTRATIONS: '/administrations',
 	FIELDS: '/fields',
 	FIELDS_FORMS: '/fields/forms',
 	ACCOMMODATIONS: '/accommodations',
@@ -9,6 +10,8 @@ export const API_ENDPOINTS = {
 	PRICE_CALCULATION: '/price_calculation',
 	WEBHOOKS: '/webhooks',
 	WEBHOOKS_EVENTS: '/webhooks/events',
+	INVOICES: '/invoices',
+	PAYMENTS: '/payments',
 } as const;
 
 export const EXCLUDED_CONTACT_FIELDS = [

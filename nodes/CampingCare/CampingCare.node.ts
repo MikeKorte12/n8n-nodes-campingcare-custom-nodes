@@ -3,9 +3,11 @@ import { NodeApiError } from 'n8n-workflow';
 
 import { administrationsDescription } from './descriptions/Administrations';
 import { contactsDescription } from './descriptions/Contacts';
-import { getReservationsDescription } from './descriptions/GetReservations';
-import { createReservationsDescription } from './descriptions/CreateReservations';
+import { priceCalculationDescription } from './descriptions/PriceCalculation';
+import { reservationsDescription } from './descriptions/Reservations';
+import { accommodationsDescription } from './descriptions/Accommodations';
 import { API_BASE_URL, API_ENDPOINTS, EXCLUDED_CONTACT_FIELDS } from './utils/constants';
+import type { ContactField, Country, Accommodation } from './utils/types';
 
 export class CampingCare implements INodeType {
 	description: INodeTypeDescription = {
@@ -38,70 +40,86 @@ export class CampingCare implements INodeType {
 				type: 'options',
 				noDataExpression: true,
 				options: [
-					{ name: 'Administration', value: 'administrations' },
-					{ name: 'Contact', value: 'contacts' },
-					{ name: 'Get Reservation', value: 'resourceGetReservations' },
-					{ name: 'Create Reservation', value: 'resourceCreateReservations' },
+					{ name: 'Accommodations API', value: 'accommodations' },
+					{ name: 'Administrations API', value: 'administrations' },
+					{ name: 'Contacts API', value: 'contacts' },
+					{ name: 'Price Calculation API', value: 'priceCalculation' },
+					{ name: 'Reservations API', value: 'reservations' },
 				],
-				default: 'administrations',
+				default: 'accommodations',
 			},
 
+			...accommodationsDescription,
 			...administrationsDescription,
 			...contactsDescription,
-			...getReservationsDescription,
-			...createReservationsDescription,
+			...priceCalculationDescription,
+			...reservationsDescription,
 		],
 	};
 
 	methods = {
 		loadOptions: {
 			async getContactFields(this: ILoadOptionsFunctions) {
-				const credentials = await this.getCredentials('campingCareApi');
+				try {
+					const credentials = await this.getCredentials('campingCareApi');
 
-				const response = await this.helpers.httpRequest({
-					method: 'GET',
-					url: `${API_BASE_URL}${API_ENDPOINTS.FIELDS}`,
-					qs: {
-						type: 'contact',
-						status: 'active',
-						read_only: 'true',
-					},
-					headers: {
-						Accept: 'application/json',
-						'Content-Type': 'application/json',
-						Authorization: `Bearer ${credentials.apiKey}`,
-					},
-				});
+					const response = await this.helpers.httpRequest({
+						method: 'GET',
+						url: `${API_BASE_URL}${API_ENDPOINTS.FIELDS}`,
+						qs: {
+							type: 'contact',
+							status: 'active',
+							read_only: 'true',
+						},
+						headers: {
+							Accept: 'application/json',
+							'Content-Type': 'application/json',
+							Authorization: `Bearer ${credentials.apiKey}`,
+						},
+					});
 
-				return response
-					.filter((field: any) => !EXCLUDED_CONTACT_FIELDS.includes(field.key))
-					.map((field: any) => ({
+					return (response as ContactField[])
+						.filter((field) => !(EXCLUDED_CONTACT_FIELDS as readonly string[]).includes(field.key))
+						.map((field) => ({
+							name: field.name,
+							value: field.key,
+						}));
+				} catch (error) {
+					throw new NodeApiError(this.getNode(), error, {
+						message: 'Failed to load contact fields',
+						description: error.message || 'Unable to retrieve contact fields from the API',
+					});
+				}
+			},
+			async getCoTravelerFields(this: ILoadOptionsFunctions) {
+				try {
+					const credentials = await this.getCredentials('campingCareApi');
+
+					const response = await this.helpers.httpRequest({
+						method: 'GET',
+						url: `${API_BASE_URL}${API_ENDPOINTS.FIELDS_FORMS}`,
+						qs: {
+							type: 'booking',
+						},
+						headers: {
+							Accept: 'application/json',
+							'Content-Type': 'application/json',
+							Authorization: `Bearer ${credentials.apiKey}`,
+						},
+					});
+
+					const coTravelerFields = response?.co_travelers ?? [];
+
+					return coTravelerFields.map((field: any) => ({
 						name: field.name,
 						value: field.key,
 					}));
-			},
-			async getCoTravelerFields(this: ILoadOptionsFunctions) {
-				const credentials = await this.getCredentials('campingCareApi');
-
-				const response = await this.helpers.httpRequest({
-					method: 'GET',
-					url: `${API_BASE_URL}${API_ENDPOINTS.FIELDS_FORMS}`,
-					qs: {
-						type: 'booking',
-					},
-					headers: {
-						Accept: 'application/json',
-						'Content-Type': 'application/json',
-						Authorization: `Bearer ${credentials.apiKey}`,
-					},
-				});
-
-				const coTravelerFields = response?.co_travelers ?? [];
-
-				return coTravelerFields.map((field: any) => ({
-					name: field.name,
-					value: field.key,
-				}));
+				} catch (error) {
+					throw new NodeApiError(this.getNode(), error, {
+						message: 'Failed to load co-traveler fields',
+						description: error.message || 'Unable to retrieve co-traveler fields from the API',
+					});
+				}
 			},
 
 			getCountriesFromRules: async function (this: ILoadOptionsFunctions) {
@@ -118,21 +136,21 @@ export class CampingCare implements INodeType {
 						},
 					});
 
-					const postcodeField = response.find((field: any) =>
-						field.rules?.some((r: any) => r.type === 'regex_country'),
+					const postcodeField = (response as ContactField[]).find((field) =>
+						field.rules?.some((r) => r.type === 'regex_country'),
 					);
 
 					if (!postcodeField) {
 						return [];
 					}
 
-					const rule = postcodeField.rules.find((r: any) => r.type === 'regex_country');
+					const rule = postcodeField.rules?.find((r) => r.type === 'regex_country');
 
 					if (!rule?.countries?.length) {
 						return [];
 					}
 
-					const countries = rule.countries.map((c: any) => ({
+					const countries = (rule.countries as Country[]).map((c) => ({
 						name: c.country_name,
 						value: c.country,
 					}));
@@ -148,36 +166,44 @@ export class CampingCare implements INodeType {
 				} catch (error) {
 					throw new NodeApiError(this.getNode(), error, {
 						message: 'Failed to load country list',
+						description: error.message || 'Unable to retrieve countries from the API',
 					});
 				}
 			},
 
 			async getAccommodations(this: ILoadOptionsFunctions) {
-				const credentials = await this.getCredentials('campingCareApi');
+				try {
+					const credentials = await this.getCredentials('campingCareApi');
 
-				const response = await this.helpers.httpRequest({
-					method: 'GET',
-					url: `${API_BASE_URL}${API_ENDPOINTS.ACCOMMODATIONS}`,
-					headers: {
-						Accept: 'application/json',
-						'Content-Type': 'application/json',
-						Authorization: `Bearer ${credentials.apiKey}`,
-					},
-				});
+					const response = await this.helpers.httpRequest({
+						method: 'GET',
+						url: `${API_BASE_URL}${API_ENDPOINTS.ACCOMMODATIONS}`,
+						headers: {
+							Accept: 'application/json',
+							'Content-Type': 'application/json',
+							Authorization: `Bearer ${credentials.apiKey}`,
+						},
+					});
 
-				const accommodations = response
-					.filter((a: any) => a.status === 'active')
-					.map((a: any) => ({
-						name: a.name || `Accommodation ${a.id}`,
-						value: a.id,
-					}));
+					const accommodations = (response as Accommodation[])
+						.filter((a) => (a as any).status === 'active')
+						.map((a) => ({
+							name: a.name || `Accommodation ${a.id}`,
+							value: a.id,
+						}));
 
-				accommodations.unshift({
-					name: '— None —',
-					value: '',
-				});
+					accommodations.unshift({
+						name: '— None —',
+						value: '',
+					});
 
-				return accommodations;
+					return accommodations;
+				} catch (error) {
+					throw new NodeApiError(this.getNode(), error, {
+						message: 'Failed to load accommodations',
+						description: error.message || 'Unable to retrieve accommodations from the API',
+					});
+				}
 			},
 		},
 	};

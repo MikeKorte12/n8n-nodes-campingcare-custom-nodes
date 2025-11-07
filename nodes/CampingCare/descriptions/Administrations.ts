@@ -11,7 +11,7 @@ export const administrationsDescription = [
 			{
 				name: 'Get Administrations',
 				value: 'getAdministrations',
-				description: 'Retrieve all administrations with optional filters, sorting, and metadata',
+				description: 'You can retrieve the administrations of a specific user. Each API key has access to a single administration. Each user could have access to multiple administrations',
 				action: 'Get administrations',
 				routing: {
 					request: {
@@ -35,7 +35,7 @@ export const administrationsDescription = [
 			{
 				name: 'Get Administration',
 				value: 'getAdministration',
-				description: 'Retrieve detailed information for a specific administration by its ID',
+				description: 'Get a single administration by id',
 				action: 'Get administration',
 				routing: {
 					request: {
@@ -61,7 +61,7 @@ export const administrationsDescription = [
 		type: 'string' as NodePropertyTypes,
 		required: true,
 		description: 'Unique identifier of the administration to retrieve',
-		placeholder: 'e.g. 1234',
+		placeholder: '1234',
 		default: '',
 		displayOptions: { show: { resource: ['administrations'], operation: ['getAdministration'] } },
 	},
@@ -71,7 +71,7 @@ export const administrationsDescription = [
 		name: 'count',
 		type: 'boolean' as NodePropertyTypes,
 		description:
-			'If enabled, returns only the total count of administrations instead of full details',
+			'Whether to get a total count back of the administrations. Default: false.',
 		default: false,
 		displayOptions: { show: { resource: ['administrations'], operation: ['getAdministrations'] } },
 	},
@@ -79,7 +79,7 @@ export const administrationsDescription = [
 		displayName: 'Get Accommodations',
 		name: 'get_accommodations',
 		type: 'boolean' as NodePropertyTypes,
-		description: 'If enabled, includes accommodation data for each administration',
+		description: 'Whether to include accommodation data for each administration',
 		default: false,
 		displayOptions: { show: { resource: ['administrations'], operation: ['getAdministrations'] } },
 	},
@@ -87,7 +87,7 @@ export const administrationsDescription = [
 		displayName: 'Get Age Tables',
 		name: 'get_age_tables',
 		type: 'boolean' as NodePropertyTypes,
-		description: 'If enabled, includes age table information for the administration(s)',
+		description: 'Whether to include age table information for the administration(s)',
 		default: false,
 		displayOptions: {
 			show: {
@@ -100,7 +100,7 @@ export const administrationsDescription = [
 		displayName: 'Get Media',
 		name: 'get_media',
 		type: 'boolean' as NodePropertyTypes,
-		description: 'If enabled, includes media information for the administration(s)',
+		description: 'Whether to include media information for the administration(s)',
 		default: false,
 		displayOptions: {
 			show: {
@@ -114,7 +114,7 @@ export const administrationsDescription = [
 		name: 'get_meta',
 		type: 'boolean' as NodePropertyTypes,
 		description:
-			'If enabled, includes meta information for the administration(s). Note: OTA users may have limited access.',
+			'Whether to include meta information for the administration(s). Note: OTA users may have limited access.',
 		default: false,
 		displayOptions: {
 			show: {
@@ -127,7 +127,7 @@ export const administrationsDescription = [
 		displayName: 'Get VAT Tables',
 		name: 'get_vat_tables',
 		type: 'boolean' as NodePropertyTypes,
-		description: 'If enabled, includes VAT table information for the administration(s)',
+		description: 'Whether to include VAT table information for the administration',
 		default: false,
 		displayOptions: { show: { resource: ['administrations'], operation: ['getAdministration'] } },
 	},
@@ -135,7 +135,7 @@ export const administrationsDescription = [
 		displayName: 'Translations',
 		name: 'translations',
 		type: 'boolean' as NodePropertyTypes,
-		description: 'If enabled, includes translations for administration fields (if available)',
+		description: 'Whether to include translations for administration fields',
 		default: false,
 		displayOptions: {
 			show: {
@@ -150,6 +150,7 @@ export const administrationsDescription = [
 		name: 'limit',
 		type: 'number' as NodePropertyTypes,
 		description: 'Maximum number of administrations to return (minimum 1)',
+		placeholder: '10',
 		typeOptions: { minValue: 1 },
 		default: 5,
 		displayOptions: { show: { resource: ['administrations'], operation: ['getAdministrations'] } },
@@ -159,6 +160,7 @@ export const administrationsDescription = [
 		name: 'offset',
 		type: 'number' as NodePropertyTypes,
 		description: 'Number of items to skip before starting to collect results',
+		placeholder: '0',
 		typeOptions: { minValue: 0 },
 		default: 0,
 		displayOptions: { show: { resource: ['administrations'], operation: ['getAdministrations'] } },
@@ -182,7 +184,7 @@ export const administrationsDescription = [
 		name: 'search',
 		type: 'string' as NodePropertyTypes,
 		description: 'Filter administrations by ID or name. Partial matches are allowed.',
-		placeholder: 'Search by ID or name',
+		placeholder: 'Enter ID or name',
 		default: '',
 		displayOptions: { show: { resource: ['administrations'], operation: ['getAdministrations'] } },
 	},

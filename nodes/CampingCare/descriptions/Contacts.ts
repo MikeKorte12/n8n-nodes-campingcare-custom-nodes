@@ -12,7 +12,7 @@ export const contactsDescription = [
 			{
 				name: 'Get Contacts',
 				value: 'getContacts',
-				description: 'Retrieve all contacts with optional filters, sorting, and metadata',
+				description: 'Get a list of contacts for this administration',
 				action: 'Get contacts',
 				routing: {
 					request: {
@@ -38,7 +38,7 @@ export const contactsDescription = [
 			{
 				name: 'Get Contact',
 				value: 'getContact',
-				description: 'Retrieve detailed information of a specific contact by its ID',
+				description: 'Get a single contact by ID',
 				action: 'Get contact',
 				routing: {
 					request: {
@@ -58,7 +58,7 @@ export const contactsDescription = [
 			{
 				name: 'Add Contact',
 				value: 'addContact',
-				description: 'Create a new contact in the system with optional additional metadata',
+				description: 'Add either an empty contact or add parameters to a contact. All provided data will be added to the new contact.',
 				action: 'Add contact',
 				routing: {
 					request: {
@@ -83,6 +83,7 @@ export const contactsDescription = [
 							country_origin: '={{ $parameter["country_origin"] || undefined }}',
 							company: '={{ $parameter["company"] || undefined }}',
 							vat_number: '={{ $parameter["vat_number"] || undefined }}',
+							type: '={{ $parameter["type"] || undefined }}',
 							meta: '={{ $parameter["extraFields"]?.field?.filter(f => f.value !== "" && f.value !== undefined)?.map(f => ({ key: f.key, value: f.value })) || [] }}',
 						},
 					},
@@ -98,7 +99,7 @@ export const contactsDescription = [
 		type: 'string' as NodePropertyTypes,
 		required: true,
 		description: 'Unique identifier of the contact to retrieve',
-		placeholder: 'e.g. 1234567',
+		placeholder: '340',
 		default: '',
 		displayOptions: { show: { resource: ['contacts'], operation: ['getContact'] } },
 	},
@@ -106,7 +107,7 @@ export const contactsDescription = [
 		displayName: 'Count',
 		name: 'count',
 		type: 'boolean' as NodePropertyTypes,
-		description: 'If enabled, returns only the total number of contacts instead of full details',
+		description: 'Whether to return only the total number of contacts instead of full details',
 		default: false,
 		displayOptions: { show: { resource: ['contacts'], operation: ['getContacts'] } },
 	},
@@ -114,7 +115,7 @@ export const contactsDescription = [
 		displayName: 'Get Invoice Payments',
 		name: 'get_invoice_payments',
 		type: 'boolean' as NodePropertyTypes,
-		description: 'If enabled, includes invoice payment details for the contact(s)',
+		description: 'Whether to include invoice payment details for the contact(s)',
 		default: false,
 		displayOptions: { show: { resource: ['contacts'], operation: ['getContacts', 'getContact'] } },
 	},
@@ -122,7 +123,7 @@ export const contactsDescription = [
 		displayName: 'Get Invoices',
 		name: 'get_invoices',
 		type: 'boolean' as NodePropertyTypes,
-		description: 'If enabled, includes related invoices for the contact(s)',
+		description: 'Whether to include related invoices for the contact(s)',
 		default: false,
 		displayOptions: { show: { resource: ['contacts'], operation: ['getContacts', 'getContact'] } },
 	},
@@ -131,7 +132,7 @@ export const contactsDescription = [
 		name: 'get_meta',
 		type: 'boolean' as NodePropertyTypes,
 		description:
-			'If enabled, includes meta information about the contact. Note: OTA users have limited access.',
+			'Whether to include meta information about the contact. Note: OTA users have limited access.',
 		default: false,
 		displayOptions: { show: { resource: ['contacts'], operation: ['getContacts', 'getContact'] } },
 	},
@@ -139,7 +140,7 @@ export const contactsDescription = [
 		displayName: 'Get Reservation Payment Terms',
 		name: 'get_reservation_payment_terms',
 		type: 'boolean' as NodePropertyTypes,
-		description: 'If enabled, includes reservation payment term information for the contact(s)',
+		description: 'Whether to include reservation payment term information for the contact(s)',
 		default: false,
 		displayOptions: { show: { resource: ['contacts'], operation: ['getContacts', 'getContact'] } },
 	},
@@ -147,7 +148,7 @@ export const contactsDescription = [
 		displayName: 'Get Reservations',
 		name: 'get_reservations',
 		type: 'boolean' as NodePropertyTypes,
-		description: 'If enabled, includes reservations related to the contact(s)',
+		description: 'Whether to include reservations related to the contact(s)',
 		default: false,
 		displayOptions: { show: { resource: ['contacts'], operation: ['getContacts', 'getContact'] } },
 	},
@@ -157,6 +158,7 @@ export const contactsDescription = [
 		name: 'limit',
 		type: 'number' as NodePropertyTypes,
 		description: 'Maximum number of contacts to return (minimum 1)',
+		placeholder: '10',
 		typeOptions: { minValue: 1 },
 		default: 10,
 		displayOptions: { show: { resource: ['contacts'], operation: ['getContacts'] } },
@@ -166,6 +168,7 @@ export const contactsDescription = [
 		name: 'offset',
 		type: 'number' as NodePropertyTypes,
 		description: 'Number of contacts to skip before starting to collect results',
+		placeholder: '0',
 		typeOptions: { minValue: 0 },
 		default: 0,
 		displayOptions: { show: { resource: ['contacts'], operation: ['getContacts'] } },
@@ -174,7 +177,7 @@ export const contactsDescription = [
 		displayName: 'Order',
 		name: 'order',
 		type: 'options' as NodePropertyTypes,
-		description: 'Select the sorting order of the returned contacts. — None — will not sort.',
+		description: 'Sorting order of the returned contacts. Choose ascending (ASC) or descending (DESC).',
 		options: [
 			{ name: '— None —', value: '' },
 			{ name: 'ASC', value: 'asc' },
@@ -187,7 +190,7 @@ export const contactsDescription = [
 		displayName: 'Order By',
 		name: 'order_by',
 		type: 'options' as NodePropertyTypes,
-		description: 'Select the field to sort the results by. — None — leaves results unsorted.',
+		description: 'Field to sort the results by',
 		options: [
 			{ name: '— None —', value: '' },
 			{ name: 'ID', value: 'id' },
@@ -210,13 +213,13 @@ export const contactsDescription = [
 		name: 'search',
 		type: 'string' as NodePropertyTypes,
 		description: 'Filter contacts by ID or name. Partial matches are allowed.',
-		placeholder: 'Search by ID or name',
+		placeholder: 'support@camping.care',
 		default: '',
 		displayOptions: { show: { resource: ['contacts'], operation: ['getContacts'] } },
 	},
 
-	createContactField('first_name', 'First Name', 'First name of the contact'),
-	createContactField('last_name', 'Last Name', 'Last name of the contact', { required: true }),
+	createContactField('first_name', 'First Name', 'First name of the contact', { placeholder: 'John' }),
+	createContactField('last_name', 'Last Name', 'Last name of the contact', { required: true, placeholder: 'Doe' }),
 	{
 		displayName: 'Gender',
 		name: 'gender',
@@ -232,6 +235,7 @@ export const contactsDescription = [
 		displayOptions: createDisplayOptions('contacts', 'addContact'),
 	},
 	createContactField('birthday', 'Birthday', 'Birthday of the contact in YYYY-MM-DD format', {
+		placeholder: '1990-01-15',
 		typeOptions: {
 			validation: [
 				{
@@ -244,14 +248,14 @@ export const contactsDescription = [
 			],
 		},
 	}),
-	createContactField('email', 'Email', 'Email address of the contact', { required: true }),
-	createContactField('phone', 'Phone', 'Primary phone number of the contact'),
-	createContactField('phone_mobile', 'Mobile Phone', 'Mobile phone number of the contact'),
-	createContactField('address', 'Address', "Street name of the contact's address"),
-	createContactField('address_number', 'Address Number', "House number of the contact's address"),
-	createContactField('city', 'City', 'City where the contact resides'),
-	createContactField('state', 'State', 'State or province of the contact'),
-	createContactField('zipcode', 'Zipcode', "Postal code of the contact's address"),
+	createContactField('email', 'Email', 'Email address of the contact', { required: true, placeholder: 'john.doe@example.com' }),
+	createContactField('phone', 'Phone', 'Primary phone number of the contact', { placeholder: '+31123456789' }),
+	createContactField('phone_mobile', 'Mobile Phone', 'Mobile phone number of the contact', { placeholder: '+31612345678' }),
+	createContactField('address', 'Address', "Street name of the contact's address", { placeholder: 'Wilhelminastraat' }),
+	createContactField('address_number', 'Address Number', "House number of the contact's address", { placeholder: '8' }),
+	createContactField('city', 'City', 'City where the contact resides', { placeholder: 'Denekamp' }),
+	createContactField('state', 'State', 'State or province of the contact', { placeholder: 'Overijssel' }),
+	createContactField('zipcode', 'Zipcode', "Postal code of the contact's address", { placeholder: '7591TN' }),
 	{
 		displayName: 'Country',
 		name: 'country',
@@ -265,8 +269,9 @@ export const contactsDescription = [
 		'id_type',
 		'ID Type',
 		'Type of identification document (e.g. Passport, ID Card)',
+		{ placeholder: 'Passport' }
 	),
-	createContactField('id_nr', 'ID Number', 'Identification number of the document'),
+	createContactField('id_nr', 'ID Number', 'Identification number of the document', { placeholder: 'AB1234567' }),
 	{
 		displayName: 'Country of Origin',
 		name: 'country_origin',
@@ -276,12 +281,27 @@ export const contactsDescription = [
 		default: '',
 		displayOptions: createDisplayOptions('contacts', 'addContact'),
 	},
-	createContactField('company', 'Company', 'Company name if the contact represents a business'),
+	createContactField('company', 'Company', 'Company name if the contact represents a business', { placeholder: 'Acme Corporation' }),
 	createContactField(
 		'vat_number',
 		'VAT Number',
 		'VAT number associated with the company (if applicable)',
+		{ placeholder: 'NL123456789B01' }
 	),
+	{
+		displayName: 'Type',
+		name: 'type',
+		type: 'options' as NodePropertyTypes,
+		description: 'Type of contact',
+		options: [
+			{ name: '— None —', value: '' },
+			{ name: 'Main Traveler', value: 'main_traveler' },
+			{ name: 'Co Traveler', value: 'co_traveler' },
+			{ name: 'Booker', value: 'booker' },
+		],
+		default: '',
+		displayOptions: createDisplayOptions('contacts', 'addContact'),
+	},
 	{
 		displayName: 'Extra Fields',
 		name: 'extraFields',
