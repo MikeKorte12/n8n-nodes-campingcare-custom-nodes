@@ -11,7 +11,8 @@ export const priceCalculationDescription = [
 			{
 				name: 'Price Calculation',
 				value: 'calculatePrice',
-				description: 'Calculate accommodation price to get calculation ID and hash for creating a reservation',
+				description:
+					'Calculate accommodation price to get calculation ID and hash for creating a reservation',
 				action: 'Calculate price',
 				routing: {
 					request: {
@@ -27,7 +28,8 @@ export const priceCalculationDescription = [
 							get_guests_price: '={{ $parameter["get_guests_price"] || undefined }}',
 							get_taxes_price: '={{ $parameter["get_taxes_price"] || undefined }}',
 							get_discounts_price: '={{ $parameter["get_discounts_price"] || undefined }}',
-							get_required_options_price: '={{ $parameter["get_required_options_price"] || undefined }}',
+							get_required_options_price:
+								'={{ $parameter["get_required_options_price"] || undefined }}',
 							get_options: '={{ $parameter["get_options"] || undefined }}',
 							get_deposit: '={{ $parameter["get_deposit"] || undefined }}',
 							channel_id: '={{ $parameter["channel_id"] || undefined }}',
@@ -73,7 +75,8 @@ export const priceCalculationDescription = [
 		name: 'arrival',
 		type: 'string' as NodePropertyTypes,
 		required: true,
-		description: 'Arrival date and time for the booking (format: YYYY-MM-DD or YYYY-MM-DD HH:MM:SS)',
+		description:
+			'Arrival date and time for the booking (format: YYYY-MM-DD or YYYY-MM-DD HH:MM:SS)',
 		placeholder: '2025-05-15 or 2025-05-15 17:00:00',
 		default: '',
 		displayOptions: {
@@ -90,7 +93,8 @@ export const priceCalculationDescription = [
 		default: '',
 		required: true,
 		placeholder: '2025-05-22 or 2025-05-22 11:00:00',
-		description: 'Departure date and time for the booking (format: YYYY-MM-DD or YYYY-MM-DD HH:MM:SS)',
+		description:
+			'Departure date and time for the booking (format: YYYY-MM-DD or YYYY-MM-DD HH:MM:SS)',
 		displayOptions: {
 			show: {
 				resource: ['priceCalculation'],
@@ -104,7 +108,8 @@ export const priceCalculationDescription = [
 		type: 'number' as NodePropertyTypes,
 		default: 2,
 		placeholder: '2',
-		description: 'Number of persons staying in the accommodation. The price calculation always will include 2 persons calculated using the default age table.',
+		description:
+			'Number of persons staying in the accommodation. The price calculation always will include 2 persons calculated using the default age table.',
 		displayOptions: {
 			show: {
 				resource: ['priceCalculation'],
@@ -169,7 +174,8 @@ export const priceCalculationDescription = [
 		name: 'get_options',
 		type: 'boolean' as NodePropertyTypes,
 		default: false,
-		description: 'Whether to get available bookable options (baby chair, extra tent, dog, etc.). The option IDs which are coming from the price calculation result can be used in the add options method.',
+		description:
+			'Whether to get available bookable options (baby chair, extra tent, dog, etc.). The option IDs which are coming from the price calculation result can be used in the add options method.',
 		displayOptions: {
 			show: {
 				resource: ['priceCalculation'],
@@ -248,7 +254,8 @@ export const priceCalculationDescription = [
 		type: 'string' as NodePropertyTypes,
 		default: '',
 		placeholder: '[{"ID":"14709","count":"4"},{"ID":"14710","count":"1"}]',
-		description: 'Age tables are used using the age table ID and count. Provide detailed guest information (JSON array format).',
+		description:
+			'Age tables are used using the age table ID and count. Provide detailed guest information (JSON array format).',
 		displayOptions: {
 			show: {
 				resource: ['priceCalculation'],
@@ -262,7 +269,8 @@ export const priceCalculationDescription = [
 		type: 'string' as NodePropertyTypes,
 		default: '',
 		placeholder: '[{"birthdate":"2013-08-02","count":"1"},{"birthdate":"1977-03-07","count":"1"}]',
-		description: 'Birth tables are used when you know the birth days of the guests. The price calculation will automatically transform them to age_tables (JSON array format).',
+		description:
+			'Birth tables are used when you know the birth days of the guests. The price calculation will automatically transform them to age_tables (JSON array format).',
 		displayOptions: {
 			show: {
 				resource: ['priceCalculation'],
@@ -304,7 +312,8 @@ export const priceCalculationDescription = [
 		type: 'string' as NodePropertyTypes,
 		default: '',
 		placeholder: '1234',
-		description: 'If a reservation ID is provided, the calculation is checked against this reservation',
+		description:
+			'If a reservation ID is provided, the calculation is checked against this reservation',
 		displayOptions: {
 			show: {
 				resource: ['priceCalculation'],

@@ -11,7 +11,8 @@ export const administrationsDescription = [
 			{
 				name: 'Get Administrations',
 				value: 'getAdministrations',
-				description: 'You can retrieve the administrations of a specific user. Each API key has access to a single administration. Each user could have access to multiple administrations',
+				description:
+					'You can retrieve the administrations of a specific user. Each API key has access to a single administration. Each user could have access to multiple administrations',
 				action: 'Get administrations',
 				routing: {
 					request: {
@@ -70,8 +71,7 @@ export const administrationsDescription = [
 		displayName: 'Count',
 		name: 'count',
 		type: 'boolean' as NodePropertyTypes,
-		description:
-			'Whether to get a total count back of the administrations. Default: false.',
+		description: 'Whether to get a total count back of the administrations. Default: false.',
 		default: false,
 		displayOptions: { show: { resource: ['administrations'], operation: ['getAdministrations'] } },
 	},

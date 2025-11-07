@@ -11,8 +11,7 @@ export const reservationsDescription = [
 			{
 				name: 'Get Reservations',
 				value: 'getReservations',
-				description:
-					'Get a list of reservations with various filtering options',
+				description: 'Get a list of reservations with various filtering options',
 				action: 'Get reservations',
 				routing: {
 					request: {
@@ -58,8 +57,7 @@ export const reservationsDescription = [
 			{
 				name: 'Get Reservation',
 				value: 'getReservation',
-				description:
-					'Get a single reservation by ID with optional additional data',
+				description: 'Get a single reservation by ID with optional additional data',
 				action: 'Get reservation',
 				routing: {
 					request: {

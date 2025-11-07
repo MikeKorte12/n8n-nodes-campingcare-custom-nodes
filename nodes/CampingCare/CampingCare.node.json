@@ -1,18 +1,18 @@
 {
-  "node": "n8n-nodes-base.campingcare",
-  "nodeVersion": "1.0",
-  "codexVersion": "1.0",
-  "categories": ["Productivity"],
-  "resources": {
-    "primaryDocumentation": [
-      {
-        "url": "https://docs.campingcare.com/n8n-node"
-      }
-    ],
-    "credentialDocumentation": [
-      {
-        "url": "https://docs.campingcare.com/n8n-credentials"
-      }
-    ]
-  }
+	"node": "n8n-nodes-base.campingcare",
+	"nodeVersion": "1.0",
+	"codexVersion": "1.0",
+	"categories": ["Productivity"],
+	"resources": {
+		"primaryDocumentation": [
+			{
+				"url": "https://docs.campingcare.com/n8n-node"
+			}
+		],
+		"credentialDocumentation": [
+			{
+				"url": "https://docs.campingcare.com/n8n-credentials"
+			}
+		]
+	}
 }

@@ -58,7 +58,8 @@ export const contactsDescription = [
 			{
 				name: 'Add Contact',
 				value: 'addContact',
-				description: 'Add either an empty contact or add parameters to a contact. All provided data will be added to the new contact.',
+				description:
+					'Add either an empty contact or add parameters to a contact. All provided data will be added to the new contact.',
 				action: 'Add contact',
 				routing: {
 					request: {
@@ -177,7 +178,8 @@ export const contactsDescription = [
 		displayName: 'Order',
 		name: 'order',
 		type: 'options' as NodePropertyTypes,
-		description: 'Sorting order of the returned contacts. Choose ascending (ASC) or descending (DESC).',
+		description:
+			'Sorting order of the returned contacts. Choose ascending (ASC) or descending (DESC).',
 		options: [
 			{ name: '— None —', value: '' },
 			{ name: 'ASC', value: 'asc' },
@@ -218,8 +220,13 @@ export const contactsDescription = [
 		displayOptions: { show: { resource: ['contacts'], operation: ['getContacts'] } },
 	},
 
-	createContactField('first_name', 'First Name', 'First name of the contact', { placeholder: 'John' }),
-	createContactField('last_name', 'Last Name', 'Last name of the contact', { required: true, placeholder: 'Doe' }),
+	createContactField('first_name', 'First Name', 'First name of the contact', {
+		placeholder: 'John',
+	}),
+	createContactField('last_name', 'Last Name', 'Last name of the contact', {
+		required: true,
+		placeholder: 'Doe',
+	}),
 	{
 		displayName: 'Gender',
 		name: 'gender',
@@ -248,14 +255,29 @@ export const contactsDescription = [
 			],
 		},
 	}),
-	createContactField('email', 'Email', 'Email address of the contact', { required: true, placeholder: 'john.doe@example.com' }),
-	createContactField('phone', 'Phone', 'Primary phone number of the contact', { placeholder: '+31123456789' }),
-	createContactField('phone_mobile', 'Mobile Phone', 'Mobile phone number of the contact', { placeholder: '+31612345678' }),
-	createContactField('address', 'Address', "Street name of the contact's address", { placeholder: 'Wilhelminastraat' }),
-	createContactField('address_number', 'Address Number', "House number of the contact's address", { placeholder: '8' }),
+	createContactField('email', 'Email', 'Email address of the contact', {
+		required: true,
+		placeholder: 'john.doe@example.com',
+	}),
+	createContactField('phone', 'Phone', 'Primary phone number of the contact', {
+		placeholder: '+31123456789',
+	}),
+	createContactField('phone_mobile', 'Mobile Phone', 'Mobile phone number of the contact', {
+		placeholder: '+31612345678',
+	}),
+	createContactField('address', 'Address', "Street name of the contact's address", {
+		placeholder: 'Wilhelminastraat',
+	}),
+	createContactField('address_number', 'Address Number', "House number of the contact's address", {
+		placeholder: '8',
+	}),
 	createContactField('city', 'City', 'City where the contact resides', { placeholder: 'Denekamp' }),
-	createContactField('state', 'State', 'State or province of the contact', { placeholder: 'Overijssel' }),
-	createContactField('zipcode', 'Zipcode', "Postal code of the contact's address", { placeholder: '7591TN' }),
+	createContactField('state', 'State', 'State or province of the contact', {
+		placeholder: 'Overijssel',
+	}),
+	createContactField('zipcode', 'Zipcode', "Postal code of the contact's address", {
+		placeholder: '7591TN',
+	}),
 	{
 		displayName: 'Country',
 		name: 'country',
@@ -269,9 +291,11 @@ export const contactsDescription = [
 		'id_type',
 		'ID Type',
 		'Type of identification document (e.g. Passport, ID Card)',
-		{ placeholder: 'Passport' }
+		{ placeholder: 'Passport' },
 	),
-	createContactField('id_nr', 'ID Number', 'Identification number of the document', { placeholder: 'AB1234567' }),
+	createContactField('id_nr', 'ID Number', 'Identification number of the document', {
+		placeholder: 'AB1234567',
+	}),
 	{
 		displayName: 'Country of Origin',
 		name: 'country_origin',
@@ -281,12 +305,14 @@ export const contactsDescription = [
 		default: '',
 		displayOptions: createDisplayOptions('contacts', 'addContact'),
 	},
-	createContactField('company', 'Company', 'Company name if the contact represents a business', { placeholder: 'Acme Corporation' }),
+	createContactField('company', 'Company', 'Company name if the contact represents a business', {
+		placeholder: 'Acme Corporation',
+	}),
 	createContactField(
 		'vat_number',
 		'VAT Number',
 		'VAT number associated with the company (if applicable)',
-		{ placeholder: 'NL123456789B01' }
+		{ placeholder: 'NL123456789B01' },
 	),
 	{
 		displayName: 'Type',
