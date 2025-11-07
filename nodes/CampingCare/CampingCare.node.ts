@@ -5,6 +5,7 @@ import { administrationsDescription } from './descriptions/Administrations';
 import { contactsDescription } from './descriptions/Contacts';
 import { getReservationsDescription } from './descriptions/GetReservations';
 import { createReservationsDescription } from './descriptions/CreateReservations';
+import { API_BASE_URL, API_ENDPOINTS, EXCLUDED_CONTACT_FIELDS } from './utils/constants';
 
 export class CampingCare implements INodeType {
 	description: INodeTypeDescription = {
@@ -22,7 +23,7 @@ export class CampingCare implements INodeType {
 		usableAsTool: true,
 
 		requestDefaults: {
-			baseURL: 'https://api.camping.care/v21',
+			baseURL: API_BASE_URL,
 			headers: {
 				Accept: 'application/json',
 				'Content-Type': 'application/json',
@@ -59,7 +60,7 @@ export class CampingCare implements INodeType {
 
 				const response = await this.helpers.httpRequest({
 					method: 'GET',
-					url: 'https://api.camping.care/v21/fields',
+					url: `${API_BASE_URL}${API_ENDPOINTS.FIELDS}`,
 					qs: {
 						type: 'contact',
 						status: 'active',
@@ -72,31 +73,8 @@ export class CampingCare implements INodeType {
 					},
 				});
 
-				const excludeFields = [
-					'gender',
-					'first_name',
-					'last_name',
-					'address',
-					'address_number',
-					'birthday',
-					'city',
-					'company',
-					'country',
-					'country_origin',
-					'email',
-					'id_nr',
-					'phone',
-					'zipcode',
-					'phone_mobile',
-					'vat_number',
-					'state',
-					'id_type',
-					'created',
-					'create_date',
-				];
-
 				return response
-					.filter((field: any) => !excludeFields.includes(field.key))
+					.filter((field: any) => !EXCLUDED_CONTACT_FIELDS.includes(field.key))
 					.map((field: any) => ({
 						name: field.name,
 						value: field.key,
@@ -107,7 +85,7 @@ export class CampingCare implements INodeType {
 
 				const response = await this.helpers.httpRequest({
 					method: 'GET',
-					url: 'https://api.camping.care/v21/fields/forms',
+					url: `${API_BASE_URL}${API_ENDPOINTS.FIELDS_FORMS}`,
 					qs: {
 						type: 'booking',
 					},
@@ -132,7 +110,7 @@ export class CampingCare implements INodeType {
 
 					const response = await this.helpers.httpRequest({
 						method: 'GET',
-						url: 'https://api.camping.care/v21/fields',
+						url: `${API_BASE_URL}${API_ENDPOINTS.FIELDS}`,
 						qs: { type: 'contact', status: 'active' },
 						headers: {
 							Accept: 'application/json',
@@ -179,7 +157,7 @@ export class CampingCare implements INodeType {
 
 				const response = await this.helpers.httpRequest({
 					method: 'GET',
-					url: 'https://api.camping.care/v21/accommodations',
+					url: `${API_BASE_URL}${API_ENDPOINTS.ACCOMMODATIONS}`,
 					headers: {
 						Accept: 'application/json',
 						'Content-Type': 'application/json',

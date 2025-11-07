@@ -8,6 +8,8 @@ import type {
 	IWebhookResponseData,
 } from 'n8n-workflow';
 import { NodeApiError, NodeConnectionTypes } from 'n8n-workflow';
+import { API_BASE_URL, API_ENDPOINTS } from './utils/constants';
+import { extractWebhookId } from './utils/helpers';
 
 export class CampingCareTrigger implements INodeType {
 	description: INodeTypeDescription = {
@@ -40,7 +42,8 @@ export class CampingCareTrigger implements INodeType {
 					loadOptionsMethod: 'getWebhookEvents',
 				},
 				default: [],
-				description: 'Choose from the list, or specify IDs using an <a href="https://docs.n8n.io/code/expressions/">expression</a>',
+				description:
+					'Choose from the list, or specify IDs using an <a href="https://docs.n8n.io/code/expressions/">expression</a>',
 			},
 		],
 	};
@@ -53,7 +56,7 @@ export class CampingCareTrigger implements INodeType {
 				try {
 					const events = await this.helpers.httpRequest({
 						method: 'GET',
-						url: 'https://api.camping.care/v21/webhooks/events',
+						url: `${API_BASE_URL}${API_ENDPOINTS.WEBHOOKS_EVENTS}`,
 						headers: {
 							Authorization: `Bearer ${credentials.apiKey}`,
 							'Content-Type': 'application/json',
@@ -85,7 +88,7 @@ export class CampingCareTrigger implements INodeType {
 				try {
 					await this.helpers.httpRequest({
 						method: 'GET',
-						url: `https://api.camping.care/v21/webhooks/${webhookData.webhookId}`,
+						url: `${API_BASE_URL}${API_ENDPOINTS.WEBHOOKS}/${webhookData.webhookId}`,
 						headers: {
 							Authorization: `Bearer ${credentials.apiKey}`,
 							'Content-Type': 'application/json',
@@ -93,6 +96,7 @@ export class CampingCareTrigger implements INodeType {
 					});
 					return true;
 				} catch (error) {
+					console.error('Failed to check webhook existence:', error);
 					return false;
 				}
 			},
@@ -109,7 +113,7 @@ export class CampingCareTrigger implements INodeType {
 				try {
 					const responseData = await this.helpers.httpRequest({
 						method: 'POST',
-						url: 'https://api.camping.care/v21/webhooks',
+						url: `${API_BASE_URL}${API_ENDPOINTS.WEBHOOKS}`,
 						headers: {
 							Authorization: `Bearer ${credentials.apiKey}`,
 							'Content-Type': 'application/json',
@@ -118,7 +122,7 @@ export class CampingCareTrigger implements INodeType {
 					});
 
 					const webhookData = this.getWorkflowStaticData('node');
-					webhookData.webhookId = responseData.id || responseData.webhook_id || responseData.data?.id;
+					webhookData.webhookId = extractWebhookId(responseData);
 					return true;
 				} catch (error) {
 					throw new NodeApiError(this.getNode(), error, {
@@ -136,7 +140,7 @@ export class CampingCareTrigger implements INodeType {
 				try {
 					await this.helpers.httpRequest({
 						method: 'DELETE',
-						url: `https://api.camping.care/v21/webhooks/${webhookData.webhookId}`,
+						url: `${API_BASE_URL}${API_ENDPOINTS.WEBHOOKS}/${webhookData.webhookId}`,
 						headers: {
 							Authorization: `Bearer ${credentials.apiKey}`,
 							'Content-Type': 'application/json',

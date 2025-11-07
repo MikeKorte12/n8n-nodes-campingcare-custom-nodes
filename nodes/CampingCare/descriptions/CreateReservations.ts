@@ -150,6 +150,17 @@ export const createReservationsDescription = [
 		description: 'Arrival date for the booking (format: YYYY-MM-DD)',
 		placeholder: 'YYYY-MM-DD',
 		default: '',
+		typeOptions: {
+			validation: [
+				{
+					type: 'regex',
+					properties: {
+						regex: '^\\d{4}-\\d{2}-\\d{2}$',
+						errorMessage: 'Date must be in YYYY-MM-DD format',
+					},
+				},
+			],
+		},
 		displayOptions: {
 			show: {
 				resource: ['resourceCreateReservations'],
@@ -166,6 +177,17 @@ export const createReservationsDescription = [
 		required: true,
 		placeholder: 'YYYY-MM-DD',
 		description: 'Departure date for the booking (format: YYYY-MM-DD)',
+		typeOptions: {
+			validation: [
+				{
+					type: 'regex',
+					properties: {
+						regex: '^\\d{4}-\\d{2}-\\d{2}$',
+						errorMessage: 'Date must be in YYYY-MM-DD format',
+					},
+				},
+			],
+		},
 		displayOptions: {
 			show: {
 				resource: ['resourceCreateReservations'],

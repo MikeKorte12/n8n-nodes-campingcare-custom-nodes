@@ -1,48 +1,208 @@
-![Banner image](https://user-images.githubusercontent.com/10284570/173569848-c624317f-42b1-45a6-ab09-f0ea3c247648.png)
+# n8n-nodes-campingcare-custom-nodes
 
-# n8n-nodes-starter
+Custom n8n nodes for integrating with the [Camping Care API](https://api.camping.care). These nodes allow you to interact with contacts, reservations, accommodations, and webhooks in your n8n workflows.
 
-This repo contains example nodes to help you get started building your own custom integrations for [n8n](https://n8n.io). It includes the node linter and other dependencies.
+## Features
 
-To make your custom node available to the community, you must create it as an npm package, and [submit it to the npm registry](https://docs.npmjs.com/packages-and-modules/contributing-packages-to-the-registry).
+This package provides the following nodes:
 
-If you would like your node to be available on n8n cloud you can also [submit your node for verification](https://docs.n8n.io/integrations/creating-nodes/deploy/submit-community-nodes/).
+### Camping Care Node
 
-## Prerequisites
+Regular node for making API calls to Camping Care:
 
-You need the following installed on your development machine:
+- **Administrations**: Manage administration data
+- **Contacts**: Create, retrieve, and search contacts
+- **Reservations**: Get and create reservations with price calculations
+- **Accommodations**: List and manage accommodations
 
-* [git](https://git-scm.com/downloads)
-* Node.js and npm. Minimum version Node 20. You can find instructions on how to install both using nvm (Node Version Manager) for Linux, Mac, and WSL [here](https://github.com/nvm-sh/nvm). For Windows users, refer to Microsoft's guide to [Install NodeJS on Windows](https://docs.microsoft.com/en-us/windows/dev-environment/javascript/nodejs-on-windows).
-* Install n8n with:
-  ```
-  npm install n8n -g
-  ```
-* Recommended: follow n8n's guide to [set up your development environment](https://docs.n8n.io/integrations/creating-nodes/build/node-development-environment/).
+### Camping Care Trigger Node
 
-## Using this starter
+Webhook trigger node that listens for events from Camping Care:
 
-These are the basic steps for working with the starter. For detailed guidance on creating and publishing nodes, refer to the [documentation](https://docs.n8n.io/integrations/creating-nodes/).
+- Automatically creates and manages webhooks
+- Supports multiple event types
+- Receives real-time updates from Camping Care
 
-1. [Generate a new repository](https://github.com/n8n-io/n8n-nodes-starter/generate) from this template repository.
-2. Clone your new repo:
-   ```
-   git clone https://github.com/<your organization>/<your-repo-name>.git
-   ```
-3. Run `npm i` to install dependencies.
-4. Open the project in your editor.
-5. Browse the examples in `/nodes` and `/credentials`. Modify the examples, or replace them with your own nodes.
-6. Update the `package.json` to match your details.
-7. Run `npm run lint` to check for errors or `npm run lintfix` to automatically fix errors when possible.
-8. Test your node locally. Refer to [Run your node locally](https://docs.n8n.io/integrations/creating-nodes/test/run-node-locally/) for guidance.
-9. Replace this README with documentation for your node. Use the [README_TEMPLATE](README_TEMPLATE.md) to get started.
-10. Update the LICENSE file to use your details.
-11. [Publish](https://docs.npmjs.com/packages-and-modules/contributing-packages-to-the-registry) your package to npm.
+## Installation
 
-## More information
+### Prerequisites
 
-Refer to our [documentation on creating nodes](https://docs.n8n.io/integrations/creating-nodes/) for detailed information on building your own nodes.
+- Node.js 20.x or higher
+- n8n installed (minimum version 0.x)
+- A valid Camping Care API key
+
+### Install via npm
+
+```bash
+npm install n8n-nodes-campingcare-custom-nodes
+```
+
+### Install in n8n
+
+1. Stop your n8n instance
+2. Install the package: `npm install n8n-nodes-campingcare-custom-nodes`
+3. Restart n8n
+4. The nodes will appear in the nodes panel
+
+## Configuration
+
+### Setting up API Credentials
+
+1. In n8n, go to **Credentials** > **New**
+2. Search for "Camping Care API"
+3. Enter your API credentials:
+   - **API Key**: Your Camping Care API key (available in your Camping Care dashboard)
+
+## Usage Examples
+
+### Example 1: Create a Contact
+
+1. Add the "Camping Care" node
+2. Select **Resource**: Contact
+3. Select **Operation**: Add Contact
+4. Fill in the required fields:
+   - Last Name (required)
+   - Email (required)
+   - Additional optional fields as needed
+
+### Example 2: Create a Reservation
+
+1. Add the "Camping Care" node
+2. Select **Resource**: Create Reservation
+3. Choose operation type:
+   - **Using Price Calculation**: Calculate price first, then create
+   - **With Start/End Date**: Automatic price calculation
+   - **Force Reservation**: Use custom pricing data
+
+### Example 3: Listen for Webhook Events
+
+1. Add the "Camping Care Trigger" node
+2. Select the event types you want to listen for
+3. Activate the workflow
+4. The webhook will be automatically created in Camping Care
+
+## Supported Operations
+
+### Contacts
+
+- **Get Contacts**: Retrieve contacts with filtering, sorting, and pagination
+- **Get Contact**: Get a specific contact by ID
+- **Add Contact**: Create a new contact with metadata support
+
+### Reservations
+
+- **Get Reservations**: List reservations with filters
+- **Create Reservation**: Multiple methods for creating reservations
+- **Calculate Price**: Get pricing before creating a reservation
+
+### Administrations
+
+- Manage administration data and settings
+
+## API Documentation
+
+For detailed API documentation, visit: [https://api.camping.care/docs](https://api.camping.care)
+
+## Development
+
+### Setup Development Environment
+
+```bash
+# Clone the repository
+git clone https://github.com/MikeKorte12/n8n-nodes-campingcare-custom-nodes.git
+
+# Install dependencies
+npm install
+
+# Build the project
+npm run build
+
+# Link for local testing
+npm link
+
+# In your n8n installation directory
+npm link n8n-nodes-campingcare-custom-nodes
+```
+
+### Project Structure
+
+```
+nodes/
+  CampingCare/
+    CampingCare.node.ts          # Main node
+    CampingCareTrigger.node.ts   # Webhook trigger node
+    descriptions/                 # Operation descriptions
+      Contacts.ts
+      Reservations.ts
+      Administrations.ts
+      CreateReservations.ts
+    utils/                        # Utility functions
+      constants.ts                # API constants
+      helpers.ts                  # Helper functions
+credentials/
+  CampingCareApi.credentials.ts  # API credentials definition
+```
+
+### Running Tests
+
+```bash
+npm run lint          # Check for linting errors
+npm run lintfix       # Auto-fix linting errors
+npm run build         # Build the project
+```
+
+## Troubleshooting
+
+### Common Issues
+
+**Issue**: "Invalid API Key" error
+
+- **Solution**: Verify your API key in the Camping Care dashboard and update it in n8n credentials
+
+**Issue**: Webhook not receiving events
+
+- **Solution**:
+  - Check that the workflow is activated
+  - Verify the webhook exists in Camping Care dashboard
+  - Ensure n8n is accessible from the internet (for webhooks)
+
+**Issue**: Date format errors in reservations
+
+- **Solution**: Ensure dates are in YYYY-MM-DD format
+
+## Contributing
+
+Contributions are welcome! Please follow these steps:
+
+1. Fork the repository
+2. Create a feature branch: `git checkout -b feature/my-feature`
+3. Commit your changes: `git commit -am 'Add new feature'`
+4. Push to the branch: `git push origin feature/my-feature`
+5. Submit a pull request
+
+## Changelog
+
+### Version 0.1.0
+
+- Initial release
+- Support for Contacts, Reservations, and Accommodations
+- Webhook trigger support
+- Price calculation features
 
 ## License
 
-[MIT](https://github.com/n8n-io/n8n-nodes-starter/blob/master/LICENSE.md)
+[MIT](LICENSE.md)
+
+## Support
+
+For support, please:
+
+- Check the [API Documentation](https://api.camping.care/docs)
+- Open an issue on [GitHub](https://github.com/MikeKorte12/n8n-nodes-campingcare-custom-nodes/issues)
+- Contact Camping Care support for API-related questions
+
+## Credits
+
+Created by [MikeKorte12](https://github.com/MikeKorte12)
+
+Built with the [n8n nodes starter](https://github.com/n8n-io/n8n-nodes-starter)
