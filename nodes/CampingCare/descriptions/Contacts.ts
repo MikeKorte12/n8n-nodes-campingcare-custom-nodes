@@ -92,7 +92,6 @@ export const contactsDescription = [
 		default: 'getContacts',
 	},
 
-	// === Get Contact / Get Contacts filters ===
 	{
 		displayName: 'Contact ID',
 		name: 'contactId',
@@ -153,7 +152,6 @@ export const contactsDescription = [
 		displayOptions: { show: { resource: ['contacts'], operation: ['getContacts', 'getContact'] } },
 	},
 
-	// === Pagination & Sorting ===
 	{
 		displayName: 'Limit',
 		name: 'limit',
@@ -217,7 +215,6 @@ export const contactsDescription = [
 		displayOptions: { show: { resource: ['contacts'], operation: ['getContacts'] } },
 	},
 
-	// === Add Contact ===
 	createContactField('first_name', 'First Name', 'First name of the contact'),
 	createContactField('last_name', 'Last Name', 'Last name of the contact', { required: true }),
 	{

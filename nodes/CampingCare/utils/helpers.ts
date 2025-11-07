@@ -1,8 +1,5 @@
 import type { NodePropertyTypes } from 'n8n-workflow';
 
-/**
- * Helper function to create display options for node properties
- */
 export const createDisplayOptions = (
 	resource: string,
 	operation: string | string[],
@@ -17,9 +14,6 @@ export const createDisplayOptions = (
 	},
 });
 
-/**
- * Helper function to create contact field properties with less duplication
- */
 export const createContactField = (
 	name: string,
 	displayName: string,
@@ -43,9 +37,6 @@ export const createContactField = (
 	...(options.placeholder && { placeholder: options.placeholder }),
 });
 
-/**
- * Validate webhook ID from API response
- */
 export const extractWebhookId = (responseData: any): string => {
 	const webhookId = responseData.id || responseData.webhook_id || responseData.data?.id;
 

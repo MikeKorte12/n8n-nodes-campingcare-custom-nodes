@@ -83,7 +83,6 @@ export const getReservationsDescription = [
 		default: 'getReservations',
 	},
 
-	// Single reservation ID
 	{
 		displayName: 'Reservation ID',
 		name: 'reservation_id',
@@ -97,7 +96,6 @@ export const getReservationsDescription = [
 		},
 	},
 
-	// === Boolean parameters ===
 	{
 		displayName: 'Count',
 		name: 'count',
@@ -250,7 +248,6 @@ export const getReservationsDescription = [
 		},
 	},
 
-	// === Filter parameters ===
 	{
 		displayName: 'Accommodation Name or ID',
 		name: 'accommodation_id',

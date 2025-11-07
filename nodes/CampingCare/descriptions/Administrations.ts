@@ -66,7 +66,6 @@ export const administrationsDescription = [
 		displayOptions: { show: { resource: ['administrations'], operation: ['getAdministration'] } },
 	},
 
-	// === Boolean options ===
 	{
 		displayName: 'Count',
 		name: 'count',
@@ -146,7 +145,6 @@ export const administrationsDescription = [
 		},
 	},
 
-	// === Pagination and sorting ===
 	{
 		displayName: 'Limit',
 		name: 'limit',

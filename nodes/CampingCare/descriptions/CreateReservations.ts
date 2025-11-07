@@ -141,7 +141,6 @@ export const createReservationsDescription = [
 		default: 'createReservations3',
 	},
 
-	// === Create Reservation 1 CP ===
 	{
 		displayName: 'Arrival Date',
 		name: 'arrival',
@@ -231,7 +230,6 @@ export const createReservationsDescription = [
 		},
 	},
 
-	// === Create Reservation 1 CR ===
 	{
 		displayName: 'Accommodation Name or ID',
 		name: 'accommodation_id',

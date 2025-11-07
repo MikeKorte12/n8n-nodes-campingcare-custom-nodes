@@ -1,4 +1,3 @@
-// API Constants
 export const API_BASE_URL = 'https://api.camping.care/v21';
 
 export const API_ENDPOINTS = {
@@ -12,7 +11,6 @@ export const API_ENDPOINTS = {
 	WEBHOOKS_EVENTS: '/webhooks/events',
 } as const;
 
-// Excluded contact fields for metadata
 export const EXCLUDED_CONTACT_FIELDS = [
 	'gender',
 	'first_name',
