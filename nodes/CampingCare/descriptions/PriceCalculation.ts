@@ -77,7 +77,7 @@ export const priceCalculationDescription = [
 		required: true,
 		description:
 			'Arrival date and time for the booking (format: YYYY-MM-DD or YYYY-MM-DD HH:MM:SS)',
-		placeholder: '2025-05-15 or 2025-05-15 17:00:00',
+		placeholder: '2025-01-01',
 		default: '',
 		displayOptions: {
 			show: {
@@ -92,7 +92,7 @@ export const priceCalculationDescription = [
 		type: 'string' as NodePropertyTypes,
 		default: '',
 		required: true,
-		placeholder: '2025-05-22 or 2025-05-22 11:00:00',
+		placeholder: '2025-01-05',
 		description:
 			'Departure date and time for the booking (format: YYYY-MM-DD or YYYY-MM-DD HH:MM:SS)',
 		displayOptions: {

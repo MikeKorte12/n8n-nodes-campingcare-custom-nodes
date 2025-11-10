@@ -7,6 +7,7 @@ import { priceCalculationDescription } from './descriptions/PriceCalculation';
 import { reservationsDescription } from './descriptions/Reservations';
 import { accommodationsDescription } from './descriptions/Accommodations';
 import { channelsDescription } from './descriptions/Channels';
+import { timezonesDescription } from './descriptions/Timezones';
 import { API_BASE_URL, API_ENDPOINTS, EXCLUDED_CONTACT_FIELDS } from './utils/constants';
 import type { ContactField, Country, Accommodation } from './utils/types';
 
@@ -47,6 +48,7 @@ export class CampingCare implements INodeType {
 					{ name: 'Contacts API', value: 'contacts' },
 					{ name: 'Price Calculation API', value: 'priceCalculation' },
 					{ name: 'Reservations API', value: 'reservations' },
+					{ name: 'Timezones API', value: 'timezones' },
 				],
 				default: 'accommodations',
 			},
@@ -57,6 +59,7 @@ export class CampingCare implements INodeType {
 			...contactsDescription,
 			...priceCalculationDescription,
 			...reservationsDescription,
+			...timezonesDescription,
 		],
 	};
 

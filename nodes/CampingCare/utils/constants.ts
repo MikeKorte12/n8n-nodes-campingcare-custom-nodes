@@ -9,6 +9,7 @@ export const API_ENDPOINTS = {
 	CONTACTS: '/contacts',
 	RESERVATIONS: '/reservations',
 	PRICE_CALCULATION: '/price_calculation',
+	TIMEZONES: '/timezones',
 	WEBHOOKS: '/webhooks',
 	WEBHOOKS_EVENTS: '/webhooks/events',
 	INVOICES: '/invoices',
