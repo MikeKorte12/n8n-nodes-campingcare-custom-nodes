@@ -108,12 +108,12 @@ export const reservationsDescription = [
 				description:
 					'Using this method you should use the price calculation api first. In the price calculation api you can first add the options etc using the Add options method from the Price Calculation API.',
 			},
-			{
-				name: 'Using Start and End Date',
-				value: 'withDates',
-				description:
-					'If you use this method the price calculation is integrated and used while creating the reservation directly',
-			},
+			// {
+			// 	name: 'Using Start and End Date',
+			// 	value: 'withDates',
+			// 	description:
+			// 		'If you use this method the price calculation is integrated and used while creating the reservation directly',
+			// },
 			{
 				name: 'Force with Own Data',
 				value: 'forceWithData',
