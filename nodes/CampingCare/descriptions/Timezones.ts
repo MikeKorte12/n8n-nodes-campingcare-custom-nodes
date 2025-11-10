@@ -1,4 +1,5 @@
 import type { NodePropertyTypes, IHttpRequestMethods } from 'n8n-workflow';
+import { API_ENDPOINTS } from '../utils/constants';
 
 export const timezonesDescription = [
 	{
@@ -16,7 +17,7 @@ export const timezonesDescription = [
 				routing: {
 					request: {
 						method: 'GET' as IHttpRequestMethods,
-						url: '/timezones',
+						url: API_ENDPOINTS.TIMEZONES,
 						qs: {
 							limit: '={{ $parameter["limit"] || undefined }}',
 							offset: '={{ $parameter["offset"] || undefined }}',

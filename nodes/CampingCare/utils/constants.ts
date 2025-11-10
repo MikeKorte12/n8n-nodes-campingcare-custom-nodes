@@ -6,6 +6,7 @@ export const API_ENDPOINTS = {
 	FIELDS_FORMS: '/fields/forms',
 	ACCOMMODATIONS: '/accommodations',
 	CHANNELS: '/channels',
+	CODES: '/codes',
 	CONTACTS: '/contacts',
 	RESERVATIONS: '/reservations',
 	PRICE_CALCULATION: '/price_calculation',

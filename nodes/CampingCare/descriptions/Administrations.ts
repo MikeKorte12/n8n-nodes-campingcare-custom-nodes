@@ -1,4 +1,5 @@
 import type { NodePropertyTypes, IHttpRequestMethods } from 'n8n-workflow';
+import { API_ENDPOINTS } from '../utils/constants';
 
 export const administrationsDescription = [
 	{
@@ -9,17 +10,17 @@ export const administrationsDescription = [
 		displayOptions: { show: { resource: ['administrations'] } },
 		options: [
 			{
-				name: 'Get Administrations',
-				value: 'getAdministrations',
-				description:
-					'You can retrieve the administrations of a specific user. Each API key has access to a single administration. Each user could have access to multiple administrations',
-				action: 'Get administrations',
-				routing: {
-					request: {
-						method: 'GET' as IHttpRequestMethods,
-						url: '/administrations',
-						qs: {
-							count: '={{ $parameter["count"] || undefined }}',
+			name: 'Get Administrations',
+			value: 'getAdministrations',
+			description:
+				'You can retrieve the administrations of a specific user. Each API key has access to a single administration. Each user could have access to multiple administrations',
+			action: 'Get administrations',
+			routing: {
+				request: {
+					method: 'GET' as IHttpRequestMethods,
+					url: API_ENDPOINTS.ADMINISTRATIONS,
+					qs: {
+						count: '={{ $parameter["count"] || undefined }}',
 							get_accommodations: '={{ $parameter["get_accommodations"] || undefined }}',
 							get_age_tables: '={{ $parameter["get_age_tables"] || undefined }}',
 							get_media: '={{ $parameter["get_media"] || undefined }}',

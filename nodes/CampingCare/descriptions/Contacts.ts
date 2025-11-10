@@ -1,4 +1,5 @@
 import type { NodePropertyTypes, IHttpRequestMethods } from 'n8n-workflow';
+import { API_ENDPOINTS } from '../utils/constants';
 import { createDisplayOptions, createContactField } from '../utils/helpers';
 
 export const contactsDescription = [
@@ -13,14 +14,14 @@ export const contactsDescription = [
 				name: 'Get Contacts',
 				value: 'getContacts',
 				description: 'Get a list of contacts for this administration',
-				action: 'Get contacts',
-				routing: {
-					request: {
-						method: 'GET' as IHttpRequestMethods,
-						url: '/contacts',
-						qs: {
-							count: '={{ $parameter["count"] || undefined }}',
-							get_invoice_payments: '={{ $parameter["get_invoice_payments"] || undefined }}',
+			action: 'Get contacts',
+			routing: {
+				request: {
+					method: 'GET' as IHttpRequestMethods,
+					url: API_ENDPOINTS.CONTACTS,
+					qs: {
+						count: '={{ $parameter["count"] || undefined }}',
+						get_invoice_payments: '={{ $parameter["get_invoice_payments"] || undefined }}',
 							get_invoices: '={{ $parameter["get_invoices"] || undefined }}',
 							get_meta: '={{ $parameter["get_meta"] || undefined }}',
 							get_reservation_payment_terms:
@@ -56,17 +57,17 @@ export const contactsDescription = [
 				},
 			},
 			{
-				name: 'Add Contact',
-				value: 'addContact',
-				description:
-					'Add either an empty contact or add parameters to a contact. All provided data will be added to the new contact.',
-				action: 'Add contact',
-				routing: {
-					request: {
-						method: 'POST' as IHttpRequestMethods,
-						url: '/contacts',
-						body: {
-							first_name: '={{ $parameter["first_name"] || undefined }}',
+			name: 'Add Contact',
+			value: 'addContact',
+			description:
+				'Add either an empty contact or add parameters to a contact. All provided data will be added to the new contact.',
+			action: 'Add contact',
+			routing: {
+				request: {
+					method: 'POST' as IHttpRequestMethods,
+					url: API_ENDPOINTS.CONTACTS,
+					body: {
+						first_name: '={{ $parameter["first_name"] || undefined }}',
 							last_name: '={{ $parameter["last_name"] || undefined }}',
 							gender: '={{ $parameter["gender"] || undefined }}',
 							birthday: '={{ $parameter["birthday"] || undefined }}',

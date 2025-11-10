@@ -10,6 +10,7 @@ import type {
 import { NodeApiError, NodeConnectionTypes } from 'n8n-workflow';
 import { API_BASE_URL, API_ENDPOINTS } from './utils/constants';
 import { extractWebhookId } from './utils/helpers';
+import type { WebhookEvent, WebhookResponse } from './utils/types';
 
 export class CampingCareTrigger implements INodeType {
 	description: INodeTypeDescription = {
@@ -63,9 +64,10 @@ export class CampingCareTrigger implements INodeType {
 						},
 					});
 
-					return events.map((event: any) => ({
-						name: event.name || event.label || event.event || event,
-						value: event.value || event.event || event,
+					const webhookEvents = (Array.isArray(events) ? events : []) as WebhookEvent[];
+					return webhookEvents.map((event) => ({
+						name: event.name || event.label || event.event,
+						value: event.value || event.event,
 					}));
 				} catch (error) {
 					throw new NodeApiError(this.getNode(), error, {
@@ -96,7 +98,6 @@ export class CampingCareTrigger implements INodeType {
 					});
 					return true;
 				} catch (error) {
-					console.error('Failed to check webhook existence:', error);
 					return false;
 				}
 			},
@@ -110,28 +111,26 @@ export class CampingCareTrigger implements INodeType {
 					events: events,
 				};
 
-				try {
-					const responseData = await this.helpers.httpRequest({
-						method: 'POST',
-						url: `${API_BASE_URL}${API_ENDPOINTS.WEBHOOKS}`,
-						headers: {
-							Authorization: `Bearer ${credentials.apiKey}`,
-							'Content-Type': 'application/json',
-						},
-						body,
-					});
+			try {
+				const responseData = await this.helpers.httpRequest({
+					method: 'POST',
+					url: `${API_BASE_URL}${API_ENDPOINTS.WEBHOOKS}`,
+					headers: {
+						Authorization: `Bearer ${credentials.apiKey}`,
+						'Content-Type': 'application/json',
+					},
+					body,
+				}) as WebhookResponse | WebhookResponse[];
 
-					const webhookData = this.getWorkflowStaticData('node');
-					webhookData.webhookId = extractWebhookId(responseData);
+				const webhookData = this.getWorkflowStaticData('node');
+				webhookData.webhookId = extractWebhookId(responseData);
 
-					// Store the secret_key for webhook verification
-					if (Array.isArray(responseData) && responseData[0]?.secret_key) {
-						webhookData.secretKey = responseData[0].secret_key;
-					} else if (responseData?.secret_key) {
-						webhookData.secretKey = responseData.secret_key;
-					}
-
-					return true;
+				// Store the secret_key for webhook verification
+				if (Array.isArray(responseData) && responseData[0]?.secret_key) {
+					webhookData.secretKey = responseData[0].secret_key;
+				} else if (!Array.isArray(responseData) && responseData?.secret_key) {
+					webhookData.secretKey = responseData.secret_key;
+				}					return true;
 				} catch (error) {
 					throw new NodeApiError(this.getNode(), error, {
 						message: 'Failed to create webhook in Starfish',

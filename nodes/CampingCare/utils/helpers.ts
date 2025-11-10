@@ -1,4 +1,5 @@
 import type { NodePropertyTypes } from 'n8n-workflow';
+import type { WebhookResponse } from './types';
 
 export const createDisplayOptions = (
 	resource: string,
@@ -21,8 +22,8 @@ export const createContactField = (
 	options: {
 		type?: NodePropertyTypes;
 		required?: boolean;
-		default?: any;
-		typeOptions?: any;
+		default?: string | number | boolean;
+		typeOptions?: Record<string, unknown>;
 		placeholder?: string;
 	} = {},
 ) => ({
@@ -37,7 +38,20 @@ export const createContactField = (
 	...(options.placeholder && { placeholder: options.placeholder }),
 });
 
-export const extractWebhookId = (responseData: any): string => {
+export const extractWebhookId = (responseData: WebhookResponse | WebhookResponse[]): string => {
+	// Handle array response
+	if (Array.isArray(responseData)) {
+		const firstItem = responseData[0];
+		const webhookId = firstItem?.id || firstItem?.webhook_id || firstItem?.data?.id;
+
+		if (!webhookId) {
+			throw new Error('Webhook created but no ID was returned from the API');
+		}
+
+		return webhookId;
+	}
+
+	// Handle single object response
 	const webhookId = responseData.id || responseData.webhook_id || responseData.data?.id;
 
 	if (!webhookId) {
@@ -45,4 +59,23 @@ export const extractWebhookId = (responseData: any): string => {
 	}
 
 	return webhookId;
+};
+
+// Type guard functions for runtime validation
+export const isValidWebhookResponse = (data: unknown): data is WebhookResponse => {
+	if (typeof data !== 'object' || data === null) {
+		return false;
+	}
+	const response = data as Record<string, unknown>;
+	return (
+		typeof response.id === 'string' ||
+		typeof response.webhook_id === 'string' ||
+		(typeof response.data === 'object' && response.data !== null && 'id' in response.data)
+	);
+};
+
+export const isValidWebhookResponseArray = (
+	data: unknown,
+): data is WebhookResponse[] => {
+	return Array.isArray(data) && data.every(isValidWebhookResponse);
 };

@@ -1,4 +1,5 @@
 import type { NodePropertyTypes, IHttpRequestMethods } from 'n8n-workflow';
+import { API_ENDPOINTS } from '../utils/constants';
 
 export const priceCalculationDescription = [
 	{
@@ -9,17 +10,17 @@ export const priceCalculationDescription = [
 		displayOptions: { show: { resource: ['priceCalculation'] } },
 		options: [
 			{
-				name: 'Price Calculation',
-				value: 'calculatePrice',
-				description:
-					'Calculate accommodation price to get calculation ID and hash for creating a reservation',
-				action: 'Calculate price',
-				routing: {
-					request: {
-						method: 'GET' as IHttpRequestMethods,
-						url: '/price_calculation',
-						qs: {
-							accommodation_id: '={{ $parameter["accommodation_id"] || undefined }}',
+			name: 'Price Calculation',
+			value: 'calculatePrice',
+			description:
+				'Calculate accommodation price to get calculation ID and hash for creating a reservation',
+			action: 'Calculate price',
+			routing: {
+				request: {
+					method: 'GET' as IHttpRequestMethods,
+					url: API_ENDPOINTS.PRICE_CALCULATION,
+					qs: {
+						accommodation_id: '={{ $parameter["accommodation_id"] || undefined }}',
 							arrival: '={{ $parameter["arrival"] || undefined }}',
 							departure: '={{ $parameter["departure"] || undefined }}',
 							persons: '={{ $parameter["persons"] || undefined }}',

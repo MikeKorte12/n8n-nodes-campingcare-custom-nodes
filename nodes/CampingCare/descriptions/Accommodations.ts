@@ -1,4 +1,5 @@
 import type { NodePropertyTypes, IHttpRequestMethods } from 'n8n-workflow';
+import { API_ENDPOINTS } from '../utils/constants';
 
 export const accommodationsDescription = [
 	{
@@ -9,17 +10,17 @@ export const accommodationsDescription = [
 		displayOptions: { show: { resource: ['accommodations'] } },
 		options: [
 			{
-				name: 'Get Accommodations',
-				value: 'getAccommodations',
-				description:
-					'Get a list of accommodations with optional meta, media, services and translations',
-				action: 'Get accommodations',
-				routing: {
-					request: {
-						method: 'GET' as IHttpRequestMethods,
-						url: '/accommodations',
-						qs: {
-							count: '={{ $parameter["count"] || undefined }}',
+			name: 'Get Accommodations',
+			value: 'getAccommodations',
+			description:
+				'Get a list of accommodations with optional meta, media, services and translations',
+			action: 'Get accommodations',
+			routing: {
+				request: {
+					method: 'GET' as IHttpRequestMethods,
+					url: API_ENDPOINTS.ACCOMMODATIONS,
+					qs: {
+						count: '={{ $parameter["count"] || undefined }}',
 							get_meta: '={{ $parameter["get_meta"] || undefined }}',
 							get_media: '={{ $parameter["get_media"] || undefined }}',
 							get_services: '={{ $parameter["get_services"] || undefined }}',
@@ -51,16 +52,16 @@ export const accommodationsDescription = [
 				},
 			},
 			{
-				name: 'Add Accommodation',
-				value: 'addAccommodation',
-				description: 'Add a new accommodation (minimal: name)',
-				action: 'Add accommodation',
-				routing: {
-					request: {
-						method: 'POST' as IHttpRequestMethods,
-						url: '/accommodations',
-						body: {
-							name: '={{ $parameter["name"] }}',
+			name: 'Add Accommodation',
+			value: 'addAccommodation',
+			description: 'Add a new accommodation (minimal: name)',
+			action: 'Add accommodation',
+			routing: {
+				request: {
+					method: 'POST' as IHttpRequestMethods,
+					url: API_ENDPOINTS.ACCOMMODATIONS,
+					body: {
+						name: '={{ $parameter["name"] }}',
 						},
 					},
 				},

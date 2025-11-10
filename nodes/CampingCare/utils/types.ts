@@ -20,6 +20,7 @@ export interface Accommodation {
 	id: string;
 	name: string;
 	type?: string;
+	status?: string;
 }
 
 export interface Administration {
@@ -34,5 +35,39 @@ export interface ApiResponse<T> {
 		total?: number;
 		limit?: number;
 		offset?: number;
+	};
+}
+
+export interface Channel {
+	id: string;
+	name: string;
+	icon?: string;
+}
+
+export interface Code {
+	id: string;
+	code: string;
+	name?: string;
+}
+
+export interface WebhookEvent {
+	event: string;
+	name?: string;
+	label?: string;
+	value?: string;
+}
+
+export interface CoTravelerField {
+	key: string;
+	name: string;
+	type?: string;
+}
+
+export interface WebhookResponse {
+	id?: string;
+	webhook_id?: string;
+	secret_key?: string;
+	data?: {
+		id?: string;
 	};
 }
