@@ -123,6 +123,14 @@ export class CampingCareTrigger implements INodeType {
 
 					const webhookData = this.getWorkflowStaticData('node');
 					webhookData.webhookId = extractWebhookId(responseData);
+
+					// Store the secret_key for webhook verification
+					if (Array.isArray(responseData) && responseData[0]?.secret_key) {
+						webhookData.secretKey = responseData[0].secret_key;
+					} else if (responseData?.secret_key) {
+						webhookData.secretKey = responseData.secret_key;
+					}
+
 					return true;
 				} catch (error) {
 					throw new NodeApiError(this.getNode(), error, {
@@ -153,12 +161,47 @@ export class CampingCareTrigger implements INodeType {
 				}
 
 				delete webhookData.webhookId;
+				delete webhookData.secretKey;
 				return true;
 			},
 		},
 	};
 
 	async webhook(this: IWebhookFunctions): Promise<IWebhookResponseData> {
+		const webhookData = this.getWorkflowStaticData('node');
+		const req = this.getRequestObject();
+		const headerData = this.getHeaderData();
+
+		// Verify the secret key from the request
+		const receivedSecretKey =
+			req.headers['x-webhook-secret'] ||
+			req.headers['x-secret-key'] ||
+			headerData['x-webhook-secret'] ||
+			headerData['x-secret-key'];
+
+		// Check if we have a stored secret key
+		if (webhookData.secretKey) {
+			if (!receivedSecretKey) {
+				throw new NodeApiError(this.getNode(),
+					{ message: 'Missing webhook secret key in request headers' },
+					{
+						message: 'Webhook request rejected: No secret key provided',
+						description: 'The webhook must include a secret key for security verification'
+					}
+				);
+			}
+
+			if (receivedSecretKey !== webhookData.secretKey) {
+				throw new NodeApiError(this.getNode(),
+					{ message: 'Invalid webhook secret key' },
+					{
+						message: 'Webhook request rejected: Invalid secret key',
+						description: 'The provided secret key does not match the expected value'
+					}
+				);
+			}
+		}
+
 		const bodyData = this.getBodyData();
 		return {
 			workflowData: [this.helpers.returnJsonArray(bodyData)],
