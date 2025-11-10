@@ -11,13 +11,13 @@ import type { ContactField, Country, Accommodation } from './utils/types';
 
 export class CampingCare implements INodeType {
 	description: INodeTypeDescription = {
-		displayName: 'Starfish',
+		displayName: 'Starfish (CampingCare/HotelCare)',
 		name: 'campingCare',
 		icon: { light: 'file:campingcare.svg', dark: 'file:campingcaredark.svg' },
 		group: ['input'],
 		version: 1,
 		subtitle: '={{ $parameter["operation"] + ": " + $parameter["resource"] }}',
-		description: 'Interact with the Starfish API',
+		description: 'Interact with the Starfish API for CampingCare and HotelCare',
 		defaults: { name: 'Starfish' },
 		inputs: ['main'],
 		outputs: ['main'],

@@ -13,7 +13,7 @@ import { extractWebhookId } from './utils/helpers';
 
 export class CampingCareTrigger implements INodeType {
 	description: INodeTypeDescription = {
-		displayName: 'Starfish Trigger',
+		displayName: 'Starfish (CampingCare/HotelCare) Trigger',
 		name: 'campingCareTrigger',
 		icon: { light: 'file:campingcare.svg', dark: 'file:campingcaredark.svg' },
 		group: ['trigger'],

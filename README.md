@@ -1,12 +1,12 @@
 # n8n-nodes-campingcare-custom-nodes
 
-Custom n8n nodes for integrating with the [Starfish API](https://api.camping.care). These nodes allow you to interact with contacts, reservations, accommodations, and webhooks in your n8n workflows.
+Custom n8n nodes for integrating with the [Starfish API](https://api.camping.care) for CampingCare and HotelCare platforms. These nodes allow you to interact with contacts, reservations, accommodations, and webhooks in your n8n workflows.
 
 ## Features
 
 This package provides the following nodes:
 
-### Starfish Node
+### Starfish (CampingCare/HotelCare) Node
 
 Regular node for making API calls to Starfish:
 
@@ -15,7 +15,7 @@ Regular node for making API calls to Starfish:
 - **Reservations**: Get and create reservations with price calculations
 - **Accommodations**: List and manage accommodations
 
-### Starfish Trigger Node
+### Starfish (CampingCare/HotelCare) Trigger Node
 
 Webhook trigger node that listens for events from Starfish:
 
@@ -49,7 +49,7 @@ npm install n8n-nodes-campingcare-custom-nodes
 ### Setting up API Credentials
 
 1. In n8n, go to **Credentials** > **New**
-2. Search for "Starfish API"
+2. Search for "Starfish (CampingCare/HotelCare) API"
 3. Enter your API credentials:
    - **API Key**: Your Starfish API key (available in your Starfish dashboard)
 
@@ -57,7 +57,7 @@ npm install n8n-nodes-campingcare-custom-nodes
 
 ### Example 1: Create a Contact
 
-1. Add the "Starfish" node
+1. Add the "Starfish (CampingCare/HotelCare)" node
 2. Select **Resource**: Contact
 3. Select **Operation**: Add Contact
 4. Fill in the required fields:
@@ -67,7 +67,7 @@ npm install n8n-nodes-campingcare-custom-nodes
 
 ### Example 2: Create a Reservation
 
-1. Add the "Starfish" node
+1. Add the "Starfish (CampingCare/HotelCare)" node
 2. Select **Resource**: Create Reservation
 3. Choose operation type:
    - **Using Price Calculation**: Calculate price first, then create
@@ -76,7 +76,7 @@ npm install n8n-nodes-campingcare-custom-nodes
 
 ### Example 3: Listen for Webhook Events
 
-1. Add the "Starfish Trigger" node
+1. Add the "Starfish (CampingCare/HotelCare) Trigger" node
 2. Select the event types you want to listen for
 3. Activate the workflow
 4. The webhook will be automatically created in Starfish
