@@ -149,12 +149,12 @@ export const accommodationsDescription = [
 		displayOptions: { show: { resource: ['accommodations'], operation: ['getAccommodations'] } },
 	},
 	{
-		displayName: 'Channel ID',
+		displayName: 'Channel',
 		name: 'channel_id',
-		type: 'string' as NodePropertyTypes,
-		description: 'Filter by channel ID (OTAs)',
-		placeholder: '19',
+		type: 'options' as NodePropertyTypes,
+		description: 'Select a channel (OTAs)',
 		default: '',
+		typeOptions: { loadOptionsMethod: 'getChannels' },
 		displayOptions: { show: { resource: ['accommodations'], operation: ['getAccommodations'] } },
 	},
 	{

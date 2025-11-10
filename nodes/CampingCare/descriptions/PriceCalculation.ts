@@ -106,8 +106,12 @@ export const priceCalculationDescription = [
 		displayName: 'Number of Persons',
 		name: 'persons',
 		type: 'number' as NodePropertyTypes,
+		required: true,
 		default: 2,
 		placeholder: '2',
+		typeOptions: {
+			minValue: 1,
+		},
 		description:
 			'Number of persons staying in the accommodation. The price calculation always will include 2 persons calculated using the default age table.',
 		displayOptions: {
@@ -249,13 +253,15 @@ export const priceCalculationDescription = [
 		},
 	},
 	{
-		displayName: 'Age Tables',
+		displayName: 'Age Table IDs',
 		name: 'age_tables',
 		type: 'string' as NodePropertyTypes,
-		default: '',
-		placeholder: '[{"ID":"14709","count":"4"},{"ID":"14710","count":"1"}]',
-		description:
-			'Age tables are used using the age table ID and count. Provide detailed guest information (JSON array format).',
+		default: [],
+		placeholder: '14709',
+		typeOptions: {
+			multipleValues: true,
+		},
+		description: 'Add one or more age table IDs',
 		displayOptions: {
 			show: {
 				resource: ['priceCalculation'],
@@ -264,13 +270,15 @@ export const priceCalculationDescription = [
 		},
 	},
 	{
-		displayName: 'Birth Tables',
+		displayName: 'Birthdates',
 		name: 'birth_tables',
 		type: 'string' as NodePropertyTypes,
-		default: '',
-		placeholder: '[{"birthdate":"2013-08-02","count":"1"},{"birthdate":"1977-03-07","count":"1"}]',
-		description:
-			'Birth tables are used when you know the birth days of the guests. The price calculation will automatically transform them to age_tables (JSON array format).',
+		default: [],
+		placeholder: '2005-11-11',
+		typeOptions: {
+			multipleValues: true,
+		},
+		description: 'Add one or more birthdates (YYYY-MM-DD)',
 		displayOptions: {
 			show: {
 				resource: ['priceCalculation'],
@@ -279,12 +287,12 @@ export const priceCalculationDescription = [
 		},
 	},
 	{
-		displayName: 'Channel ID',
+		displayName: 'Channel',
 		name: 'channel_id',
-		type: 'string' as NodePropertyTypes,
+		type: 'options' as NodePropertyTypes,
 		default: '',
-		placeholder: '3',
-		description: 'Channel identifier for the booking',
+		description: 'Select a channel for the booking',
+		typeOptions: { loadOptionsMethod: 'getChannels' },
 		displayOptions: {
 			show: {
 				resource: ['priceCalculation'],

@@ -6,7 +6,6 @@ import { contactsDescription } from './descriptions/Contacts';
 import { priceCalculationDescription } from './descriptions/PriceCalculation';
 import { reservationsDescription } from './descriptions/Reservations';
 import { accommodationsDescription } from './descriptions/Accommodations';
-import { channelsDescription } from './descriptions/Channels';
 import { timezonesDescription } from './descriptions/Timezones';
 import { API_BASE_URL, API_ENDPOINTS, EXCLUDED_CONTACT_FIELDS } from './utils/constants';
 import type { ContactField, Country, Accommodation } from './utils/types';
@@ -44,7 +43,6 @@ export class CampingCare implements INodeType {
 				options: [
 					{ name: 'Accommodations API', value: 'accommodations' },
 					{ name: 'Administrations API', value: 'administrations' },
-					{ name: 'Channels API', value: 'channels' },
 					{ name: 'Contacts API', value: 'contacts' },
 					{ name: 'Price Calculation API', value: 'priceCalculation' },
 					{ name: 'Reservations API', value: 'reservations' },
@@ -55,7 +53,6 @@ export class CampingCare implements INodeType {
 
 			...accommodationsDescription,
 			...administrationsDescription,
-			...channelsDescription,
 			...contactsDescription,
 			...priceCalculationDescription,
 			...reservationsDescription,
@@ -65,6 +62,57 @@ export class CampingCare implements INodeType {
 
 	methods = {
 		loadOptions: {
+			async getChannels(this: ILoadOptionsFunctions) {
+				try {
+					const credentials = await this.getCredentials('campingCareApi');
+					const response = await this.helpers.httpRequest({
+						method: 'GET',
+						url: `${API_BASE_URL}/channels`,
+						headers: {
+							Accept: 'application/json',
+							Authorization: `Bearer ${credentials.apiKey}`,
+						},
+					});
+
+					const options = (Array.isArray(response) ? response : []).map((channel: any) => ({
+						name: channel.name,
+						value: channel.id,
+						iconUrl: channel.icon,
+					}));
+					options.unshift({ name: '— None —', value: '', iconUrl: undefined });
+					return options;
+				} catch (error) {
+					throw new NodeApiError(this.getNode(), error, {
+						message: 'Failed to load channels',
+						description: error.message || 'Unable to retrieve channels from the API',
+					});
+				}
+			},
+			async getCodes(this: ILoadOptionsFunctions) {
+				try {
+					const credentials = await this.getCredentials('campingCareApi');
+					const response = await this.helpers.httpRequest({
+						method: 'GET',
+						url: `${API_BASE_URL}/codes`,
+						headers: {
+							Accept: 'application/json',
+							Authorization: `Bearer ${credentials.apiKey}`,
+						},
+					});
+
+					const options = (Array.isArray(response) ? response : []).map((code: any) => ({
+						name: code.name || code.code,
+						value: code.id,
+					}));
+					options.unshift({ name: '— None —', value: '' });
+					return options;
+				} catch (error) {
+					throw new NodeApiError(this.getNode(), error, {
+						message: 'Failed to load codes',
+						description: error.message || 'Unable to retrieve codes from the API',
+					});
+				}
+			},
 			async getContactFields(this: ILoadOptionsFunctions) {
 				try {
 					const credentials = await this.getCredentials('campingCareApi');

@@ -349,12 +349,12 @@ export const reservationsDescription = [
 		},
 	},
 	{
-		displayName: 'Channel ID',
+		displayName: 'Channel',
 		name: 'channel_id',
-		type: 'string' as NodePropertyTypes,
-		description: 'Filter by channel ID',
-		placeholder: '3',
+		type: 'options' as NodePropertyTypes,
+		description: 'Select a channel',
 		default: '',
+		typeOptions: { loadOptionsMethod: 'getChannels' },
 		displayOptions: {
 			show: { resource: ['reservations'], operation: ['getReservations'] },
 		},
