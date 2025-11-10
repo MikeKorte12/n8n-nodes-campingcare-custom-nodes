@@ -10,16 +10,16 @@ export const reservationsDescription = [
 		displayOptions: { show: { resource: [RESOURCES.RESERVATIONS] } },
 		options: [
 			{
-			name: 'Get Reservations',
-			value: OPERATIONS.GET_RESERVATIONS,
-			description: 'Get a list of reservations with various filtering options',
-			action: 'Get reservations',
-			routing: {
-				request: {
-					method: 'GET' as IHttpRequestMethods,
-					url: API_ENDPOINTS.RESERVATIONS,
-					qs: {
-						count: '={{ $parameter["count"] || undefined }}',
+				name: 'Get Reservations',
+				value: OPERATIONS.GET_RESERVATIONS,
+				description: 'Get a list of reservations with various filtering options',
+				action: 'Get reservations',
+				routing: {
+					request: {
+						method: 'GET' as IHttpRequestMethods,
+						url: API_ENDPOINTS.RESERVATIONS,
+						qs: {
+							count: '={{ $parameter["count"] || undefined }}',
 							filter_root_meta: '={{ $parameter["filter_root_meta"] || undefined }}',
 							get_contact: '={{ $parameter["get_contact"] || undefined }}',
 							get_invoice_payment: '={{ $parameter["get_invoice_payment"] || undefined }}',

@@ -14,14 +14,14 @@ export const contactsDescription = [
 				name: 'Get Contacts',
 				value: OPERATIONS.GET_CONTACTS,
 				description: 'Get a list of contacts for this administration',
-			action: 'Get contacts',
-			routing: {
-				request: {
-					method: 'GET' as IHttpRequestMethods,
-					url: API_ENDPOINTS.CONTACTS,
-					qs: {
-						count: '={{ $parameter["count"] || undefined }}',
-						get_invoice_payments: '={{ $parameter["get_invoice_payments"] || undefined }}',
+				action: 'Get contacts',
+				routing: {
+					request: {
+						method: 'GET' as IHttpRequestMethods,
+						url: API_ENDPOINTS.CONTACTS,
+						qs: {
+							count: '={{ $parameter["count"] || undefined }}',
+							get_invoice_payments: '={{ $parameter["get_invoice_payments"] || undefined }}',
 							get_invoices: '={{ $parameter["get_invoices"] || undefined }}',
 							get_meta: '={{ $parameter["get_meta"] || undefined }}',
 							get_reservation_payment_terms:
@@ -57,17 +57,17 @@ export const contactsDescription = [
 				},
 			},
 			{
-			name: 'Add Contact',
-			value: OPERATIONS.ADD_CONTACT,
-			description:
-				'Add either an empty contact or add parameters to a contact. All provided data will be added to the new contact.',
-			action: 'Add contact',
-			routing: {
-				request: {
-					method: 'POST' as IHttpRequestMethods,
-					url: API_ENDPOINTS.CONTACTS,
-					body: {
-						first_name: '={{ $parameter["first_name"] || undefined }}',
+				name: 'Add Contact',
+				value: OPERATIONS.ADD_CONTACT,
+				description:
+					'Add either an empty contact or add parameters to a contact. All provided data will be added to the new contact.',
+				action: 'Add contact',
+				routing: {
+					request: {
+						method: 'POST' as IHttpRequestMethods,
+						url: API_ENDPOINTS.CONTACTS,
+						body: {
+							first_name: '={{ $parameter["first_name"] || undefined }}',
 							last_name: '={{ $parameter["last_name"] || undefined }}',
 							gender: '={{ $parameter["gender"] || undefined }}',
 							birthday: '={{ $parameter["birthday"] || undefined }}',
@@ -103,7 +103,9 @@ export const contactsDescription = [
 		description: 'Unique identifier of the contact to retrieve',
 		placeholder: '340',
 		default: '',
-		displayOptions: { show: { resource: [RESOURCES.CONTACTS], operation: [OPERATIONS.GET_CONTACT] } },
+		displayOptions: {
+			show: { resource: [RESOURCES.CONTACTS], operation: [OPERATIONS.GET_CONTACT] },
+		},
 	},
 	{
 		displayName: 'Count',
@@ -111,7 +113,9 @@ export const contactsDescription = [
 		type: 'boolean' as NodePropertyTypes,
 		description: 'Whether to return only the total number of contacts instead of full details',
 		default: false,
-		displayOptions: { show: { resource: [RESOURCES.CONTACTS], operation: [OPERATIONS.GET_CONTACTS] } },
+		displayOptions: {
+			show: { resource: [RESOURCES.CONTACTS], operation: [OPERATIONS.GET_CONTACTS] },
+		},
 	},
 	{
 		displayName: 'Get Invoice Payments',
@@ -119,7 +123,12 @@ export const contactsDescription = [
 		type: 'boolean' as NodePropertyTypes,
 		description: 'Whether to include invoice payment details for the contact(s)',
 		default: false,
-		displayOptions: { show: { resource: [RESOURCES.CONTACTS], operation: [OPERATIONS.GET_CONTACTS, OPERATIONS.GET_CONTACT] } },
+		displayOptions: {
+			show: {
+				resource: [RESOURCES.CONTACTS],
+				operation: [OPERATIONS.GET_CONTACTS, OPERATIONS.GET_CONTACT],
+			},
+		},
 	},
 	{
 		displayName: 'Get Invoices',
@@ -127,7 +136,12 @@ export const contactsDescription = [
 		type: 'boolean' as NodePropertyTypes,
 		description: 'Whether to include related invoices for the contact(s)',
 		default: false,
-		displayOptions: { show: { resource: [RESOURCES.CONTACTS], operation: [OPERATIONS.GET_CONTACTS, OPERATIONS.GET_CONTACT] } },
+		displayOptions: {
+			show: {
+				resource: [RESOURCES.CONTACTS],
+				operation: [OPERATIONS.GET_CONTACTS, OPERATIONS.GET_CONTACT],
+			},
+		},
 	},
 	{
 		displayName: 'Get Meta',
@@ -136,7 +150,12 @@ export const contactsDescription = [
 		description:
 			'Whether to include meta information about the contact. Note: OTA users have limited access.',
 		default: false,
-		displayOptions: { show: { resource: [RESOURCES.CONTACTS], operation: [OPERATIONS.GET_CONTACTS, OPERATIONS.GET_CONTACT] } },
+		displayOptions: {
+			show: {
+				resource: [RESOURCES.CONTACTS],
+				operation: [OPERATIONS.GET_CONTACTS, OPERATIONS.GET_CONTACT],
+			},
+		},
 	},
 	{
 		displayName: 'Get Reservation Payment Terms',
@@ -144,7 +163,12 @@ export const contactsDescription = [
 		type: 'boolean' as NodePropertyTypes,
 		description: 'Whether to include reservation payment term information for the contact(s)',
 		default: false,
-		displayOptions: { show: { resource: [RESOURCES.CONTACTS], operation: [OPERATIONS.GET_CONTACTS, OPERATIONS.GET_CONTACT] } },
+		displayOptions: {
+			show: {
+				resource: [RESOURCES.CONTACTS],
+				operation: [OPERATIONS.GET_CONTACTS, OPERATIONS.GET_CONTACT],
+			},
+		},
 	},
 	{
 		displayName: 'Get Reservations',
@@ -152,7 +176,12 @@ export const contactsDescription = [
 		type: 'boolean' as NodePropertyTypes,
 		description: 'Whether to include reservations related to the contact(s)',
 		default: false,
-		displayOptions: { show: { resource: [RESOURCES.CONTACTS], operation: [OPERATIONS.GET_CONTACTS, OPERATIONS.GET_CONTACT] } },
+		displayOptions: {
+			show: {
+				resource: [RESOURCES.CONTACTS],
+				operation: [OPERATIONS.GET_CONTACTS, OPERATIONS.GET_CONTACT],
+			},
+		},
 	},
 
 	{
@@ -163,7 +192,9 @@ export const contactsDescription = [
 		placeholder: '10',
 		typeOptions: { minValue: 1 },
 		default: 10,
-		displayOptions: { show: { resource: [RESOURCES.CONTACTS], operation: [OPERATIONS.GET_CONTACTS] } },
+		displayOptions: {
+			show: { resource: [RESOURCES.CONTACTS], operation: [OPERATIONS.GET_CONTACTS] },
+		},
 	},
 	{
 		displayName: 'Offset',
@@ -173,7 +204,9 @@ export const contactsDescription = [
 		placeholder: '0',
 		typeOptions: { minValue: 0 },
 		default: 0,
-		displayOptions: { show: { resource: [RESOURCES.CONTACTS], operation: [OPERATIONS.GET_CONTACTS] } },
+		displayOptions: {
+			show: { resource: [RESOURCES.CONTACTS], operation: [OPERATIONS.GET_CONTACTS] },
+		},
 	},
 	{
 		displayName: 'Order',
@@ -187,7 +220,9 @@ export const contactsDescription = [
 			{ name: 'DESC', value: 'desc' },
 		],
 		default: '',
-		displayOptions: { show: { resource: [RESOURCES.CONTACTS], operation: [OPERATIONS.GET_CONTACTS] } },
+		displayOptions: {
+			show: { resource: [RESOURCES.CONTACTS], operation: [OPERATIONS.GET_CONTACTS] },
+		},
 	},
 	{
 		displayName: 'Order By',
@@ -209,7 +244,9 @@ export const contactsDescription = [
 			{ name: 'Last Modified Search', value: 'last_modified_search' },
 		],
 		default: '',
-		displayOptions: { show: { resource: [RESOURCES.CONTACTS], operation: [OPERATIONS.GET_CONTACTS] } },
+		displayOptions: {
+			show: { resource: [RESOURCES.CONTACTS], operation: [OPERATIONS.GET_CONTACTS] },
+		},
 	},
 	{
 		displayName: 'Search',
@@ -218,7 +255,9 @@ export const contactsDescription = [
 		description: 'Filter contacts by ID or name. Partial matches are allowed.',
 		placeholder: 'support@camping.care',
 		default: '',
-		displayOptions: { show: { resource: [RESOURCES.CONTACTS], operation: [OPERATIONS.GET_CONTACTS] } },
+		displayOptions: {
+			show: { resource: [RESOURCES.CONTACTS], operation: [OPERATIONS.GET_CONTACTS] },
+		},
 	},
 
 	createContactField('first_name', 'First Name', 'First name of the contact', {
@@ -337,7 +376,9 @@ export const contactsDescription = [
 		placeholder: 'Add Field',
 		typeOptions: { multipleValues: true },
 		default: { field: [] },
-		displayOptions: { show: { resource: [RESOURCES.CONTACTS], operation: [OPERATIONS.ADD_CONTACT] } },
+		displayOptions: {
+			show: { resource: [RESOURCES.CONTACTS], operation: [OPERATIONS.ADD_CONTACT] },
+		},
 		options: [
 			{
 				displayName: 'Field',

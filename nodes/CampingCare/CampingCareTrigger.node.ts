@@ -111,26 +111,27 @@ export class CampingCareTrigger implements INodeType {
 					events: events,
 				};
 
-			try {
-				const responseData = await this.helpers.httpRequest({
-					method: 'POST',
-					url: `${API_BASE_URL}${API_ENDPOINTS.WEBHOOKS}`,
-					headers: {
-						Authorization: `Bearer ${credentials.apiKey}`,
-						'Content-Type': 'application/json',
-					},
-					body,
-				}) as WebhookResponse | WebhookResponse[];
+				try {
+					const responseData = (await this.helpers.httpRequest({
+						method: 'POST',
+						url: `${API_BASE_URL}${API_ENDPOINTS.WEBHOOKS}`,
+						headers: {
+							Authorization: `Bearer ${credentials.apiKey}`,
+							'Content-Type': 'application/json',
+						},
+						body,
+					})) as WebhookResponse | WebhookResponse[];
 
-				const webhookData = this.getWorkflowStaticData('node');
-				webhookData.webhookId = extractWebhookId(responseData);
+					const webhookData = this.getWorkflowStaticData('node');
+					webhookData.webhookId = extractWebhookId(responseData);
 
-				// Store the secret_key for webhook verification
-				if (Array.isArray(responseData) && responseData[0]?.secret_key) {
-					webhookData.secretKey = responseData[0].secret_key;
-				} else if (!Array.isArray(responseData) && responseData?.secret_key) {
-					webhookData.secretKey = responseData.secret_key;
-				}					return true;
+					// Store the secret_key for webhook verification
+					if (Array.isArray(responseData) && responseData[0]?.secret_key) {
+						webhookData.secretKey = responseData[0].secret_key;
+					} else if (!Array.isArray(responseData) && responseData?.secret_key) {
+						webhookData.secretKey = responseData.secret_key;
+					}
+					return true;
 				} catch (error) {
 					throw new NodeApiError(this.getNode(), error, {
 						message: 'Failed to create webhook in Starfish',
@@ -181,22 +182,24 @@ export class CampingCareTrigger implements INodeType {
 		// Check if we have a stored secret key
 		if (webhookData.secretKey) {
 			if (!receivedSecretKey) {
-				throw new NodeApiError(this.getNode(),
+				throw new NodeApiError(
+					this.getNode(),
 					{ message: 'Missing webhook secret key in request headers' },
 					{
 						message: 'Webhook request rejected: No secret key provided',
-						description: 'The webhook must include a secret key for security verification'
-					}
+						description: 'The webhook must include a secret key for security verification',
+					},
 				);
 			}
 
 			if (receivedSecretKey !== webhookData.secretKey) {
-				throw new NodeApiError(this.getNode(),
+				throw new NodeApiError(
+					this.getNode(),
 					{ message: 'Invalid webhook secret key' },
 					{
 						message: 'Webhook request rejected: Invalid secret key',
-						description: 'The provided secret key does not match the expected value'
-					}
+						description: 'The provided secret key does not match the expected value',
+					},
 				);
 			}
 		}

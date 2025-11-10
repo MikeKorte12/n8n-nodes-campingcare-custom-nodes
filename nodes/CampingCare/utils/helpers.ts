@@ -74,8 +74,6 @@ export const isValidWebhookResponse = (data: unknown): data is WebhookResponse =
 	);
 };
 
-export const isValidWebhookResponseArray = (
-	data: unknown,
-): data is WebhookResponse[] => {
+export const isValidWebhookResponseArray = (data: unknown): data is WebhookResponse[] => {
 	return Array.isArray(data) && data.every(isValidWebhookResponse);
 };

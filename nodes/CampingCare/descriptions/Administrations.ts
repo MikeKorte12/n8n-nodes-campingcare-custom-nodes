@@ -10,17 +10,17 @@ export const administrationsDescription = [
 		displayOptions: { show: { resource: [RESOURCES.ADMINISTRATIONS] } },
 		options: [
 			{
-			name: 'Get Administrations',
-			value: OPERATIONS.GET_ADMINISTRATIONS,
-			description:
-				'You can retrieve the administrations of a specific user. Each API key has access to a single administration. Each user could have access to multiple administrations',
-			action: 'Get administrations',
-			routing: {
-				request: {
-					method: 'GET' as IHttpRequestMethods,
-					url: API_ENDPOINTS.ADMINISTRATIONS,
-					qs: {
-						count: '={{ $parameter["count"] || undefined }}',
+				name: 'Get Administrations',
+				value: OPERATIONS.GET_ADMINISTRATIONS,
+				description:
+					'You can retrieve the administrations of a specific user. Each API key has access to a single administration. Each user could have access to multiple administrations',
+				action: 'Get administrations',
+				routing: {
+					request: {
+						method: 'GET' as IHttpRequestMethods,
+						url: API_ENDPOINTS.ADMINISTRATIONS,
+						qs: {
+							count: '={{ $parameter["count"] || undefined }}',
 							get_accommodations: '={{ $parameter["get_accommodations"] || undefined }}',
 							get_age_tables: '={{ $parameter["get_age_tables"] || undefined }}',
 							get_media: '={{ $parameter["get_media"] || undefined }}',
@@ -119,7 +119,9 @@ export const administrationsDescription = [
 		description: 'Unique identifier of the administration to retrieve',
 		placeholder: '1234',
 		default: '',
-		displayOptions: { show: { resource: [RESOURCES.ADMINISTRATIONS], operation: [OPERATIONS.GET_ADMINISTRATION] } },
+		displayOptions: {
+			show: { resource: [RESOURCES.ADMINISTRATIONS], operation: [OPERATIONS.GET_ADMINISTRATION] },
+		},
 	},
 
 	{
@@ -128,7 +130,9 @@ export const administrationsDescription = [
 		type: 'boolean' as NodePropertyTypes,
 		description: 'Whether to get a total count back of the administrations. Default: false.',
 		default: false,
-		displayOptions: { show: { resource: [RESOURCES.ADMINISTRATIONS], operation: [OPERATIONS.GET_ADMINISTRATIONS] } },
+		displayOptions: {
+			show: { resource: [RESOURCES.ADMINISTRATIONS], operation: [OPERATIONS.GET_ADMINISTRATIONS] },
+		},
 	},
 	{
 		displayName: 'Get Accommodations',
@@ -136,7 +140,9 @@ export const administrationsDescription = [
 		type: 'boolean' as NodePropertyTypes,
 		description: 'Whether to include accommodation data for each administration',
 		default: false,
-		displayOptions: { show: { resource: [RESOURCES.ADMINISTRATIONS], operation: [OPERATIONS.GET_ADMINISTRATIONS] } },
+		displayOptions: {
+			show: { resource: [RESOURCES.ADMINISTRATIONS], operation: [OPERATIONS.GET_ADMINISTRATIONS] },
+		},
 	},
 	{
 		displayName: 'Get Age Tables',
@@ -184,7 +190,9 @@ export const administrationsDescription = [
 		type: 'boolean' as NodePropertyTypes,
 		description: 'Whether to include VAT table information for the administration',
 		default: false,
-		displayOptions: { show: { resource: [RESOURCES.ADMINISTRATIONS], operation: [OPERATIONS.GET_ADMINISTRATION] } },
+		displayOptions: {
+			show: { resource: [RESOURCES.ADMINISTRATIONS], operation: [OPERATIONS.GET_ADMINISTRATION] },
+		},
 	},
 	{
 		displayName: 'Translations',
@@ -208,7 +216,9 @@ export const administrationsDescription = [
 		placeholder: '10',
 		typeOptions: { minValue: 1 },
 		default: 5,
-		displayOptions: { show: { resource: [RESOURCES.ADMINISTRATIONS], operation: [OPERATIONS.GET_ADMINISTRATIONS] } },
+		displayOptions: {
+			show: { resource: [RESOURCES.ADMINISTRATIONS], operation: [OPERATIONS.GET_ADMINISTRATIONS] },
+		},
 	},
 	{
 		displayName: 'Offset',
@@ -218,7 +228,9 @@ export const administrationsDescription = [
 		placeholder: '0',
 		typeOptions: { minValue: 0 },
 		default: 0,
-		displayOptions: { show: { resource: [RESOURCES.ADMINISTRATIONS], operation: [OPERATIONS.GET_ADMINISTRATIONS] } },
+		displayOptions: {
+			show: { resource: [RESOURCES.ADMINISTRATIONS], operation: [OPERATIONS.GET_ADMINISTRATIONS] },
+		},
 	},
 	{
 		displayName: 'Order',
@@ -232,7 +244,9 @@ export const administrationsDescription = [
 			{ name: 'DESC', value: 'desc' },
 		],
 		default: '',
-		displayOptions: { show: { resource: [RESOURCES.ADMINISTRATIONS], operation: [OPERATIONS.GET_ADMINISTRATIONS] } },
+		displayOptions: {
+			show: { resource: [RESOURCES.ADMINISTRATIONS], operation: [OPERATIONS.GET_ADMINISTRATIONS] },
+		},
 	},
 	{
 		displayName: 'Search',
@@ -241,7 +255,9 @@ export const administrationsDescription = [
 		description: 'Filter administrations by ID or name. Partial matches are allowed.',
 		placeholder: 'Enter ID or name',
 		default: '',
-		displayOptions: { show: { resource: [RESOURCES.ADMINISTRATIONS], operation: [OPERATIONS.GET_ADMINISTRATIONS] } },
+		displayOptions: {
+			show: { resource: [RESOURCES.ADMINISTRATIONS], operation: [OPERATIONS.GET_ADMINISTRATIONS] },
+		},
 	},
 
 	// === AGE TABLES PARAMETERS ===
@@ -295,7 +311,7 @@ export const administrationsDescription = [
 		type: 'options' as NodePropertyTypes,
 		description: 'Sort age tables by field',
 		options: [
-			{ name : '— None —', value: '' },
+			{ name: '— None —', value: '' },
 			{ name: 'Priority', value: 'priority' },
 			{ name: 'Name', value: 'name' },
 			{ name: 'ID', value: 'id' },

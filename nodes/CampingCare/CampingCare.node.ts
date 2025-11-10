@@ -69,26 +69,26 @@ export class CampingCare implements INodeType {
 
 	methods = {
 		loadOptions: {
-		async getChannels(this: ILoadOptionsFunctions) {
-			try {
-				const credentials = await this.getCredentials('campingCareApi');
-				const response = await this.helpers.httpRequest({
-					method: 'GET',
-					url: `${API_BASE_URL}${API_ENDPOINTS.CHANNELS}`,
-					headers: {
-						Accept: 'application/json',
-						Authorization: `Bearer ${credentials.apiKey}`,
-					},
-				});
+			async getChannels(this: ILoadOptionsFunctions) {
+				try {
+					const credentials = await this.getCredentials('campingCareApi');
+					const response = await this.helpers.httpRequest({
+						method: 'GET',
+						url: `${API_BASE_URL}${API_ENDPOINTS.CHANNELS}`,
+						headers: {
+							Accept: 'application/json',
+							Authorization: `Bearer ${credentials.apiKey}`,
+						},
+					});
 
-				const channels = (Array.isArray(response) ? response : []) as Channel[];
-				const options = channels.map((channel) => ({
-					name: channel.name,
-					value: channel.id,
-					iconUrl: channel.icon,
-				}));
-				options.unshift({ name: '— None —', value: '', iconUrl: undefined });
-				return options;
+					const channels = (Array.isArray(response) ? response : []) as Channel[];
+					const options = channels.map((channel) => ({
+						name: channel.name,
+						value: channel.id,
+						iconUrl: channel.icon,
+					}));
+					options.unshift({ name: '— None —', value: '', iconUrl: undefined });
+					return options;
 				} catch (error) {
 					throw new NodeApiError(this.getNode(), error, {
 						message: 'Failed to load channels',
@@ -96,24 +96,24 @@ export class CampingCare implements INodeType {
 					});
 				}
 			},
-		async getCodes(this: ILoadOptionsFunctions) {
-			try {
-				const credentials = await this.getCredentials('campingCareApi');
-				const response = await this.helpers.httpRequest({
-					method: 'GET',
-					url: `${API_BASE_URL}${API_ENDPOINTS.CODES}`,
-					headers: {
-						Accept: 'application/json',
-						Authorization: `Bearer ${credentials.apiKey}`,
-					},
-				});
+			async getCodes(this: ILoadOptionsFunctions) {
+				try {
+					const credentials = await this.getCredentials('campingCareApi');
+					const response = await this.helpers.httpRequest({
+						method: 'GET',
+						url: `${API_BASE_URL}${API_ENDPOINTS.CODES}`,
+						headers: {
+							Accept: 'application/json',
+							Authorization: `Bearer ${credentials.apiKey}`,
+						},
+					});
 
-				const codes = (Array.isArray(response) ? response : []) as Code[];
-				const options = codes.map((code) => ({
-					name: code.name || code.code,
-					value: code.id,
-				}));
-				options.unshift({ name: '— None —', value: '' });
+					const codes = (Array.isArray(response) ? response : []) as Code[];
+					const options = codes.map((code) => ({
+						name: code.name || code.code,
+						value: code.id,
+					}));
+					options.unshift({ name: '— None —', value: '' });
 					return options;
 				} catch (error) {
 					throw new NodeApiError(this.getNode(), error, {
@@ -169,15 +169,15 @@ export class CampingCare implements INodeType {
 							'Content-Type': 'application/json',
 							Authorization: `Bearer ${credentials.apiKey}`,
 						},
-				});
+					});
 
-				const coTravelerFields = (response?.co_travelers ?? []) as CoTravelerField[];
+					const coTravelerFields = (response?.co_travelers ?? []) as CoTravelerField[];
 
-				return coTravelerFields.map((field) => ({
-					name: field.name,
-					value: field.key,
-				}));
-			} catch (error) {
+					return coTravelerFields.map((field) => ({
+						name: field.name,
+						value: field.key,
+					}));
+				} catch (error) {
 					throw new NodeApiError(this.getNode(), error, {
 						message: 'Failed to load co-traveler fields',
 						description: error.message || 'Unable to retrieve co-traveler fields from the API',
@@ -213,17 +213,18 @@ export class CampingCare implements INodeType {
 						return [];
 					}
 
-				const countries = (rule.countries as Country[]).map((c) => ({
-					name: c.country_name,
-					value: c.country,
-				}));
+					const countries = (rule.countries as Country[]).map((c) => ({
+						name: c.country_name,
+						value: c.country,
+					}));
 
-				countries.sort((a, b) => a.name.localeCompare(b.name));
+					countries.sort((a, b) => a.name.localeCompare(b.name));
 
-				countries.unshift({
-					name: '— None —',
-					value: '',
-				});					return countries;
+					countries.unshift({
+						name: '— None —',
+						value: '',
+					});
+					return countries;
 				} catch (error) {
 					throw new NodeApiError(this.getNode(), error, {
 						message: 'Failed to load country list',
@@ -246,12 +247,13 @@ export class CampingCare implements INodeType {
 						},
 					});
 
-				const accommodations = (response as Accommodation[])
-					.filter((a) => a.status === 'active')
-					.map((a) => ({
-						name: a.name || `Accommodation ${a.id}`,
-						value: a.id,
-					}));					accommodations.unshift({
+					const accommodations = (response as Accommodation[])
+						.filter((a) => a.status === 'active')
+						.map((a) => ({
+							name: a.name || `Accommodation ${a.id}`,
+							value: a.id,
+						}));
+					accommodations.unshift({
 						name: '— None —',
 						value: '',
 					});

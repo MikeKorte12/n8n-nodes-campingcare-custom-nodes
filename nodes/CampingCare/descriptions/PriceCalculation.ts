@@ -10,17 +10,17 @@ export const priceCalculationDescription = [
 		displayOptions: { show: { resource: [RESOURCES.PRICE_CALCULATION] } },
 		options: [
 			{
-			name: 'Price Calculation',
-			value: OPERATIONS.CALCULATE_PRICE,
-			description:
-				'Calculate accommodation price to get calculation ID and hash for creating a reservation',
-			action: 'Calculate price',
-			routing: {
-				request: {
-					method: 'GET' as IHttpRequestMethods,
-					url: API_ENDPOINTS.PRICE_CALCULATION,
-					qs: {
-						accommodation_id: '={{ $parameter["accommodation_id"] || undefined }}',
+				name: 'Price Calculation',
+				value: OPERATIONS.CALCULATE_PRICE,
+				description:
+					'Calculate accommodation price to get calculation ID and hash for creating a reservation',
+				action: 'Calculate price',
+				routing: {
+					request: {
+						method: 'GET' as IHttpRequestMethods,
+						url: API_ENDPOINTS.PRICE_CALCULATION,
+						qs: {
+							accommodation_id: '={{ $parameter["accommodation_id"] || undefined }}',
 							arrival: '={{ $parameter["arrival"] || undefined }}',
 							departure: '={{ $parameter["departure"] || undefined }}',
 							persons: '={{ $parameter["persons"] || undefined }}',
