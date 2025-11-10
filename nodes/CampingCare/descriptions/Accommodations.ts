@@ -1,5 +1,5 @@
 import type { NodePropertyTypes, IHttpRequestMethods } from 'n8n-workflow';
-import { API_ENDPOINTS } from '../utils/constants';
+import { API_ENDPOINTS, RESOURCES, OPERATIONS } from '../utils/constants';
 
 export const accommodationsDescription = [
 	{
@@ -7,11 +7,11 @@ export const accommodationsDescription = [
 		name: 'operation',
 		type: 'options' as NodePropertyTypes,
 		noDataExpression: true,
-		displayOptions: { show: { resource: ['accommodations'] } },
+		displayOptions: { show: { resource: [RESOURCES.ACCOMMODATIONS] } },
 		options: [
 			{
 			name: 'Get Accommodations',
-			value: 'getAccommodations',
+			value: OPERATIONS.GET_ACCOMMODATIONS,
 			description:
 				'Get a list of accommodations with optional meta, media, services and translations',
 			action: 'Get accommodations',
@@ -35,7 +35,7 @@ export const accommodationsDescription = [
 			},
 			{
 				name: 'Get Accommodation',
-				value: 'getAccommodation',
+				value: OPERATIONS.GET_ACCOMMODATION,
 				description: 'Get a single accommodation by ID',
 				action: 'Get accommodation',
 				routing: {
@@ -53,7 +53,7 @@ export const accommodationsDescription = [
 			},
 			{
 			name: 'Add Accommodation',
-			value: 'addAccommodation',
+			value: OPERATIONS.ADD_ACCOMMODATION,
 			description: 'Add a new accommodation (minimal: name)',
 			action: 'Add accommodation',
 			routing: {
@@ -67,7 +67,7 @@ export const accommodationsDescription = [
 				},
 			},
 		],
-		default: 'getAccommodations',
+		default: OPERATIONS.GET_ACCOMMODATIONS,
 	},
 
 	// Common fields
@@ -79,7 +79,7 @@ export const accommodationsDescription = [
 		description: 'Unique identifier of the accommodation to retrieve',
 		placeholder: '7343',
 		default: '',
-		displayOptions: { show: { resource: ['accommodations'], operation: ['getAccommodation'] } },
+		displayOptions: { show: { resource: [RESOURCES.ACCOMMODATIONS], operation: [OPERATIONS.GET_ACCOMMODATION] } },
 	},
 
 	// List filters
@@ -89,7 +89,7 @@ export const accommodationsDescription = [
 		type: 'boolean' as NodePropertyTypes,
 		description: 'Get the total count of accommodations (independent of channel filter)',
 		default: false,
-		displayOptions: { show: { resource: ['accommodations'], operation: ['getAccommodations'] } },
+		displayOptions: { show: { resource: [RESOURCES.ACCOMMODATIONS], operation: [OPERATIONS.GET_ACCOMMODATIONS] } },
 	},
 	{
 		displayName: 'Get Meta',
@@ -98,7 +98,7 @@ export const accommodationsDescription = [
 		description: 'Include meta data for each accommodation',
 		default: false,
 		displayOptions: {
-			show: { resource: ['accommodations'], operation: ['getAccommodations', 'getAccommodation'] },
+			show: { resource: [RESOURCES.ACCOMMODATIONS], operation: [OPERATIONS.GET_ACCOMMODATIONS, OPERATIONS.GET_ACCOMMODATION] },
 		},
 	},
 	{
@@ -108,7 +108,7 @@ export const accommodationsDescription = [
 		description: 'Include media info for each accommodation',
 		default: false,
 		displayOptions: {
-			show: { resource: ['accommodations'], operation: ['getAccommodations', 'getAccommodation'] },
+			show: { resource: [RESOURCES.ACCOMMODATIONS], operation: [OPERATIONS.GET_ACCOMMODATIONS, OPERATIONS.GET_ACCOMMODATION] },
 		},
 	},
 	{
@@ -117,7 +117,7 @@ export const accommodationsDescription = [
 		type: 'boolean' as NodePropertyTypes,
 		description: 'Include services for each accommodation',
 		default: false,
-		displayOptions: { show: { resource: ['accommodations'], operation: ['getAccommodations'] } },
+		displayOptions: { show: { resource: [RESOURCES.ACCOMMODATIONS], operation: [OPERATIONS.GET_ACCOMMODATIONS] } },
 	},
 	{
 		displayName: 'Translations',
@@ -126,7 +126,7 @@ export const accommodationsDescription = [
 		description: 'Include translations of names and descriptions',
 		default: false,
 		displayOptions: {
-			show: { resource: ['accommodations'], operation: ['getAccommodations', 'getAccommodation'] },
+			show: { resource: [RESOURCES.ACCOMMODATIONS], operation: [OPERATIONS.GET_ACCOMMODATIONS, OPERATIONS.GET_ACCOMMODATION] },
 		},
 	},
 	{
@@ -137,7 +137,7 @@ export const accommodationsDescription = [
 		placeholder: '15',
 		typeOptions: { minValue: 1, maxValue: 50 },
 		default: 15,
-		displayOptions: { show: { resource: ['accommodations'], operation: ['getAccommodations'] } },
+		displayOptions: { show: { resource: [RESOURCES.ACCOMMODATIONS], operation: [OPERATIONS.GET_ACCOMMODATIONS] } },
 	},
 	{
 		displayName: 'Offset',
@@ -147,7 +147,7 @@ export const accommodationsDescription = [
 		placeholder: '0',
 		typeOptions: { minValue: 0 },
 		default: 0,
-		displayOptions: { show: { resource: ['accommodations'], operation: ['getAccommodations'] } },
+		displayOptions: { show: { resource: [RESOURCES.ACCOMMODATIONS], operation: [OPERATIONS.GET_ACCOMMODATIONS] } },
 	},
 	{
 		displayName: 'Channel',
@@ -156,7 +156,7 @@ export const accommodationsDescription = [
 		description: 'Select a channel (OTAs)',
 		default: '',
 		typeOptions: { loadOptionsMethod: 'getChannels' },
-		displayOptions: { show: { resource: ['accommodations'], operation: ['getAccommodations'] } },
+		displayOptions: { show: { resource: [RESOURCES.ACCOMMODATIONS], operation: [OPERATIONS.GET_ACCOMMODATIONS] } },
 	},
 	{
 		displayName: 'Status',
@@ -169,7 +169,7 @@ export const accommodationsDescription = [
 			{ name: 'Nonactive', value: 'nonactive' },
 		],
 		default: '',
-		displayOptions: { show: { resource: ['accommodations'], operation: ['getAccommodations'] } },
+		displayOptions: { show: { resource: [RESOURCES.ACCOMMODATIONS], operation: [OPERATIONS.GET_ACCOMMODATIONS] } },
 	},
 
 	// Add accommodation minimal field(s)
@@ -181,6 +181,6 @@ export const accommodationsDescription = [
 		description: 'Name of the new accommodation',
 		placeholder: 'Campsite',
 		default: '',
-		displayOptions: { show: { resource: ['accommodations'], operation: ['addAccommodation'] } },
+		displayOptions: { show: { resource: [RESOURCES.ACCOMMODATIONS], operation: [OPERATIONS.ADD_ACCOMMODATION] } },
 	},
 ];

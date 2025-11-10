@@ -1,5 +1,5 @@
 import type { NodePropertyTypes, IHttpRequestMethods } from 'n8n-workflow';
-import { API_ENDPOINTS } from '../utils/constants';
+import { API_ENDPOINTS, RESOURCES, OPERATIONS } from '../utils/constants';
 
 export const reservationsDescription = [
 	{
@@ -7,11 +7,11 @@ export const reservationsDescription = [
 		name: 'operation',
 		type: 'options' as NodePropertyTypes,
 		noDataExpression: true,
-		displayOptions: { show: { resource: ['reservations'] } },
+		displayOptions: { show: { resource: [RESOURCES.RESERVATIONS] } },
 		options: [
 			{
 			name: 'Get Reservations',
-			value: 'getReservations',
+			value: OPERATIONS.GET_RESERVATIONS,
 			description: 'Get a list of reservations with various filtering options',
 			action: 'Get reservations',
 			routing: {
@@ -57,7 +57,7 @@ export const reservationsDescription = [
 			},
 			{
 				name: 'Get Reservation',
-				value: 'getReservation',
+				value: OPERATIONS.GET_RESERVATION,
 				description: 'Get a single reservation by ID with optional additional data',
 				action: 'Get reservation',
 				routing: {
@@ -82,12 +82,12 @@ export const reservationsDescription = [
 			},
 			{
 				name: 'Create Reservation',
-				value: 'createReservation',
+				value: OPERATIONS.CREATE_RESERVATION,
 				description: 'Create a reservation using different methods',
 				action: 'Create reservation',
 			},
 		],
-		default: 'getReservations',
+		default: OPERATIONS.GET_RESERVATIONS,
 	},
 
 	// Create Reservation Method Selection
@@ -98,8 +98,8 @@ export const reservationsDescription = [
 		noDataExpression: true,
 		displayOptions: {
 			show: {
-				resource: ['reservations'],
-				operation: ['createReservation'],
+				resource: [RESOURCES.RESERVATIONS],
+				operation: [OPERATIONS.CREATE_RESERVATION],
 			},
 		},
 		options: [
@@ -135,7 +135,7 @@ export const reservationsDescription = [
 		placeholder: '1234567',
 		default: '',
 		displayOptions: {
-			show: { resource: ['reservations'], operation: ['getReservation'] },
+			show: { resource: [RESOURCES.RESERVATIONS], operation: [OPERATIONS.GET_RESERVATION] },
 		},
 	},
 
@@ -147,7 +147,7 @@ export const reservationsDescription = [
 		description: 'Whether to return only the total count of reservations instead of full details',
 		default: false,
 		displayOptions: {
-			show: { resource: ['reservations'], operation: ['getReservations'] },
+			show: { resource: [RESOURCES.RESERVATIONS], operation: [OPERATIONS.GET_RESERVATIONS] },
 		},
 	},
 	{
@@ -158,8 +158,8 @@ export const reservationsDescription = [
 		default: false,
 		displayOptions: {
 			show: {
-				resource: ['reservations'],
-				operation: ['getReservations', 'getReservation'],
+				resource: [RESOURCES.RESERVATIONS],
+				operation: [OPERATIONS.GET_RESERVATIONS, OPERATIONS.GET_RESERVATION],
 			},
 		},
 	},
@@ -170,7 +170,7 @@ export const reservationsDescription = [
 		description: 'Whether to include booker details of the reservation(s)',
 		default: false,
 		displayOptions: {
-			show: { resource: ['reservations'], operation: ['getReservation'] },
+			show: { resource: [RESOURCES.RESERVATIONS], operation: [OPERATIONS.GET_RESERVATION] },
 		},
 	},
 	{
@@ -180,7 +180,7 @@ export const reservationsDescription = [
 		description: 'Whether to include co-traveler details of the reservation(s)',
 		default: false,
 		displayOptions: {
-			show: { resource: ['reservations'], operation: ['getReservation'] },
+			show: { resource: [RESOURCES.RESERVATIONS], operation: [OPERATIONS.GET_RESERVATION] },
 		},
 	},
 	{
@@ -191,8 +191,8 @@ export const reservationsDescription = [
 		default: false,
 		displayOptions: {
 			show: {
-				resource: ['reservations'],
-				operation: ['getReservations', 'getReservation'],
+				resource: [RESOURCES.RESERVATIONS],
+				operation: [OPERATIONS.GET_RESERVATIONS, OPERATIONS.GET_RESERVATION],
 			},
 		},
 	},
@@ -204,8 +204,8 @@ export const reservationsDescription = [
 		default: false,
 		displayOptions: {
 			show: {
-				resource: ['reservations'],
-				operation: ['getReservations', 'getReservation'],
+				resource: [RESOURCES.RESERVATIONS],
+				operation: [OPERATIONS.GET_RESERVATIONS, OPERATIONS.GET_RESERVATION],
 			},
 		},
 	},
@@ -216,7 +216,7 @@ export const reservationsDescription = [
 		description: 'Whether to include invoice payment of the reservation(s)',
 		default: false,
 		displayOptions: {
-			show: { resource: ['reservations'], operation: ['getReservations'] },
+			show: { resource: [RESOURCES.RESERVATIONS], operation: [OPERATIONS.GET_RESERVATIONS] },
 		},
 	},
 	{
@@ -226,7 +226,7 @@ export const reservationsDescription = [
 		description: 'Whether to include invoice payments of the reservation(s)',
 		default: false,
 		displayOptions: {
-			show: { resource: ['reservations'], operation: ['getReservation'] },
+			show: { resource: [RESOURCES.RESERVATIONS], operation: [OPERATIONS.GET_RESERVATION] },
 		},
 	},
 	{
@@ -236,7 +236,7 @@ export const reservationsDescription = [
 		description: 'Whether to include invoice rows filter of the reservation(s)',
 		default: false,
 		displayOptions: {
-			show: { resource: ['reservations'], operation: ['getReservation'] },
+			show: { resource: [RESOURCES.RESERVATIONS], operation: [OPERATIONS.GET_RESERVATION] },
 		},
 	},
 	{
@@ -247,8 +247,8 @@ export const reservationsDescription = [
 		default: false,
 		displayOptions: {
 			show: {
-				resource: ['reservations'],
-				operation: ['getReservations', 'getReservation'],
+				resource: [RESOURCES.RESERVATIONS],
+				operation: [OPERATIONS.GET_RESERVATIONS, OPERATIONS.GET_RESERVATION],
 			},
 		},
 	},
@@ -260,8 +260,8 @@ export const reservationsDescription = [
 		default: false,
 		displayOptions: {
 			show: {
-				resource: ['reservations'],
-				operation: ['getReservations', 'getReservation'],
+				resource: [RESOURCES.RESERVATIONS],
+				operation: [OPERATIONS.GET_RESERVATIONS, OPERATIONS.GET_RESERVATION],
 			},
 		},
 	},
@@ -273,8 +273,8 @@ export const reservationsDescription = [
 		default: false,
 		displayOptions: {
 			show: {
-				resource: ['reservations'],
-				operation: ['getReservations', 'getReservation'],
+				resource: [RESOURCES.RESERVATIONS],
+				operation: [OPERATIONS.GET_RESERVATIONS, OPERATIONS.GET_RESERVATION],
 			},
 		},
 	},
@@ -286,8 +286,8 @@ export const reservationsDescription = [
 		default: false,
 		displayOptions: {
 			show: {
-				resource: ['reservations'],
-				operation: ['getReservations', 'getReservation'],
+				resource: [RESOURCES.RESERVATIONS],
+				operation: [OPERATIONS.GET_RESERVATIONS, OPERATIONS.GET_RESERVATION],
 			},
 		},
 	},
@@ -304,7 +304,7 @@ export const reservationsDescription = [
 		description:
 			'Choose from the list, or specify an ID using an <a href="https://docs.n8n.io/code/expressions/">expression</a>',
 		displayOptions: {
-			show: { resource: ['reservations'], operation: ['getReservations'] },
+			show: { resource: [RESOURCES.RESERVATIONS], operation: [OPERATIONS.GET_RESERVATIONS] },
 		},
 	},
 	{
@@ -315,7 +315,7 @@ export const reservationsDescription = [
 		placeholder: '1234',
 		default: '',
 		displayOptions: {
-			show: { resource: ['reservations'], operation: ['getReservations'] },
+			show: { resource: [RESOURCES.RESERVATIONS], operation: [OPERATIONS.GET_RESERVATIONS] },
 		},
 	},
 	{
@@ -327,7 +327,7 @@ export const reservationsDescription = [
 		placeholder: '2025-05-15',
 		default: '',
 		displayOptions: {
-			show: { resource: ['reservations'], operation: ['getReservations'] },
+			show: { resource: [RESOURCES.RESERVATIONS], operation: [OPERATIONS.GET_RESERVATIONS] },
 		},
 	},
 	{
@@ -346,7 +346,7 @@ export const reservationsDescription = [
 		],
 		default: '',
 		displayOptions: {
-			show: { resource: ['reservations'], operation: ['getReservations'] },
+			show: { resource: [RESOURCES.RESERVATIONS], operation: [OPERATIONS.GET_RESERVATIONS] },
 		},
 	},
 	{
@@ -357,7 +357,7 @@ export const reservationsDescription = [
 		default: '',
 		typeOptions: { loadOptionsMethod: 'getChannels' },
 		displayOptions: {
-			show: { resource: ['reservations'], operation: ['getReservations'] },
+			show: { resource: [RESOURCES.RESERVATIONS], operation: [OPERATIONS.GET_RESERVATIONS] },
 		},
 	},
 	{
@@ -368,7 +368,7 @@ export const reservationsDescription = [
 		placeholder: '123456',
 		default: '',
 		displayOptions: {
-			show: { resource: ['reservations'], operation: ['getReservations'] },
+			show: { resource: [RESOURCES.RESERVATIONS], operation: [OPERATIONS.GET_RESERVATIONS] },
 		},
 	},
 	{
@@ -380,7 +380,7 @@ export const reservationsDescription = [
 		placeholder: '2025-01-01',
 		default: '',
 		displayOptions: {
-			show: { resource: ['reservations'], operation: ['getReservations'] },
+			show: { resource: [RESOURCES.RESERVATIONS], operation: [OPERATIONS.GET_RESERVATIONS] },
 		},
 	},
 	{
@@ -399,7 +399,7 @@ export const reservationsDescription = [
 		],
 		default: '',
 		displayOptions: {
-			show: { resource: ['reservations'], operation: ['getReservations'] },
+			show: { resource: [RESOURCES.RESERVATIONS], operation: [OPERATIONS.GET_RESERVATIONS] },
 		},
 	},
 	{
@@ -411,7 +411,7 @@ export const reservationsDescription = [
 		placeholder: '2025-05-22',
 		default: '',
 		displayOptions: {
-			show: { resource: ['reservations'], operation: ['getReservations'] },
+			show: { resource: [RESOURCES.RESERVATIONS], operation: [OPERATIONS.GET_RESERVATIONS] },
 		},
 	},
 	{
@@ -430,7 +430,7 @@ export const reservationsDescription = [
 		],
 		default: '',
 		displayOptions: {
-			show: { resource: ['reservations'], operation: ['getReservations'] },
+			show: { resource: [RESOURCES.RESERVATIONS], operation: [OPERATIONS.GET_RESERVATIONS] },
 		},
 	},
 	{
@@ -441,7 +441,7 @@ export const reservationsDescription = [
 		placeholder: '789',
 		default: '',
 		displayOptions: {
-			show: { resource: ['reservations'], operation: ['getReservations'] },
+			show: { resource: [RESOURCES.RESERVATIONS], operation: [OPERATIONS.GET_RESERVATIONS] },
 		},
 	},
 	{
@@ -452,7 +452,7 @@ export const reservationsDescription = [
 		placeholder: '2025-01-01',
 		default: '',
 		displayOptions: {
-			show: { resource: ['reservations'], operation: ['getReservations'] },
+			show: { resource: [RESOURCES.RESERVATIONS], operation: [OPERATIONS.GET_RESERVATIONS] },
 		},
 	},
 	{
@@ -471,7 +471,7 @@ export const reservationsDescription = [
 		],
 		default: '',
 		displayOptions: {
-			show: { resource: ['reservations'], operation: ['getReservations'] },
+			show: { resource: [RESOURCES.RESERVATIONS], operation: [OPERATIONS.GET_RESERVATIONS] },
 		},
 	},
 	{
@@ -483,7 +483,7 @@ export const reservationsDescription = [
 		typeOptions: { maxValue: 30 },
 		default: 10,
 		displayOptions: {
-			show: { resource: ['reservations'], operation: ['getReservations'] },
+			show: { resource: [RESOURCES.RESERVATIONS], operation: [OPERATIONS.GET_RESERVATIONS] },
 		},
 	},
 	{
@@ -494,7 +494,7 @@ export const reservationsDescription = [
 		placeholder: 'custom_field',
 		default: '',
 		displayOptions: {
-			show: { resource: ['reservations'], operation: ['getReservations'] },
+			show: { resource: [RESOURCES.RESERVATIONS], operation: [OPERATIONS.GET_RESERVATIONS] },
 		},
 	},
 	{
@@ -505,7 +505,7 @@ export const reservationsDescription = [
 		placeholder: '=',
 		default: '',
 		displayOptions: {
-			show: { resource: ['reservations'], operation: ['getReservations'] },
+			show: { resource: [RESOURCES.RESERVATIONS], operation: [OPERATIONS.GET_RESERVATIONS] },
 		},
 	},
 	{
@@ -516,7 +516,7 @@ export const reservationsDescription = [
 		placeholder: 'value',
 		default: '',
 		displayOptions: {
-			show: { resource: ['reservations'], operation: ['getReservations'] },
+			show: { resource: [RESOURCES.RESERVATIONS], operation: [OPERATIONS.GET_RESERVATIONS] },
 		},
 	},
 	{
@@ -528,7 +528,7 @@ export const reservationsDescription = [
 		typeOptions: { minValue: 0 },
 		default: 0,
 		displayOptions: {
-			show: { resource: ['reservations'], operation: ['getReservations'] },
+			show: { resource: [RESOURCES.RESERVATIONS], operation: [OPERATIONS.GET_RESERVATIONS] },
 		},
 	},
 	{
@@ -543,7 +543,7 @@ export const reservationsDescription = [
 		],
 		default: '',
 		displayOptions: {
-			show: { resource: ['reservations'], operation: ['getReservations'] },
+			show: { resource: [RESOURCES.RESERVATIONS], operation: [OPERATIONS.GET_RESERVATIONS] },
 		},
 	},
 	{
@@ -560,7 +560,7 @@ export const reservationsDescription = [
 		],
 		default: '',
 		displayOptions: {
-			show: { resource: ['reservations'], operation: ['getReservations'] },
+			show: { resource: [RESOURCES.RESERVATIONS], operation: [OPERATIONS.GET_RESERVATIONS] },
 		},
 	},
 	{
@@ -571,7 +571,7 @@ export const reservationsDescription = [
 		placeholder: '456',
 		default: '',
 		displayOptions: {
-			show: { resource: ['reservations'], operation: ['getReservations'] },
+			show: { resource: [RESOURCES.RESERVATIONS], operation: [OPERATIONS.GET_RESERVATIONS] },
 		},
 	},
 	{
@@ -590,7 +590,7 @@ export const reservationsDescription = [
 		],
 		default: '',
 		displayOptions: {
-			show: { resource: ['reservations'], operation: ['getReservations'] },
+			show: { resource: [RESOURCES.RESERVATIONS], operation: [OPERATIONS.GET_RESERVATIONS] },
 		},
 	},
 	{
@@ -601,7 +601,7 @@ export const reservationsDescription = [
 		placeholder: 'group',
 		default: '',
 		displayOptions: {
-			show: { resource: ['reservations'], operation: ['getReservations'] },
+			show: { resource: [RESOURCES.RESERVATIONS], operation: [OPERATIONS.GET_RESERVATIONS] },
 		},
 	},
 
@@ -621,8 +621,8 @@ export const reservationsDescription = [
 			'Choose from the list, or specify an ID using an <a href="https://docs.n8n.io/code/expressions/">expression</a>',
 		displayOptions: {
 			show: {
-				resource: ['reservations'],
-				operation: ['createReservation'],
+				resource: [RESOURCES.RESERVATIONS],
+				operation: [OPERATIONS.CREATE_RESERVATION],
 			},
 		},
 		routing: {
@@ -647,8 +647,8 @@ export const reservationsDescription = [
 		description: 'The calculation ID returned from the Price Calculation API',
 		displayOptions: {
 			show: {
-				resource: ['reservations'],
-				operation: ['createReservation'],
+				resource: [RESOURCES.RESERVATIONS],
+				operation: [OPERATIONS.CREATE_RESERVATION],
 				creationMethod: ['withCalculation'],
 			},
 		},
@@ -670,8 +670,8 @@ export const reservationsDescription = [
 		description: 'The draft ID returned from the Price Calculation API',
 		displayOptions: {
 			show: {
-				resource: ['reservations'],
-				operation: ['createReservation'],
+				resource: [RESOURCES.RESERVATIONS],
+				operation: [OPERATIONS.CREATE_RESERVATION],
 				creationMethod: ['withCalculation'],
 			},
 		},
@@ -706,8 +706,8 @@ export const reservationsDescription = [
 		},
 		displayOptions: {
 			show: {
-				resource: ['reservations'],
-				operation: ['createReservation'],
+				resource: [RESOURCES.RESERVATIONS],
+				operation: [OPERATIONS.CREATE_RESERVATION],
 				creationMethod: ['withDates', 'forceWithData'],
 			},
 		},
@@ -740,8 +740,8 @@ export const reservationsDescription = [
 		},
 		displayOptions: {
 			show: {
-				resource: ['reservations'],
-				operation: ['createReservation'],
+				resource: [RESOURCES.RESERVATIONS],
+				operation: [OPERATIONS.CREATE_RESERVATION],
 				creationMethod: ['withDates', 'forceWithData'],
 			},
 		},
@@ -763,8 +763,8 @@ export const reservationsDescription = [
 		description: 'Number of persons staying in the accommodation',
 		displayOptions: {
 			show: {
-				resource: ['reservations'],
-				operation: ['createReservation'],
+				resource: [RESOURCES.RESERVATIONS],
+				operation: [OPERATIONS.CREATE_RESERVATION],
 				creationMethod: ['withDates', 'forceWithData'],
 			},
 		},
@@ -798,8 +798,8 @@ export const reservationsDescription = [
 		},
 		displayOptions: {
 			show: {
-				resource: ['reservations'],
-				operation: ['createReservation'],
+				resource: [RESOURCES.RESERVATIONS],
+				operation: [OPERATIONS.CREATE_RESERVATION],
 				creationMethod: ['forceWithData'],
 			},
 		},
@@ -868,8 +868,8 @@ export const reservationsDescription = [
 		default: '',
 		displayOptions: {
 			show: {
-				resource: ['reservations'],
-				operation: ['createReservation'],
+				resource: [RESOURCES.RESERVATIONS],
+				operation: [OPERATIONS.CREATE_RESERVATION],
 			},
 		},
 		routing: {
@@ -892,8 +892,8 @@ export const reservationsDescription = [
 		default: { traveler: [] },
 		displayOptions: {
 			show: {
-				resource: ['reservations'],
-				operation: ['createReservation'],
+				resource: [RESOURCES.RESERVATIONS],
+				operation: [OPERATIONS.CREATE_RESERVATION],
 			},
 		},
 		options: [

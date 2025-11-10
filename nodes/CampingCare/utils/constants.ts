@@ -39,3 +39,42 @@ export const EXCLUDED_CONTACT_FIELDS = [
 	'created',
 	'create_date',
 ] as const;
+
+// Resource names
+export const RESOURCES = {
+	ACCOMMODATIONS: 'accommodations',
+	ADMINISTRATIONS: 'administrations',
+	CONTACTS: 'contacts',
+	PRICE_CALCULATION: 'priceCalculation',
+	RESERVATIONS: 'reservations',
+	TIMEZONES: 'timezones',
+} as const;
+
+// Operation names
+export const OPERATIONS = {
+	// Accommodations
+	GET_ACCOMMODATION: 'getAccommodation',
+	GET_ACCOMMODATIONS: 'getAccommodations',
+	ADD_ACCOMMODATION: 'addAccommodation',
+
+	// Administrations
+	GET_ADMINISTRATION: 'getAdministration',
+	GET_ADMINISTRATIONS: 'getAdministrations',
+	AGE_TABLES: 'ageTables',
+
+	// Contacts
+	GET_CONTACT: 'getContact',
+	GET_CONTACTS: 'getContacts',
+	ADD_CONTACT: 'addContact',
+
+	// Price Calculation
+	CALCULATE_PRICE: 'calculatePrice',
+
+	// Reservations
+	GET_RESERVATION: 'getReservation',
+	GET_RESERVATIONS: 'getReservations',
+	CREATE_RESERVATION: 'createReservation',
+
+	// Timezones
+	GET_TIMEZONES: 'getTimezones',
+} as const;

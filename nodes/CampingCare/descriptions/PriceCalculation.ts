@@ -1,5 +1,5 @@
 import type { NodePropertyTypes, IHttpRequestMethods } from 'n8n-workflow';
-import { API_ENDPOINTS } from '../utils/constants';
+import { API_ENDPOINTS, RESOURCES, OPERATIONS } from '../utils/constants';
 
 export const priceCalculationDescription = [
 	{
@@ -7,11 +7,11 @@ export const priceCalculationDescription = [
 		name: 'operation',
 		type: 'options' as NodePropertyTypes,
 		noDataExpression: true,
-		displayOptions: { show: { resource: ['priceCalculation'] } },
+		displayOptions: { show: { resource: [RESOURCES.PRICE_CALCULATION] } },
 		options: [
 			{
 			name: 'Price Calculation',
-			value: 'calculatePrice',
+			value: OPERATIONS.CALCULATE_PRICE,
 			description:
 				'Calculate accommodation price to get calculation ID and hash for creating a reservation',
 			action: 'Calculate price',
@@ -50,7 +50,7 @@ export const priceCalculationDescription = [
 				},
 			},
 		],
-		default: 'calculatePrice',
+		default: OPERATIONS.CALCULATE_PRICE,
 	},
 
 	{
@@ -66,8 +66,8 @@ export const priceCalculationDescription = [
 			'The accommodation ID can be found using the accommodations API. Choose from the list, or specify an ID using an <a href="https://docs.n8n.io/code/expressions/">expression</a>.',
 		displayOptions: {
 			show: {
-				resource: ['priceCalculation'],
-				operation: ['calculatePrice'],
+				resource: [RESOURCES.PRICE_CALCULATION],
+				operation: [OPERATIONS.CALCULATE_PRICE],
 			},
 		},
 	},
@@ -82,8 +82,8 @@ export const priceCalculationDescription = [
 		default: '',
 		displayOptions: {
 			show: {
-				resource: ['priceCalculation'],
-				operation: ['calculatePrice'],
+				resource: [RESOURCES.PRICE_CALCULATION],
+				operation: [OPERATIONS.CALCULATE_PRICE],
 			},
 		},
 	},
@@ -98,8 +98,8 @@ export const priceCalculationDescription = [
 			'Departure date and time for the booking (format: YYYY-MM-DD or YYYY-MM-DD HH:MM:SS)',
 		displayOptions: {
 			show: {
-				resource: ['priceCalculation'],
-				operation: ['calculatePrice'],
+				resource: [RESOURCES.PRICE_CALCULATION],
+				operation: [OPERATIONS.CALCULATE_PRICE],
 			},
 		},
 	},
@@ -117,8 +117,8 @@ export const priceCalculationDescription = [
 			'Number of persons staying in the accommodation. The price calculation always will include 2 persons calculated using the default age table.',
 		displayOptions: {
 			show: {
-				resource: ['priceCalculation'],
-				operation: ['calculatePrice'],
+				resource: [RESOURCES.PRICE_CALCULATION],
+				operation: [OPERATIONS.CALCULATE_PRICE],
 			},
 		},
 	},
@@ -130,8 +130,8 @@ export const priceCalculationDescription = [
 		description: 'Whether to include extra guest prices in the calculation',
 		displayOptions: {
 			show: {
-				resource: ['priceCalculation'],
-				operation: ['calculatePrice'],
+				resource: [RESOURCES.PRICE_CALCULATION],
+				operation: [OPERATIONS.CALCULATE_PRICE],
 			},
 		},
 	},
@@ -143,8 +143,8 @@ export const priceCalculationDescription = [
 		description: 'Whether to include taxes in the calculation',
 		displayOptions: {
 			show: {
-				resource: ['priceCalculation'],
-				operation: ['calculatePrice'],
+				resource: [RESOURCES.PRICE_CALCULATION],
+				operation: [OPERATIONS.CALCULATE_PRICE],
 			},
 		},
 	},
@@ -156,8 +156,8 @@ export const priceCalculationDescription = [
 		description: 'Whether to include discounts in the calculation',
 		displayOptions: {
 			show: {
-				resource: ['priceCalculation'],
-				operation: ['calculatePrice'],
+				resource: [RESOURCES.PRICE_CALCULATION],
+				operation: [OPERATIONS.CALCULATE_PRICE],
 			},
 		},
 	},
@@ -169,8 +169,8 @@ export const priceCalculationDescription = [
 		description: 'Whether to include required options in the calculation',
 		displayOptions: {
 			show: {
-				resource: ['priceCalculation'],
-				operation: ['calculatePrice'],
+				resource: [RESOURCES.PRICE_CALCULATION],
+				operation: [OPERATIONS.CALCULATE_PRICE],
 			},
 		},
 	},
@@ -183,8 +183,8 @@ export const priceCalculationDescription = [
 			'Whether to get available bookable options (baby chair, extra tent, dog, etc.). The option IDs which are coming from the price calculation result can be used in the add options method.',
 		displayOptions: {
 			show: {
-				resource: ['priceCalculation'],
-				operation: ['calculatePrice'],
+				resource: [RESOURCES.PRICE_CALCULATION],
+				operation: [OPERATIONS.CALCULATE_PRICE],
 			},
 		},
 	},
@@ -196,8 +196,8 @@ export const priceCalculationDescription = [
 		description: 'Whether to include deposit information',
 		displayOptions: {
 			show: {
-				resource: ['priceCalculation'],
-				operation: ['calculatePrice'],
+				resource: [RESOURCES.PRICE_CALCULATION],
+				operation: [OPERATIONS.CALCULATE_PRICE],
 			},
 		},
 	},
@@ -209,8 +209,8 @@ export const priceCalculationDescription = [
 		description: 'Whether to include translations in the response',
 		displayOptions: {
 			show: {
-				resource: ['priceCalculation'],
-				operation: ['calculatePrice'],
+				resource: [RESOURCES.PRICE_CALCULATION],
+				operation: [OPERATIONS.CALCULATE_PRICE],
 			},
 		},
 	},
@@ -222,8 +222,8 @@ export const priceCalculationDescription = [
 		description: 'Whether to search for alternative accommodations',
 		displayOptions: {
 			show: {
-				resource: ['priceCalculation'],
-				operation: ['calculatePrice'],
+				resource: [RESOURCES.PRICE_CALCULATION],
+				operation: [OPERATIONS.CALCULATE_PRICE],
 			},
 		},
 	},
@@ -235,8 +235,8 @@ export const priceCalculationDescription = [
 		description: 'Whether to get available places',
 		displayOptions: {
 			show: {
-				resource: ['priceCalculation'],
-				operation: ['calculatePrice'],
+				resource: [RESOURCES.PRICE_CALCULATION],
+				operation: [OPERATIONS.CALCULATE_PRICE],
 			},
 		},
 	},
@@ -248,8 +248,8 @@ export const priceCalculationDescription = [
 		description: 'Whether to include detailed row information',
 		displayOptions: {
 			show: {
-				resource: ['priceCalculation'],
-				operation: ['calculatePrice'],
+				resource: [RESOURCES.PRICE_CALCULATION],
+				operation: [OPERATIONS.CALCULATE_PRICE],
 			},
 		},
 	},
@@ -265,8 +265,8 @@ export const priceCalculationDescription = [
 		description: 'Add one or more age table IDs',
 		displayOptions: {
 			show: {
-				resource: ['priceCalculation'],
-				operation: ['calculatePrice'],
+				resource: [RESOURCES.PRICE_CALCULATION],
+				operation: [OPERATIONS.CALCULATE_PRICE],
 			},
 		},
 	},
@@ -282,8 +282,8 @@ export const priceCalculationDescription = [
 		description: 'Add one or more birthdates (YYYY-MM-DD)',
 		displayOptions: {
 			show: {
-				resource: ['priceCalculation'],
-				operation: ['calculatePrice'],
+				resource: [RESOURCES.PRICE_CALCULATION],
+				operation: [OPERATIONS.CALCULATE_PRICE],
 			},
 		},
 	},
@@ -296,8 +296,8 @@ export const priceCalculationDescription = [
 		typeOptions: { loadOptionsMethod: 'getChannels' },
 		displayOptions: {
 			show: {
-				resource: ['priceCalculation'],
-				operation: ['calculatePrice'],
+				resource: [RESOURCES.PRICE_CALCULATION],
+				operation: [OPERATIONS.CALCULATE_PRICE],
 			},
 		},
 	},
@@ -310,8 +310,8 @@ export const priceCalculationDescription = [
 		description: 'Card identifier',
 		displayOptions: {
 			show: {
-				resource: ['priceCalculation'],
-				operation: ['calculatePrice'],
+				resource: [RESOURCES.PRICE_CALCULATION],
+				operation: [OPERATIONS.CALCULATE_PRICE],
 			},
 		},
 	},
@@ -325,8 +325,8 @@ export const priceCalculationDescription = [
 			'If a reservation ID is provided, the calculation is checked against this reservation',
 		displayOptions: {
 			show: {
-				resource: ['priceCalculation'],
-				operation: ['calculatePrice'],
+				resource: [RESOURCES.PRICE_CALCULATION],
+				operation: [OPERATIONS.CALCULATE_PRICE],
 			},
 		},
 	},
@@ -339,8 +339,8 @@ export const priceCalculationDescription = [
 		description: 'Specific place identifier',
 		displayOptions: {
 			show: {
-				resource: ['priceCalculation'],
-				operation: ['calculatePrice'],
+				resource: [RESOURCES.PRICE_CALCULATION],
+				operation: [OPERATIONS.CALCULATE_PRICE],
 			},
 		},
 	},
@@ -353,8 +353,8 @@ export const priceCalculationDescription = [
 		description: 'Promotional or discount code',
 		displayOptions: {
 			show: {
-				resource: ['priceCalculation'],
-				operation: ['calculatePrice'],
+				resource: [RESOURCES.PRICE_CALCULATION],
+				operation: [OPERATIONS.CALCULATE_PRICE],
 			},
 		},
 	},
@@ -367,8 +367,8 @@ export const priceCalculationDescription = [
 		description: 'Historical date for price calculation (format: YYYY-MM-DD)',
 		displayOptions: {
 			show: {
-				resource: ['priceCalculation'],
-				operation: ['calculatePrice'],
+				resource: [RESOURCES.PRICE_CALCULATION],
+				operation: [OPERATIONS.CALCULATE_PRICE],
 			},
 		},
 	},
@@ -381,8 +381,8 @@ export const priceCalculationDescription = [
 		description: 'Timeslot identifier',
 		displayOptions: {
 			show: {
-				resource: ['priceCalculation'],
-				operation: ['calculatePrice'],
+				resource: [RESOURCES.PRICE_CALCULATION],
+				operation: [OPERATIONS.CALCULATE_PRICE],
 			},
 		},
 	},
@@ -395,8 +395,8 @@ export const priceCalculationDescription = [
 		description: 'Timezone for the calculation',
 		displayOptions: {
 			show: {
-				resource: ['priceCalculation'],
-				operation: ['calculatePrice'],
+				resource: [RESOURCES.PRICE_CALCULATION],
+				operation: [OPERATIONS.CALCULATE_PRICE],
 			},
 		},
 	},
