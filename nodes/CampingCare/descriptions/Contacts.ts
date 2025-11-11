@@ -297,26 +297,26 @@ export const contactsDescription = [
 	}),
 	createContactField('email', 'Email', 'Email address of the contact', {
 		required: true,
-		placeholder: 'john.doe@example.com',
+		placeholder: 'support@camping.care',
 	}),
 	createContactField('phone', 'Phone', 'Primary phone number of the contact', {
-		placeholder: '+31123456789',
+		placeholder: '+31 (0)541 248 011',
 	}),
 	createContactField('phone_mobile', 'Mobile Phone', 'Mobile phone number of the contact', {
-		placeholder: '+31612345678',
+		placeholder: '+31 (0)541 248 011',
 	}),
 	createContactField('address', 'Address', "Street name of the contact's address", {
-		placeholder: 'Wilhelminastraat',
+		placeholder: 'Lossersestraat',
 	}),
 	createContactField('address_number', 'Address Number', "House number of the contact's address", {
-		placeholder: '8',
+		placeholder: '2',
 	}),
-	createContactField('city', 'City', 'City where the contact resides', { placeholder: 'Denekamp' }),
+	createContactField('city', 'City', 'City where the contact resides', { placeholder: 'Oldenzaal' }),
 	createContactField('state', 'State', 'State or province of the contact', {
 		placeholder: 'Overijssel',
 	}),
 	createContactField('zipcode', 'Zipcode', "Postal code of the contact's address", {
-		placeholder: '7591TN',
+		placeholder: '7574AE',
 	}),
 	{
 		displayName: 'Country',
@@ -346,7 +346,7 @@ export const contactsDescription = [
 		displayOptions: createDisplayOptions('contacts', 'addContact'),
 	},
 	createContactField('company', 'Company', 'Company name if the contact represents a business', {
-		placeholder: 'Acme Corporation',
+		placeholder: 'Camping.care',
 	}),
 	createContactField(
 		'vat_number',
