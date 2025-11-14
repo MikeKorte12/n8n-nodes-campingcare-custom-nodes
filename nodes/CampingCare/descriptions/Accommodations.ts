@@ -70,7 +70,6 @@ export const accommodationsDescription = [
 		default: OPERATIONS.GET_ACCOMMODATIONS,
 	},
 
-	// Common fields
 	{
 		displayName: 'Accommodation ID',
 		name: 'accommodation_id',
@@ -84,7 +83,6 @@ export const accommodationsDescription = [
 		},
 	},
 
-	// List filters
 	{
 		displayName: 'Count',
 		name: 'count',
@@ -195,7 +193,6 @@ export const accommodationsDescription = [
 		},
 	},
 
-	// Add accommodation minimal field(s)
 	{
 		displayName: 'Name',
 		name: 'name',

@@ -311,7 +311,9 @@ export const contactsDescription = [
 	createContactField('address_number', 'Address Number', "House number of the contact's address", {
 		placeholder: '2',
 	}),
-	createContactField('city', 'City', 'City where the contact resides', { placeholder: 'Oldenzaal' }),
+	createContactField('city', 'City', 'City where the contact resides', {
+		placeholder: 'Oldenzaal',
+	}),
 	createContactField('state', 'State', 'State or province of the contact', {
 		placeholder: 'Overijssel',
 	}),

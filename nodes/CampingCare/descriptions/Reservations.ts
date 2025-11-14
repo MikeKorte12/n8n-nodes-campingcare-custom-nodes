@@ -90,7 +90,6 @@ export const reservationsDescription = [
 		default: OPERATIONS.GET_RESERVATIONS,
 	},
 
-	// Create Reservation Method Selection
 	{
 		displayName: 'Creation Method',
 		name: 'creationMethod',
@@ -125,7 +124,6 @@ export const reservationsDescription = [
 		default: 'withCalculation',
 	},
 
-	// Reservation ID for Get Reservation
 	{
 		displayName: 'Reservation ID',
 		name: 'reservation_id',
@@ -139,7 +137,6 @@ export const reservationsDescription = [
 		},
 	},
 
-	// === GET RESERVATIONS PARAMETERS ===
 	{
 		displayName: 'Count',
 		name: 'count',
@@ -292,7 +289,6 @@ export const reservationsDescription = [
 		},
 	},
 
-	// Filter Parameters for Get Reservations
 	{
 		displayName: 'Accommodation Name or ID',
 		name: 'accommodation_id',
@@ -605,9 +601,6 @@ export const reservationsDescription = [
 		},
 	},
 
-	// === CREATE RESERVATION PARAMETERS ===
-
-	// Common parameters for all creation methods
 	{
 		displayName: 'Accommodation Name or ID',
 		name: 'create_accommodation_id',
@@ -636,7 +629,6 @@ export const reservationsDescription = [
 		},
 	},
 
-	// Method 1: Using Price Calculation with ID and Hash
 	{
 		displayName: 'Calculation ID',
 		name: 'calculation_id',
@@ -684,7 +676,6 @@ export const reservationsDescription = [
 		},
 	},
 
-	// Method 2: Using Start and End Date
 	{
 		displayName: 'Arrival Date',
 		name: 'create_arrival',
@@ -777,7 +768,6 @@ export const reservationsDescription = [
 		},
 	},
 
-	// Method 3: Force with Own Data
 	{
 		displayName: 'Forced Rows',
 		name: 'forced_rows',
@@ -858,7 +848,6 @@ export const reservationsDescription = [
 		},
 	},
 
-	// Common optional parameters for Create Reservation
 	{
 		displayName: 'Contact ID',
 		name: 'create_contact_id',

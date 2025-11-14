@@ -31,7 +31,6 @@ export const timezonesDescription = [
 		default: OPERATIONS.GET_TIMEZONES,
 	},
 
-	// Get Timezones parameters
 	{
 		displayName: 'Limit',
 		name: 'limit',

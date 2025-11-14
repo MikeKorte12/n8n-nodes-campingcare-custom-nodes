@@ -63,7 +63,6 @@ export const administrationsDescription = [
 		default: OPERATIONS.GET_ADMINISTRATIONS,
 	},
 
-	// Age Tables Method Selection
 	{
 		displayName: 'Age Tables Method',
 		name: 'ageTablesMethod',
@@ -260,7 +259,6 @@ export const administrationsDescription = [
 		},
 	},
 
-	// === AGE TABLES PARAMETERS ===
 	{
 		displayName: 'Administration ID',
 		name: 'admin_id',

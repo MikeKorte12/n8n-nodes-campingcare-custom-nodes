@@ -125,7 +125,6 @@ export class CampingCareTrigger implements INodeType {
 					const webhookData = this.getWorkflowStaticData('node');
 					webhookData.webhookId = extractWebhookId(responseData);
 
-					// Store the secret_key for webhook verification
 					if (Array.isArray(responseData) && responseData[0]?.secret_key) {
 						webhookData.secretKey = responseData[0].secret_key;
 					} else if (!Array.isArray(responseData) && responseData?.secret_key) {
@@ -172,14 +171,12 @@ export class CampingCareTrigger implements INodeType {
 		const req = this.getRequestObject();
 		const headerData = this.getHeaderData();
 
-		// Verify the secret key from the request
 		const receivedSecretKey =
 			req.headers['x-webhook-secret'] ||
 			req.headers['x-secret-key'] ||
 			headerData['x-webhook-secret'] ||
 			headerData['x-secret-key'];
 
-		// Check if we have a stored secret key
 		if (webhookData.secretKey) {
 			if (!receivedSecretKey) {
 				throw new NodeApiError(
